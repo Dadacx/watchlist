@@ -1,0 +1,132 @@
+.add-box-container {
+    z-index: 100;
+    margin-top: 10px;
+    width: 100%;
+    height: 98vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+.add-box {
+    width: 85%;
+    border-radius: 25px;
+    background-color: #697565;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 21px;
+    height: fit-content;
+    max-height: 95%;
+}
+.add-box h1 {
+    text-transform: uppercase;
+}
+.add-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.close {
+    position: absolute;
+    top: 1.1%;
+    left: 8.5%;
+    height: 40px;
+    cursor: pointer;
+}
+.close img {
+    width: 40px;
+}
+.add-form label {
+    text-align: center;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.add-form label span {
+    width: 150px;
+}
+.add-form input, .add-form textarea {
+    width: 90%;
+    float: right;
+    border: none;
+    outline: none;
+    background-color: #3c3d37;
+    height: 30px;
+    font-family: 'Nunito', sans-serif;
+    border-radius: 40px;
+    padding: 7px;
+    color: #ecdfcc;
+    font-size: 15px;
+    margin-top: 5px;
+}
+.add-form input.invalid, .add-form textarea.invalid {
+    border-bottom: 2px solid #cf0000;
+}
+.add-form textarea {
+    border-radius: 15px;
+    resize: vertical;
+    height: unset;
+}
+.add-btn {
+    text-transform: uppercase;
+    border: none;
+    background-color: #3c3d37;
+    color: #ecdfcc;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    height: 45px;
+    width: 100px;
+    border-radius: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+.form-error {
+    color: #cf0000;
+    font-size: 14px;
+    margin-top: -8px;
+    margin-bottom: 8px;
+    margin-left: 15%;
+  }
+
+/* AddFilmSeriesSingleMovie */
+.add-film-series-single-movie {
+    width: 95%;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 2px solid #3c3d37;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.add-film-series-single-movie:has(input.invalid) {
+    border: 2px solid #cf0000;
+}
+.add-film-series-single-movie summary {
+    font-size: 22px;
+    text-transform: uppercase;
+    margin: auto;
+    cursor: pointer;
+}
+details>summary {
+    list-style: none;
+}
+summary::-webkit-details-marker {
+    display: none
+}
+summary::after {
+    content: ' ►';
+}
+details[open] summary:after {
+    content: " ▼";
+}
+.add-form label.single-movie {
+    width: 100%;
+}
