@@ -6,8 +6,6 @@ import AddMovie from '../components/AddMovie';
 import AddFilmSeries from '../components/AddFilmSeries';
 import AddSeries from '../components/AddSeries';
 
-import testData from '../testData.json'
-
 const List = ({ data, error }) => {
   const [movies, setMovies] = useState(data?.data)
   const [menuVisible, setMenuVisible] = useState(false)

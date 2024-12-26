@@ -5,8 +5,10 @@ import List from './pages/List';
 import Info from './pages/Info';
 import { MoviesListFetch } from './components/Fetch';
 
+import testData from './testData.json';
+
 const App = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(testData);
   const [error, setError] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -20,15 +22,15 @@ const App = () => {
         console.log(fetchedData)
       }
     };
-    fetchData();
+    // fetchData();
   }, []);
   return (
     <div className="container">
-      <BrowserRouter>
+      <BrowserRouter basename="/watchlist">
         <Routes>
           <Route path="/" element={<Outlet />}>
             <Route index element={<List data={data} error={error} />} />
-            <Route path=":movie" element={<Info data={data} error={error} />} />
+            <Route path="/:movie" element={<Info data={data} error={error} />} />
           </Route>
         </Routes>
       </BrowserRouter>

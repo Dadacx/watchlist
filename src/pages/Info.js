@@ -5,8 +5,6 @@ import InfoMovie from '../components/InfoMovie';
 import InfoFilmSeries from '../components/InfoFilmSeries';
 import InfoSeries from '../components/InfoSeries';
 
-import testData from '../testData.json'
-
 const Info = ({ data, error }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const { movie } = useParams();
