@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 const InfoSeries = ({ movieData }) => {
     if (typeof movieData.episodes === 'string') movieData.episodes = JSON.parse(movieData.episodes)
-    console.log(movieData)
     const DataInDetails = ({ data }) => {
         return (
             <div>

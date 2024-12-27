@@ -12,12 +12,12 @@ const Card = ({ id, img, title, year, description, handleContextMenu }) => {
     // } else {
     //   imgRef.current.onload = getAverageColor(imgRef,setShadowColor);
     // }
-    imgRef.current.onload = getAverageColor(imgRef,setShadowColor);
+    // imgRef.current.onload = getAverageColor(imgRef,setShadowColor);
   }, [img])
   return (
     <div className='card' onContextMenu={(e) => handleContextMenu(e, id)} style={{boxShadow:'0px 0px 24px 6px '+shadowColor}}>
       <span style={{ display: 'none' }}>{id}</span>
-      <img ref={imgRef} className='card-img' alt='card-image' crossOrigin="anonymous" src={'https://corsproxy.io/?url=' + img} />
+      <img onLoad={(e) => getAverageColor(e,setShadowColor)} ref={imgRef} className='card-img' alt='card-image' crossOrigin="anonymous" src={'https://corsproxy.io/?url=' + img} />
       <div className='content'>
         <span className='title'>{title}</span>
         <span className='year'>{year}</span>

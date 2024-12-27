@@ -1,5 +1,6 @@
 const getAverageColor = (imgRef, setShadowColor) => {
-  const imgElement = imgRef.current;
+  // const imgElement = imgRef.current;
+  const imgElement = imgRef.target;
 
   // Sprawdzenie, czy imgElement jest dostępny i załadowany
   if (!imgElement || imgElement.width === 0 || imgElement.height === 0) {

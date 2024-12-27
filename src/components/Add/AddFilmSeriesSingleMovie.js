@@ -1,3 +1,4 @@
+import '../../styles/Add.css'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 const AddFilmSeriesSingleMovie = forwardRef(({ initialTitle }, ref) => {

@@ -1,7 +1,7 @@
-import '../styles/Add.css'
+import '../../styles/Add.css'
 import { useEffect, useRef, useState } from 'react';
-import close from '../images/close.svg'
-import { AddMovieFetch } from './Fetch';
+import close from '../../images/close.svg'
+import { AddMovieFetch } from '../Fetch';
 
 const AddMovie = ({ setAddMovie }) => {
   const [errors, setErrors] = useState({});
@@ -29,12 +29,12 @@ const AddMovie = ({ setAddMovie }) => {
         password: window.prompt("Podaj hasło")
       }
       console.log(movie)
-      AddMovieFetch(movie).then((response) => {
-        window.alert(response.message);
-        if (response.status === 'success') {
-          setAddMovie(null);
-        }
-      });
+      // AddMovieFetch(movie).then((response) => {
+      //   window.alert(response.message);
+      //   if (response.status === 'success') {
+      //     setAddMovie(null);
+      //   }
+      // });
     }
   }
   const validateForm = () => {

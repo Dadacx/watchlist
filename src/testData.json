@@ -1,77 +1,83 @@
 {
     "status": "success",
     "data": [
-        {
-            "id": 1,
-            "type": "movie",
-            "title": "Avengers: Wojna bez granic",
-            "year": "2018",
-            "description": "Potężny Thanos zbiera Kamienie Nieskończoności w celu narzucenia swojej woli wszystkim istnieniom we wszechświecie. Avengersi muszą połączyć siły, aby powstrzymać go przed zniszczeniem połowy życia we wszechświecie.",
-            "originalTitle": "Avengers: Infinity War",
-            "duration": "2h 29m",
-            "link": "https://www.filmweb.pl/film/Avengers%3A+Wojna+bez+granic-2018-693758",
-            "imgs": "https://fwcdn.pl/fpo/37/58/693758/7839647_2.10.webp\nhttps://fwcdn.pl/fph/37/58/693758/753489_3.12.webp\nhttps://fwcdn.pl/fph/37/58/693758/753490_3.11.webp\nhttps://fwcdn.pl/fph/37/58/693758/753491_3.11.webp\nhttps://fwcdn.pl/fph/37/58/693758/753492_3.11.webp\nhttps://fwcdn.pl/fph/37/58/693758/759408_3.11.webp\nhttps://fwcdn.pl/fph/37/58/693758/759409_3.12.webp\nhttps://fwcdn.pl/fph/37/58/693758/759423_3.11.webp"
-        },
-        {
-            "id": 2,
-            "type": "movie",
-            "title": "Avengers: Koniec gry",
-            "year": "2019",
-            "description": "Po wymazaniu połowy życia we wszechświecie przez Thanosa, Avengersi starają się zrobić wszystko, co konieczne, aby przywrócić porządek i pokonać szalonego tytana.",
-            "originalTitle": "Avengers: Endgame",
-            "duration": "3h 1m",
-            "link": "https://www.filmweb.pl/film/Avengers%3A+Koniec+gry-2019-790542",
-            "imgs": "https://fwcdn.pl/fpo/05/42/790542/7881430_2.10.webp\nhttps://fwcdn.pl/fph/05/42/790542/951699_1.12.webp\nhttps://fwcdn.pl/fph/05/42/790542/809124_2.12.webp\nhttps://fwcdn.pl/fph/05/42/790542/809122_2.11.webp\nhttps://fwcdn.pl/fph/05/42/790542/810033_2.11.webp\nhttps://fwcdn.pl/fph/05/42/790542/809135_1.11.webp"
-        },
-        {
-            "id": 3,
-            "type": "movie",
-            "title": "Spider-Man: Bez drogi do domu",
-            "year": "2021",
-            "description": "Kiedy cały świat dowiaduje się, że pod maską Spider-Mana skrywa się Peter Parker, superbohater decyduje się zwrócić o pomoc do Doktora Strange'a.",
-            "originalTitle": "Spider-Man: No Way Home",
-            "duration": "2h 30m",
-            "link": "https://www.filmweb.pl/film/Spider-Man%3A+Bez+drogi+do+domu-2021-850261",
-            "imgs": "https://fwcdn.pl/fpo/02/61/850261/7985244_2.10.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051094_2.12.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051095_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051096_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051097_1.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051099_2.12.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051098_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051104_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051108_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051115_2.11.webp"
-        },
-        {
-            "id": 4,
-            "type": "movie",
-            "title": "Czarna Wdowa",
-            "year": "2021",
-            "description": "Natasha Romanoff / Czarna Wdowa, po wydarzeniach z filmu Kapitan Ameryka: Wojna bohaterów zmuszona jest do walki ze złoczyńcą nazywanym Taskmaster.",
-            "originalTitle": "Black Widow",
-            "duration": "2h 13m",
-            "link": "https://www.filmweb.pl/film/Czarna+Wdowa-2021-120986",
-            "imgs": "https://fwcdn.pl/fpo/09/86/120986/8007829_1.10.webp\nhttps://fwcdn.pl/fph/09/86/120986/998670_1.13.webp\nhttps://fwcdn.pl/fph/09/86/120986/1013584_2.13.webp\nhttps://fwcdn.pl/fph/09/86/120986/998672_1.13.webp\nhttps://fwcdn.pl/fph/09/86/120986/998676_2.13.webp\nhttps://fwcdn.pl/fph/09/86/120986/1013591_1.13.webp"
-        },
-        {
-            "id": 5,
-            "type": "film-series",
-            "title": "Powrót do przyszłości",
-            "description": "Powrót do przyszłości (ang. Back to the Future) – seria trzech filmów science-fiction w reżyserii Roberta Zemeckisa, nakręconych w latach 1985, 1989 i 1990.\nGłównymi bohaterami filmów są dwaj przyjaciele – nastolatek Marty McFly (Michael J. Fox) i doktor Emmett „Doc” Brown (Christopher Lloyd), podróżujący w czasie DeLoreanem, który dr Brown wyposażył w kondensator strumienia umożliwiający owe podróże.",
-            "moviesCount": "3",
-            "imgs": "https://fwcdn.pl/fpo/88/23/8823/7862830_1.10.webp\nhttps://bi.im-g.pl/im/58/6f/16/z23524184IER,--Powrot-do-przeszlosci--.jpg\nhttps://ocs-pl.oktawave.com/v1/AUTH_2887234e-384a-4873-8bc5-405211db13a2/splay/2023/08/powrot-do-przyszlosci-zdjecie-po-latach.jpg\nhttps://d-art.ppstatic.pl/kadry/k/r/1/8b/32/56274408a32c6_o_medium.jpg\nhttps://quentin.pl/wp-content/uploads/2021/03/back-to-the-future.jpg",
-            "movies": [
-                {
-                    "title": "Powrót do przyszłości",
-                    "year": "1985",
-                    "duration": "1h 56m",
-                    "link": "https://www.filmweb.pl/film/Powrót+do+przyszłości-1985-8823"
-                },
-                {
-                    "title": "Powrót do przyszłości II",
-                    "year": "1989",
-                    "duration": "1h 48m",
-                    "link": "https://www.filmweb.pl/film/Powrót+do+przyszłości+II-1989-8824"
-                },
-                {
-                    "title": "Powrót do przyszłości III",
-                    "year": "1990",
-                    "duration": "1h 58m",
-                    "link": "https://www.filmweb.pl/film/Powrót+do+przyszłości+III-1990-8825"
-                }
-            ]
-        }
+      {
+        "id": "1",
+        "type": "movie",
+        "title": "Spider-man: Bez drogi do domu",
+        "originalTitle": "Spider-man: No Way Home",
+        "year": "2021",
+        "description": "Kiedy cały świat dowiaduje się, że pod maską Spider Mana skrywa się Peter Parker, superbohater decyduje się zwrócić o pomoc do Doktora Strange'a.",
+        "duration": "2h 30m",
+        "link": "https://www.filmweb.pl/film/Spider+Man%3A+Bez+drogi+do+domu-2021-850261",
+        "imgs": "https://fwcdn.pl/fpo/02/61/850261/7985244_2.10.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051094_2.12.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051095_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051096_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051097_1.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051099_2.12.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051098_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051104_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051108_2.11.webp\nhttps://fwcdn.pl/fph/02/61/850261/1051115_2.11.webp",
+        "movies": null,
+        "episodes": null
+      },
+      {
+        "id": "2",
+        "type": "film-series",
+        "title": "Powrót do przyszłości",
+        "originalTitle": null,
+        "year": null,
+        "description": "Powrót do przyszłości (ang. Back to the Future) – seria trzech filmów science-fiction w reżyserii Roberta Zemeckisa, nakręconych w latach 1985, 1989 i 1990.\nGłównymi bohaterami filmów są dwaj przyjaciele – nastolatek Marty McFly (Michael J. Fox) i doktor Emmett „Doc” Brown (Christopher Lloyd), podróżujący w czasie DeLoreanem, który dr Brown wyposażył w kondensator strumienia umożliwiający owe podróże.",
+        "duration": null,
+        "link": null,
+        "imgs": "https://fwcdn.pl/fpo/88/23/8823/7862830_1.10.webp\nhttps://bi.im-g.pl/im/58/6f/16/z23524184IER,--Powrot-do-przeszlosci--.jpg\nhttps://ocs-pl.oktawave.com/v1/AUTH_2887234e-384a-4873-8bc5-405211db13a2/splay/2023/08/powrot-do-przyszlosci-zdjecie-po-latach.jpg\nhttps://d-art.ppstatic.pl/kadry/k/r/1/8b/32/56274408a32c6_o_medium.jpg\nhttps://quentin.pl/wp-content/uploads/2021/03/back-to-the-future.jpg",
+        "movies": "[{\"title\":\"Powrót do przyszłości\",\"year\":\"1985\",\"duration\":\"1h 56m\",\"link\":\"https://www.filmweb.pl/film/Powrót+do+przyszłości-1985-8823\"},{\"title\":\"Powrót do przyszłości II\",\"year\":\"1989\",\"duration\":\"1h 48m\",\"link\":\"https://www.filmweb.pl/film/Powrót+do+przyszłości+II-1989-8824\"},{\"title\":\"Powrót do przyszłości III\",\"year\":\"1990\",\"duration\":\"1h 58m\",\"link\":\"https://www.filmweb.pl/film/Powrót+do+przyszłości+III-1990-8825\"}]",
+        "episodes": null
+      },
+      {
+        "id": "3",
+        "type": "series",
+        "title": "A gdyby...?",
+        "originalTitle": "What If...?",
+        "year": "2021",
+        "description": null,
+        "duration": null,
+        "link": "https://www.filmweb.pl/serial/A+gdyby...-2021-836442",
+        "imgs": "https://fwcdn.pl/fpo/64/42/836442/8105576_1.10.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033038_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033032_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033025_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1190857_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1252872.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033078_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033082_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033088_1.11.webp\nhttps://fwcdn.pl/fph/64/42/836442/1033143_1.11.webp",
+        "movies": null,
+        "episodes": "[[\"A gdyby… Kapitan Carter była pierwszą Avengerką?\",\"A gdyby… T’Challa został Star-Lordem?\",\"A gdyby… zabrakło najpotężniejszych bohaterów?\",\"A gdyby… Doktor Strange stracił serce zamiast dłoni?\",\"A gdyby… zombie?!\",\"A gdyby… Killmonger ocalił Tony'ego Starka?\",\"A gdyby… Thor był jedynakiem?\",\"A gdyby… Ultron wygrał?\",\"A gdyby… Obserwator złamał zasady?\"],[\"A gdyby... Nebula wstąpiła do Korpusu Nova?\",\"A gdyby... Peter Quill zaatakował Ziemię?\",\"A gdyby... Happy Hogan ocalił święta?\",\"A gdyby... Iron Man wpadł na Arcymistrza?\",\"A gdyby... Kapitan Carter walczyła z Hydrogromcą?\",\"A gdyby... Kahhori zmieniła świat?\",\"A gdyby... Hela znalazła Dziesięć Pierścieni?\",\"A gdyby... Avengersi żyli w roku 1602?\",\"A gdyby... Strange wtrącił się w losy Multiwersum?\"],[\"A gdyby… Hulk walczył z Mech Avengers?\",\"A gdyby… Agatha podbiła Hollywood?\",\"A gdyby… Red Guardian powstrzymał Zimowego Żołnierza?\",\"A gdyby… Kaczor Howard się ochajtał?\",\"What If... The Emergence Destroyed the Earth?\",\"What If... 1872?\",\"What If... The Watcher Disappeared?\",\"What If... What If?\"]]"
+      },
+      {
+        "id": "4",
+        "type": "movie",
+        "title": "Shang-Chi i legenda dziesięciu pierścieni",
+        "originalTitle": "Shang-Chi and the Legend of the Ten Rings",
+        "year": "2021",
+        "description": "Simu Liu wciela się w Shang-Chi, który musi zmierzyć się z przeszłością po tym, jak zostaje wciągnięty w sieć tajemniczej organizacji Dziesięciu Pierścieni.",
+        "duration": "2h 12m",
+        "link": "https://www.filmweb.pl/film/Shang+Chi+i+legenda+dziesięciu+pierścieni-2021-698547",
+        "imgs": "https://fwcdn.pl/fpo/85/47/698547/7972234_2.10.webp\nhttps://fwcdn.pl/fph/85/47/698547/1023341_2.12.webp\nhttps://fwcdn.pl/fph/85/47/698547/1010482_2.11.webp\nhttps://fwcdn.pl/fph/85/47/698547/1010479_2.11.webp\nhttps://fwcdn.pl/fph/85/47/698547/1010485_2.11.webp",
+        "movies": null,
+        "episodes": null
+      },
+      {
+        "id": "5",
+        "type": "film-series",
+        "title": "Transformers",
+        "originalTitle": null,
+        "year": null,
+        "description": "Fikcyjna rasa pozaziemskich mechanicznych istot, mających zdolność przeobrażania się w pojazdy.",
+        "duration": null,
+        "link": null,
+        "imgs": "https://fwcdn.pl/cwpo/00/16/16/10.3.jpg\nhttps://fwcdn.pl/fph/12/20/181220/95766_3.12.webp\nhttps://fwcdn.pl/fph/12/20/181220/100293_3.12.webp\nhttps://fwcdn.pl/fph/12/20/181220/95767_3.11.webp\nhttps://fwcdn.pl/fph/27/95/442795/143059_2.12.webp\nhttps://fwcdn.pl/fph/59/76/505976/517026_1.12.webp",
+        "movies": "[{\"title\":\"Transformers\",\"year\":\"2007\",\"duration\":\"2h 24m\",\"link\":\"https://www.filmweb.pl/film/Transformers-2007-181220\"},{\"title\":\"Transformers: Zemsta upadłych\",\"year\":\"2009\",\"duration\":\"2h 30m\",\"link\":\"https://www.filmweb.pl/film/Transformers%3A+Zemsta+upadłych-2009-442795\"},{\"title\":\"Transformers 3\",\"year\":\"2011\",\"duration\":\"2h 37m\",\"link\":\"https://www.filmweb.pl/film/Transformers+3-2011-505976\"},{\"title\":\"Transformers: Wiek zagłady\",\"year\":\"2014\",\"duration\":\"2h 45m\",\"link\":\"https://www.filmweb.pl/film/Transformers%3A+Wiek+zagłady-2014-645955\"},{\"title\":\"Transformers: Ostatni Rycerz\",\"year\":\"2017\",\"duration\":\"2h 34m\",\"link\":\"https://www.filmweb.pl/film/Transformers%3A+Ostatni+Rycerz-2017-708601\"},{\"title\":\"Transformers: Przebudzenie bestii\",\"year\":\"2023\",\"duration\":\"2h 7m\",\"link\":\"https://www.filmweb.pl/film/Transformers%3A+Przebudzenie+bestii-2023-790781\"}]",
+        "episodes": null
+      },
+      {
+        "id": "6",
+        "type": "series",
+        "title": "Stranger Things",
+        "originalTitle": " Stranger Things",
+        "year": "2016",
+        "description": null,
+        "duration": null,
+        "link": "https://www.filmweb.pl/serial/Stranger+Things-2016-750359",
+        "imgs": "https://fwcdn.pl/fpo/03/59/750359/7888222_1.10.webp\nhttps://fwcdn.pl/fph/03/59/750359/1082613_2.12.webp\nhttps://fwcdn.pl/fph/03/59/750359/1082619_1.12.webp\nhttps://fwcdn.pl/fph/03/59/750359/1082616_1.11.webp\nhttps://fwcdn.pl/fph/03/59/750359/1082615_1.11.webp",
+        "movies": null,
+        "episodes": "[[\"Rozdział pierwszy: Zniknięcie Willa Byersa\",\"Rozdział drugi: Dziwadło na Maple Street\",\"Rozdział trzeci: Wśród nocnej ciszy\",\"Rozdział czwarty: Ciało\",\"Rozdział piąty: Pchła i akrobata\",\"Rozdział szósty: Potwór\",\"Rozdział siódmy: Wanna\",\"Rozdział ósmy: Druga strona\"],[\"Rozdział pierwszy: Mad Max\",\"Rozdział drugi: Cukierek albo psikus, dziwaku\",\"Rozdział trzeci: Kijanka\",\"Rozdział czwarty: Will Roztropny\",\"Rozdział piąty: Dig Dug\",\"Rozdział szósty: Szpieg\",\"Rozdział siódmy: Zaginiona siostra\",\"Rozdział ósmy: Łupieżca umysłów\",\"Rozdział dziewiąty: Przejście\"],[\"Rozdział pierwszy: Suzie, słyszysz mnie?\",\"Rozdział drugi: Szczury z supermarketu\",\"Rozdział trzeci: Sprawa zaginionej ratowniczki\",\"Rozdział czwarty: Próba sauny\",\"Rozdział piąty: Złupieni\",\"Rozdział szósty: E pluribus unum\",\"Rozdział siódmy: Ukąszenie\",\"Rozdział ósmy: Bitwa o Starcourt\"],[\"Rozdział pierwszy: Klub Ognia Piekielnego\",\"Rozdział drugi: Klątwa Vecny\",\"Rozdział trzeci: Potwór i superbohaterka\",\"Rozdział czwarty: Drogi Billy\",\"Rozdział piąty: Projekt Nina\",\"Rozdział szósty: W głąb\",\"Rozdział siódmy: Masakra w laboratorium\",\"Rozdział ósmy: Tata\",\"Rozdział dziewiąty: Na gapę\"],[\"Chapter One: The Crawl\",\"Chapter Two: The Vanishing of...\",\"Chapter Three: The Turnbow Trap\",\"Chapter Four: Sorcerer\",\"Chapter Five: Shock Jock\",\"Chapter Six: Escape from Camazotz\",\"Chapter Seven: The Bridge\",\"Chapter Eight: The Rightside Up\"]]"
+      }
     ]
-}
+  }

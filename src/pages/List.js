@@ -2,14 +2,16 @@ import '../styles/List.css'
 import { Link } from "react-router-dom";
 import Card from '../components/Card';
 import { useEffect, useState } from 'react';
-import AddMovie from '../components/AddMovie';
-import AddFilmSeries from '../components/AddFilmSeries';
-import AddSeries from '../components/AddSeries';
+import AddMovie from '../components/Add/AddMovie';
+import AddFilmSeries from '../components/Add/AddFilmSeries';
+import AddSeries from '../components/Add/AddSeries';
 
 const List = ({ data, error }) => {
   const [movies, setMovies] = useState(data?.data)
   const [menuVisible, setMenuVisible] = useState(false)
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false)
+  const [filters, setFilters] = useState([null, null])
   const [selectedCardId, setSelectedCardId] = useState(null)
   const [addMovie, setAddMovie] = useState(null)
   useEffect(() => {
@@ -65,14 +67,50 @@ const List = ({ data, error }) => {
   }
   function episodesList(movie) {
     if (movie.type === 'series' && typeof movie.episodes === 'string') movie.episodes = JSON.parse(movie.episodes)
-      console.log(movie.episodes)
     return (
-      <ul style={{margin: 0, paddingLeft: '17px'}}>
+      <ul style={{ margin: 0, paddingLeft: '17px' }}>
         {
           movie.episodes[0].map((episode) => <li>{episode}</li>)
         }
       </ul>
     )
+  }
+  function filterMovies(filter) {
+    console.log(filter)
+    console.log(data.data)
+    console.log(movies)
+    var filterResult
+    if (filter === 'clear-sort') {
+      filterResult = movies.sort((a, b) => a.id.localeCompare(b.id))
+    } else if (filter === 'all') {
+      filterResult = data.data
+    } else if (filter === 'movies') {
+      filterResult = data.data.filter(movie => movie.type === 'movie')
+    } else if (filter === 'film-series') {
+      filterResult = data.data.filter(movie => movie.type === 'film-series')
+    } else if (filter === 'series') {
+      filterResult = data.data.filter(movie => movie.type === 'series')
+    } else if (filter === 'a-z') {
+      data.data.sort((a, b) => a.title.localeCompare(b.title))
+      filterResult = movies.sort((a, b) => a.title.localeCompare(b.title))
+    } else if (filter === 'z-a') {
+      data.data.sort((a, b) => b.title.localeCompare(a.title))
+      filterResult = movies.sort((a, b) => b.title.localeCompare(a.title))
+    }
+    console.log(filterResult)
+    setMovies(filterResult);
+  }
+  function changeFilters(index, value, filter) {
+    setFilters(prevArray => {
+      const newArray = [...prevArray];
+      newArray[index] = <span title='Usuń ten filtr' onClick={() => {
+        filterMovies(filter); setFilters(prevArray => {
+          const newArray = [...prevArray];
+          newArray[index] = null
+          return newArray
+        })}}>{value}</span>
+      return newArray
+    })
   }
   return (
     <>
@@ -91,17 +129,20 @@ const List = ({ data, error }) => {
         <div className='bar-box' title='Dodaj serial' onClick={() => setAddMovie('series')}>
           <div className="add-series-icon"></div>
         </div>
+        <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
+          <div className="filter-icon"></div>
+          <div className="filter-text">{filters.map(filter => filter)}</div>
+          {filterMenuVisible ? <div className='filter-menu'>
+            <div className='filter-option' onClick={() => { filterMovies('a-z'); changeFilters(1, 'Od A-Z', 'clear-sort') }}>Od A-Z</div>
+            <div className='filter-option' onClick={() => { filterMovies('z-a'); changeFilters(1, 'Od Z-A', 'clear-sort') }}>Od Z-A</div>
+            <div className='filter-option' onClick={() => { filterMovies('movies'); changeFilters(0, 'Tylko filmy', 'all') }}>Filmy</div>
+            <div className='filter-option' onClick={() => { filterMovies('film-series'); changeFilters(0, 'Tylko serie filmów', 'all') }}>Serie filmów</div>
+            <div className='filter-option' onClick={() => { filterMovies('series'); changeFilters(0, 'Tylko seriale', 'all') }}>Seriale</div>
+          </div> : null}
+        </div>
       </div>
       <div className='movies'>
         {error ? <div className='error'>{error.message}</div> : null}
-        {/* <Card id={1} img='https://fwcdn.pl/fpo/37/58/693758/7839647_2.10.webp' title="avengers: wojna bez granic" year='2018' description='Potężny Thanos zbiera Kamienie Nieskończoności w celu narzucenia swojej woli wszystkim istnieniom we wszechświecie. Tylko drużyna superbohaterów znanych jako Avengers może go powstrzymać.' handleContextMenu={handleContextMenu} />
-    <Card id={2} img='https://fwcdn.pl/fpo/05/42/790542/7881430_2.10.webp' title="Avengers: koniec gry" year='2019' description='Po wymazaniu połowy życia we Wszechświecie przez Thanosa Avengersi starają się zrobić wszystko, co konieczne, aby pokonać szalonego tytana.' handleContextMenu={handleContextMenu} />
-    <Link to='/3'><Card id={3} img='https://fwcdn.pl/fpo/02/61/850261/7985244_2.10.webp' title="spider-man: bez drogi do domu" year='2021' description="Kiedy cały świat dowiaduje się, że pod maską Spider Mana skrywa się Peter Parker, superbohater decyduje się zwrócić o pomoc do Doktora Strange'a." handleContextMenu={handleContextMenu} /></Link>
-    <Card id={4} img='https://fwcdn.pl/fpo/09/86/120986/8007829_1.10.webp' title="czarna wdowa" year='2021' description='Natasha Romanoff / Czarna Wdowa, po wydarzeniach z filmu Kapitan Ameryka: Wojna bohaterów zmuszona jest do walki ze złoczyńcą nazywanym Taskmaster.' handleContextMenu={handleContextMenu} />
-    <Card id={5} img='https://fwcdn.pl/fpo/85/47/698547/7972234_2.10.webp' title="Shang-Chi i legenda dziesięciu pierścieni" year='2021' description='Simu Liu wciela się w Shang-Chi, który musi zmierzyć się z przeszłością po tym, jak zostaje wciągnięty w sieć tajemniczej organizacji Dziesięciu Pierścieni.' handleContextMenu={handleContextMenu} />
-    <Card id={6} img='https://fwcdn.pl/fpo/35/38/843538/8030496_2.10.webp' title="Moon Knight" year='2022' description='Bóg księżyca Khonshu ratuje byłego agenta CIA Marca Spectora, który staje się Księżycowym Rycerzem.' handleContextMenu={handleContextMenu} />
-    <Card id={7} img='https://fwcdn.pl/fpo/64/40/836440/8008985_1.10.webp' title="Doctor Strange w multiwersum obłędu" year='2022' description='Po wydarzeniach z "Avengers: Koniec gry" dr Stephen Strange kontynuuje walkę ze złem. Tym razem stawi czoło Scarlet Witch.' handleContextMenu={handleContextMenu} />
-    <Card id={8} img='https://fwcdn.pl/fpo/85/13/868513/8133073.10.webp' title="Deadpool & Wolverine" year='2024' description='Dochodzacy do siebie Wolverine spotyka pyskatego Deadpoola, z którym łączy siły, by stawić czoła wspólnemu wrogowi.' handleContextMenu={handleContextMenu} /> */}
         {movies ? movies.map((movie) => (
           <Link className='card-link' to={`/${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}`} key={movie.id}>
             <Card key={movie.id} id={movie.id} img={movie.imgs.split('\n')[0]} title={movie.title} year={movie.year} description={movie.type === 'series' ? episodesList(movie) : movie.description} handleContextMenu={handleContextMenu} />
@@ -111,8 +152,7 @@ const List = ({ data, error }) => {
           style={{
             position: "absolute", top: `${menuPosition.y}px`,
             left: `${menuPosition.x}px`, background: "wheat", padding: "10px", border: "1px solid", color: 'black',
-          }}>Menu
-        </div> : null}
+          }}>Menu</div> : null}
       </div>
     </>
   );

@@ -1,7 +1,7 @@
-import '../styles/Add.css'
+import '../../styles/Add.css'
 import { useRef, useState } from 'react';
-import close from '../images/close.svg'
-import { AddSeriesFetch } from './Fetch';
+import close from '../../images/close.svg'
+import { AddSeriesFetch } from '../Fetch';
 
 const AddSeries = ({ setAddMovie }) => {
   const [errors, setErrors] = useState({});
@@ -33,12 +33,12 @@ const AddSeries = ({ setAddMovie }) => {
         password: window.prompt("Podaj hasło")
       }
       console.log(series)
-      AddSeriesFetch(series).then((response) => {
-        window.alert(response.message);
-        if (response.status === 'success') {
-          setAddMovie(null);
-        }
-      });
+      // AddSeriesFetch(series).then((response) => {
+      //   window.alert(response.message);
+      //   if (response.status === 'success') {
+      //     setAddMovie(null);
+      //   }
+      // });
     }
   }
   const validateForm = () => {

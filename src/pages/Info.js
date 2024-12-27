@@ -1,9 +1,9 @@
 import '../styles/Info.css'
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import InfoMovie from '../components/InfoMovie';
-import InfoFilmSeries from '../components/InfoFilmSeries';
-import InfoSeries from '../components/InfoSeries';
+import InfoMovie from '../components/Info/InfoMovie';
+import InfoFilmSeries from '../components/Info/InfoFilmSeries';
+import InfoSeries from '../components/Info/InfoSeries';
 
 const Info = ({ data, error }) => {
     const [selectedImage, setSelectedImage] = useState(null);

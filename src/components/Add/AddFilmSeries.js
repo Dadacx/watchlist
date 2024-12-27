@@ -1,7 +1,8 @@
+import '../../styles/Add.css'
 import { useRef, useState } from 'react';
 import AddFilmSeriesSingleMovie from './AddFilmSeriesSingleMovie';
-import close from '../images/close.svg';
-import { AddFilmSeriesFetch } from './Fetch';
+import close from '../../images/close.svg';
+import { AddFilmSeriesFetch } from '../Fetch';
 
 const AddFilmSeries = ({ setAddMovie }) => {
   const [errors, setErrors] = useState({});
@@ -30,12 +31,12 @@ const AddFilmSeries = ({ setAddMovie }) => {
           password: window.prompt("Podaj hasło")
         }
         console.log(movieSeries)
-        AddFilmSeriesFetch(movieSeries).then((response) => {
-          window.alert(response.message);
-          if (response.status === 'success') {
-            setAddMovie(null);
-          }
-        });
+        // AddFilmSeriesFetch(movieSeries).then((response) => {
+        //   window.alert(response.message);
+        //   if (response.status === 'success') {
+        //     setAddMovie(null);
+        //   }
+        // });
       }
     }
   };
