@@ -1,13 +1,13 @@
-.add-box-container {
+.form-box-container {
     z-index: 100;
     margin-top: 10px;
     width: 100%;
     height: 98vh;
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
 }
-.add-box {
+.form-box {
     width: 85%;
     border-radius: 25px;
     background-color: #697565;
@@ -19,10 +19,10 @@
     height: fit-content;
     max-height: 95%;
 }
-.add-box h1 {
+.form-box h1 {
     text-transform: uppercase;
 }
-.add-form {
+.form-form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@
 .close img {
     width: 40px;
 }
-.add-form label {
+.form-form label {
     text-align: center;
     width: 95%;
     display: flex;
@@ -47,10 +47,10 @@
     align-items: center;
     gap: 10px;
 }
-.add-form label span {
+.form-form label span {
     width: 150px;
 }
-.add-form input, .add-form textarea {
+.form-form input, .form-form textarea {
     width: 90%;
     float: right;
     border: none;
@@ -64,15 +64,15 @@
     font-size: 15px;
     margin-top: 5px;
 }
-.add-form input.invalid, .add-form textarea.invalid {
+.form-form input.invalid, .form-form textarea.invalid {
     border-bottom: 2px solid #cf0000;
 }
-.add-form textarea {
+.form-form textarea {
     border-radius: 15px;
     resize: vertical;
     height: unset;
 }
-.add-btn {
+.form-btn {
     text-transform: uppercase;
     border: none;
     background-color: #3c3d37;
@@ -80,7 +80,8 @@
     font-family: 'Nunito', sans-serif;
     font-size: 18px;
     height: 45px;
-    width: 100px;
+    min-width: 100px;
+    width: fit-content;
     border-radius: 15px;
     padding: 5px;
     cursor: pointer;
@@ -94,26 +95,68 @@
   }
 
 /* AddFilmSeriesSingleMovie */
-.add-film-series-single-movie {
+.form-film-series-single-movie {
     width: 95%;
     display: flex;
     overflow: auto;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     text-align: center;
     border: 2px solid #3c3d37;
     border-radius: 10px;
-    padding: 10px;
+    /* padding: 10px; */
     box-sizing: border-box;
+    
+    transition: max-height 300ms ease-out;
+    max-height: 3rem; /* Set a max-height value just enough to show the summary content */
+    overflow: hidden; /* Hide the rest of the content */
 }
-.add-film-series-single-movie:has(input.invalid) {
+.form-film-series-single-movie:has(input.invalid) {
     border: 2px solid #cf0000;
 }
-.add-film-series-single-movie summary {
+.details-input {
+    display: none;
+}
+.form-film-series-single-movie summary {
     font-size: 22px;
     text-transform: uppercase;
     margin: auto;
     cursor: pointer;
+    display: block;
+}
+.form-film-series-single-movie summary label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem; /* This height value must be equal to max-height value of <details> element  */
+}
+.form-film-series-single-movie summary label:hover {
+    cursor: pointer;
+  }
+
+.form-film-series-single-movie summary label::after {
+  content: "⏵";
+  font-size: 1.5rem;
+  /* height: 4rem; */
+  display: flex;
+  align-items: center;
+  transition: rotate 200ms 400ms ease-out;
+}
+.details-input:checked + details,
+details:has(.details-input:checked) {
+    max-height: 300px; /* Set a max-height value enough to show all the content */
+}
+
+.details-input:checked + details label::after,
+details:has(.details-input:checked) label::after {
+  rotate: 90deg;
+  transition: rotate 200ms ease-out;
+}
+.form-film-series-single-movie .form-form {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 details>summary {
     list-style: none;
@@ -121,12 +164,12 @@ details>summary {
 summary::-webkit-details-marker {
     display: none
 }
-summary::after {
+/* summary::after {
     content: ' ►';
 }
 details[open] summary:after {
     content: " ▼";
-}
-.add-form label.single-movie {
+} */
+.form-form label.single-movie {
     width: 100%;
 }

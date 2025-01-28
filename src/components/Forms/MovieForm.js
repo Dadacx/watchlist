@@ -1,9 +1,9 @@
-import '../../styles/Add.css'
+import '../../styles/Forms.css'
 import { useEffect, useRef, useState } from 'react';
 import close from '../../images/close.svg'
 import { AddMovieFetch } from '../Fetch';
 
-const AddMovie = ({ setAddMovie }) => {
+const MovieForm = ({ setAddMovie, initialData }) => {
   const [errors, setErrors] = useState({});
   const title = useRef(null);
   const original_title = useRef(null);
@@ -14,7 +14,7 @@ const AddMovie = ({ setAddMovie }) => {
   const imgs = useRef(null);
 
   
-  function addMovie() {
+  function Movie() {
     if (validateForm()) {
       console.log('Formularz poprawny');
       const movie = {
@@ -29,12 +29,7 @@ const AddMovie = ({ setAddMovie }) => {
         password: window.prompt("Podaj hasło")
       }
       console.log(movie)
-      // AddMovieFetch(movie).then((response) => {
-      //   window.alert(response.message);
-      //   if (response.status === 'success') {
-      //     setAddMovie(null);
-      //   }
-      // });
+      setAddMovie(movie);
     }
   }
   const validateForm = () => {
@@ -96,44 +91,44 @@ const AddMovie = ({ setAddMovie }) => {
   }
 
   return (
-    <div className='add-box-container'>
-      <div className='add-box'>
+    <div className='form-box-container'>
+      <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
-        <h1>Dodaj film</h1>
-        <div className='add-form'>
+        <h1>{initialData ? "Edytuj film" : "Dodaj film"}</h1>
+        <div className='form-form'>
           <label><span>Tytuł</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='title' ref={title} />
+            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='title' ref={title} defaultValue={initialData?.title} />
           </label>
           {errors.title && <div className='form-error'>{errors.title}</div>}
           <label><span>Oryginalny tytuł</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='original_title' ref={original_title} />
+            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='original_title' ref={original_title} defaultValue={initialData?.original_title} />
           </label>
           {errors.original_title && <div className='form-error'>{errors.original_title}</div>}
           <label><span>Rok premiery</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='number' id='year' ref={year} />
+            <input onChange={(e) => {RemoveInvalid(e)}} type='number' id='year' ref={year} defaultValue={initialData?.year} />
           </label>
           {errors.year && <div className='form-error'>{errors.year}</div>}
           <label><span>Opis</span>
-            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='5' id='description' ref={description} />
+            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='5' id='description' ref={description} defaultValue={initialData?.description} />
           </label>
           {errors.description && <div className='form-error'>{errors.description}</div>}
           <label><span>Czas trwania</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='duration' ref={duration} />
+            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='duration' ref={duration} defaultValue={initialData?.duration} />
           </label>
           {errors.duration && <div className='form-error'>{errors.duration}</div>}
           <label><span>Link</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='url' id='link' ref={link} />
+            <input onChange={(e) => {RemoveInvalid(e)}} type='url' id='link' ref={link} defaultValue={initialData?.link} />
           </label>
           {errors.link && <div className='form-error'>{errors.link}</div>}
           <label><span>Linki do zdjęć<br/>(jeden pod drugim)</span>
-            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='10' id='imgs' ref={imgs} />
+            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
-          <button className='add-btn' onClick={addMovie}>Dodaj</button>
+          <button className='form-btn' onClick={Movie}>{initialData ? "Zapisz zmiany" : "Dodaj"}</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default AddMovie;
+export default MovieForm;

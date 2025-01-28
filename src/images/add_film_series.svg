@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="25" height="25" x="0" y="0" viewBox="0 0 512.148 512.148" stroke="#ecdfcc" fill="none">
+  <g style="filter: drop-shadow(-1px -1px 0px #000) drop-shadow(2px -1px 0px #000) drop-shadow(2px 2px 0px #000) drop-shadow(-1px 2px 0px #000)" transform="matrix(0.847549, 0, 0, 0.847549, 87.948709, 1.450491)">
+    <path d="M 401.546 293.873 L 401.912 434.702 M 396.905 419.582 L 365.151 421.082 M 34.079 170.524 L 401.546 170.524 L 401.546 235.62 L 34.079 235.62 L 34.079 170.524 Z" stroke-width="30" stroke-miterlimit="10"></path>
+    <path d="M 238.216 419.565 L 34.079 419.565 L 34.079 235.62 L 401.546 235.62 L 401.546 306.122 M 141.382 235.62 L 207.545 169.456 M 229.042 235.62 L 295.205 169.456 M 53.722 235.62 L 119.885 169.456 M 316.702 235.62 L 382.865 169.456" stroke-width="30" stroke-miterlimit="10"></path>
+    <path d="M20.687 61.81h367.467v65.096H20.687z" transform="rotate(-14.046 204.415 94.357)" stroke-width="30" stroke-miterlimit="10"></path>
+    <path d="m138.174 144.482 48.127-80.242M223.213 123.207l48.128-80.242M53.134 165.757l48.128-80.243M308.252 101.933 356.38 21.69" stroke-width="30" stroke-miterlimit="10"></path>
+  </g>
+  <g style="filter: drop-shadow(-1px -1px 0px #000) drop-shadow(2px -1px 0px #000) drop-shadow(2px 2px 0px #000) drop-shadow(-1px 2px 0px #000)" transform="matrix(0.847549, 0, 0, 0.847549, 2.786968, 75.79075)">
+    <circle cx="401.546" cy="401.635" r="95.513" style="paint-order: fill; fill-rule: nonzero;" stroke-miterlimit="10" stroke-width="30"></circle>
+    <path d="M401.546 355.387v92.497M447.795 401.635h-92.497M34.079 170.524h367.467v65.096H34.079z" style="paint-order: fill;" stroke-miterlimit="10" stroke-width="30"></path>
+    <path d="M310.208 419.565H34.079V235.62h367.467v70.502M141.382 235.62l66.163-66.164M229.042 235.62l66.163-66.164M53.722 235.62l66.163-66.164M316.702 235.62l66.163-66.164" style="paint-order: fill;" stroke-miterlimit="10" stroke-width="30"></path>
+    <path d="M20.687 61.81h367.467v65.096H20.687z" transform="rotate(-14.046 204.415 94.357)" style="paint-order: fill;" stroke-miterlimit="10" stroke-width="30"></path>
+    <path d="m138.174 144.482 48.127-80.242M223.213 123.207l48.128-80.242M53.134 165.757l48.128-80.243M308.252 101.933 356.38 21.69" style="paint-order: fill;" stroke-miterlimit="10" stroke-width="30"></path>
+  </g>
+</svg>

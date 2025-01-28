@@ -2,16 +2,15 @@ import '../styles/List.css'
 import { Link } from "react-router-dom";
 import Card from '../components/Card';
 import { useEffect, useState } from 'react';
-import { DeleteFetch, AddFetch, EditFetch, AddFavoriteFetch } from '../components/Fetch';
+import { FavoriteMoviesListFetch, DeleteFavoriteFetch, AddFavoriteFetch, EditFavoriteFetch } from '../components/Fetch';
 import SetTitle from '../components/SetTitle';
 import MovieForm from '../components/Forms/MovieForm';
 import FilmSeriesForm from '../components/Forms/FilmSeriesForm';
 import SeriesForm from '../components/Forms/SeriesFrom';
 import delete_icon from '../images/delete.svg';
 import edit_icon from '../images/edit.svg';
-import favorite_icon from '../images/favorite.svg';
 
-const List = ({ data, error, setFavoriteData }) => {
+const FavoriteList = ( {data, error }) => {
   const [movies, setMovies] = useState(data?.data)
   const [menuVisible, setMenuVisible] = useState(false)
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -23,7 +22,10 @@ const List = ({ data, error, setFavoriteData }) => {
   const [selectedCardId, setSelectedCardId] = useState(null)
   const [addMovie, setAddMovie] = useState(null)
   const [editMovie, setEditMovie] = useState(null)
-  SetTitle("");
+  SetTitle('Ulubione')
+  if (data && !movies) {
+    setMovies(data.data)
+  }
   useEffect(() => {
     const handleClose = () => {
       if (window.document.querySelector("#menu")) {
@@ -70,7 +72,7 @@ const List = ({ data, error, setFavoriteData }) => {
   useEffect(() => {
     if(addMovie && addMovie.type) {
       // console.log(addMovie)
-      AddFetch(addMovie).then((response) => {
+      AddFavoriteFetch(addMovie).then((response) => {
         window.alert(response.message);
         if (response.status === 'success') {
           setAddMovie(null);
@@ -97,7 +99,7 @@ useEffect(() => {
   if(editMovie && editMovie.type) {
     // console.log(editMovie)
     editMovie.id = selectedCardId;
-    EditFetch(editMovie).then((response) => {
+    EditFavoriteFetch(editMovie).then((response) => {
       window.alert(response.message);
       if (response.status === 'success') {
         setAddMovie(null);
@@ -110,15 +112,12 @@ useEffect(() => {
     const searchResult = applyFiltersAndSort().filter(movie => movie.title.toLowerCase().includes(search));
     setMovies(searchResult);
   }
-  if (data && !movies) {
-    setMovies(data.data)
-  }
   function episodesList(movie) {
     if (movie.type === 'series' && typeof movie.episodes === 'string') movie.episodes = JSON.parse(movie.episodes)
     return (
       <ul style={{ margin: 0, paddingLeft: '17px' }}>
         {
-          movie.episodes[0].map((episode) => <li>{episode}</li>)
+          movie.episodes[0].map((episode) => <li key={episode}>{episode}</li>)
         }
       </ul>
     )
@@ -139,7 +138,7 @@ useEffect(() => {
     return filteredMovies;
   };
   useEffect(() => {
-    if(data) {
+    if(movies) {
       applyFiltersAndSort();
     }
   }, [filters]);
@@ -154,39 +153,19 @@ useEffect(() => {
   const toggleSortFilter = (sortOption) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      sort: prevFilters.sort === sortOption ? null : sortOption, // Usuń sortowanie, jeśli jest aktywne; ustaw nowe, jeśli nieaktywne
+      sort: prevFilters.sort === sortOption ? null : sortOption,
     }));
   };
-  function deleteMovie(id,password) {
-    DeleteFetch(password || window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((data) => {
+  function deleteMovie(id) {
+    DeleteFavoriteFetch(window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((data) => {
+      alert(data.message)
       if (data.status === 'success') {
-        alert(data.message)
         setMovies(movies.filter(movie => movie.id !== id))
       }}).catch((error) => {
         alert(error.message)
         console.log(error)
       })
   }
-  function addFavorite(id) {
-    var movie = movies.find((item) => item.id === id)
-    if (movie.movies && typeof movie.movies === "object") movie.movies = JSON.stringify(movie.movies)
-    if (movie.episodes && typeof movie.episodes === "object") movie.episodes = JSON.stringify(movie.episodes)
-    movie.password = window.prompt("Podaj hasło")
-    AddFavoriteFetch(movie).then((data) => {
-      if (data.status === 'success') {
-        setFavoriteData((prevData) => ({
-          ...prevData,
-          data: [...prevData.data, movie],
-        }))
-        deleteMovie(selectedCardId,movie.password)
-      }
-        alert(data.message)
-        console.log(data.message)
-      }).catch((error) => {
-        alert(error.message)
-        console.log(error)
-      })
-}
   return (
     <>
       {addMovieScreen}
@@ -223,14 +202,14 @@ useEffect(() => {
             </div>
           )}
         </div>
-        <div className='bar-box' title='Ulubione'>
-          <Link to='/favorite' className="favorite-icon"></Link>
+        <div className='bar-box' title='Zamknij ulubione'>
+          <Link to='/' className="favorite-fill-icon"></Link>
         </div>
       </div>
       <div className='movies'>
         {error ? <div className='error'>{error.message}</div> : null}
         {movies ? movies.map((movie) => (
-          <Link className='card-link' to={`/${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}`} key={movie.id}>
+          <Link className='card-link' to={`/favorite/${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}`} key={movie.id}>
             <Card key={movie.id} id={movie.id} img={movie.imgs.split('\n')[0]} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} handleContextMenu={handleContextMenu} />
           </Link>
         )) : null}
@@ -240,12 +219,10 @@ useEffect(() => {
           onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
           <img src={delete_icon} alt='delete_icon' className='menu-img' width={25} height={25}
           onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
-          <img src={favorite_icon} alt='favorite_icon' className='menu-img' width={25} height={25}
-          onClick={() => { addFavorite(selectedCardId); setMenuVisible(false) }} />
         </div>}
       </div>
     </>
   );
 }
 
-export default List;
+export default FavoriteList;

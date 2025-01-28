@@ -1,6 +1,7 @@
 import '../styles/Info.css'
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import SetTitle from '../components/SetTitle';
 import InfoMovie from '../components/Info/InfoMovie';
 import InfoFilmSeries from '../components/Info/InfoFilmSeries';
 import InfoSeries from '../components/Info/InfoSeries';
@@ -23,6 +24,7 @@ const Info = ({ data, error }) => {
         return () => document.body.classList.remove("no-scroll"); // Czyszczenie klasy przy odmontowaniu
     }, []);
     const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
+    movieData && SetTitle(`${movieData.title} | Info`);
     return (
         <div className='info'>
             {movieData && movieData.type === 'movie' ? <InfoMovie movieData={movieData} /> :

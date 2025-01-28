@@ -57,6 +57,7 @@ a.card-link {
     transition: 0.4s;
     line-height: 30px;
     width: 0px;
+    font-family: 'Nunito', sans-serif;
 }
 .add-movie-icon {
     background-image: url('../images/add_movie.svg');
@@ -67,7 +68,7 @@ a.card-link {
     height: 30px;
 }
 .add-film-series-icon {
-    background-image: url('../images/add_movie.svg');
+    background-image: url('../images/add_film_series.svg');
     background-size: 24px;
     background-position: center;
     background-repeat: no-repeat;
@@ -79,6 +80,24 @@ a.card-link {
     background-size: 24px;
     background-position: center;
     background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
+.favorite-icon {
+    background-image: url('../images/favorite.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+.favorite-fill-icon {
+    background-image: url('../images/favorite_fill.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
     width: 30px;
     height: 30px;
 }
@@ -128,4 +147,23 @@ a.card-link {
 }
 .filter-text span:hover {
     background-color: #cf0000;
+}
+.menu {
+    position: absolute;
+    padding: 5px;
+    background: #181C14;/*#383937 */
+    border: 1px solid;
+    border-radius: 5px;
+    color: #ecdfcc;
+    line-height: 0;
+}
+.menu-img {
+    margin: 2px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #3c3d37;
+    border-radius: 3px;
+}
+.menu-img:hover {
+    background-color: #64665d;
 }

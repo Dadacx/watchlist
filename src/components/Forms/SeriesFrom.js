@@ -1,9 +1,9 @@
-import '../../styles/Add.css'
-import { useRef, useState } from 'react';
+import '../../styles/Forms.css'
+import { useRef, useState, useEffect } from 'react';
 import close from '../../images/close.svg'
-import { AddSeriesFetch } from '../Fetch';
+// import { AddSeriesFetch } from '../Fetch';
 
-const AddSeries = ({ setAddMovie }) => {
+const SeriesFrom = ({ setAddMovie, initialData }) => {
   const [errors, setErrors] = useState({});
   const [inputSeasonsCount, setInputSeasonsCount] = useState(0);
   const title = useRef(null);
@@ -13,7 +13,11 @@ const AddSeries = ({ setAddMovie }) => {
   const imgs = useRef(null);
   const seasonsCount = useRef(null);
 
-  function addSeries() {
+  if (initialData && typeof initialData.episodes === 'string') initialData.episodes = JSON.parse(initialData.episodes)
+    useEffect(() => {
+      if (initialData) setInputSeasonsCount(initialData.episodes.length)
+    }, [initialData]);
+  function Series() {
     if (validateForm()) {
       console.log('Formularz poprawny');
       var episodes = [];
@@ -33,12 +37,7 @@ const AddSeries = ({ setAddMovie }) => {
         password: window.prompt("Podaj hasło")
       }
       console.log(series)
-      // AddSeriesFetch(series).then((response) => {
-      //   window.alert(response.message);
-      //   if (response.status === 'success') {
-      //     setAddMovie(null);
-      //   }
-      // });
+      setAddMovie(series);
     }
   }
   const validateForm = () => {
@@ -103,29 +102,29 @@ const AddSeries = ({ setAddMovie }) => {
   }
 
   return (
-    <div className='add-box-container'>
-      <div className='add-box'>
+    <div className='form-box-container'>
+      <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
-        <h1>Dodaj serial</h1>
-        <div className='add-form'>
+        <h1>{initialData ? "Edytuj serial" : "Dodaj serial"}</h1>
+        <div className='form-form'>
           <label><span>Tytuł</span>
-            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='title' ref={title} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='title' ref={title} defaultValue={initialData?.title} />
           </label>
           {errors.title && <div className='form-error'>{errors.title}</div>}
           <label><span>Oryginalny tytuł</span>
-            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='original_title' ref={original_title} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='original_title' ref={original_title} defaultValue={initialData?.original_title} />
           </label>
           {errors.original_title && <div className='form-error'>{errors.original_title}</div>}
           <label><span>Rok premiery</span>
-            <input onChange={(e) => { RemoveInvalid(e) }} type='number' id='year' ref={year} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='number' id='year' ref={year} defaultValue={initialData?.year} />
           </label>
           {errors.year && <div className='form-error'>{errors.year}</div>}
           <label><span>Link</span>
-            <input onChange={(e) => { RemoveInvalid(e) }} type='url' id='link' ref={link} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='url' id='link' ref={link} defaultValue={initialData?.link} />
           </label>
           {errors.link && <div className='form-error'>{errors.link}</div>}
           <label><span>Linki do zdjęć<br />(jeden pod drugim)</span>
-            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} />
+            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
           <label>
@@ -141,7 +140,7 @@ const AddSeries = ({ setAddMovie }) => {
                 })
               )); RemoveInvalid(e)
             }}
-              type='number' id='seasonsCount' ref={seasonsCount} />
+              type='number' id='seasonsCount' ref={seasonsCount} defaultValue={initialData?.episodes.length} />
           </label>
           {errors.seasonsCount && <div className='form-error'>{errors.seasonsCount}</div>}
           {Array.from({ length: inputSeasonsCount }, (_, i) => (<>
@@ -151,15 +150,16 @@ const AddSeries = ({ setAddMovie }) => {
                 onChange={(e) => { RemoveInvalid(e); }}
                 rows='10'
                 id={`season-${i}`}
+                defaultValue={initialData?.episodes[i]?.join('\n')}
               />
             </label>
             {errors[`season-${i}`] && <div className='form-error'>{errors[`season-${i}`]}</div>}</>
           ))}
-          <button className='add-btn' onClick={addSeries}>Dodaj</button>
+          <button className='form-btn' onClick={Series}>{initialData ? "Zapisz zmiany" : "Dodaj"}</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default AddSeries;
+export default SeriesFrom;

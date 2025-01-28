@@ -1,15 +1,15 @@
 import React from "react";
 
-const TruncatedText = ({ text, maxLines }) => {
+const TruncatedText = ({ text, maxLines = 8 }) => {
   const styles = {
     display: "-webkit-box", // Tworzy box wieloliniowy
     WebkitBoxOrient: "vertical", // Ustawia orientację pionową
     WebkitLineClamp: maxLines, // Ogranicza liczbę widocznych linii
     overflow: "hidden", // Ukrywa tekst poza widocznym obszarem
-    textOverflow: "ellipsis", // Dodaje "..." na końcu (jeśli wspierane)
+    textOverflow: "ellipsis", // Dodaje "..." na końcu
     lineHeight: "1em", // Wysokość pojedynczej linii
-    wordBreak: "break-word", // Dzieli długie słowa
-    maxHeight: `${1.5 * maxLines}em`, // Oblicza maksymalną wysokość na podstawie liczby linii
+    wordBreak: "break-word", // Łamie długie słowa
+    whiteSpace: "pre-wrap", // Zapobiega wyjściu tekstu poza box
   };
 
   return <div style={styles}>{text}</div>;
