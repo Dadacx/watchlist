@@ -1,7 +1,6 @@
 import '../../styles/Forms.css'
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import close from '../../images/close.svg'
-import { AddMovieFetch } from '../Fetch';
 
 const MovieForm = ({ setAddMovie, initialData }) => {
   const [errors, setErrors] = useState({});

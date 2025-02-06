@@ -7,19 +7,19 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const DeleteFetch = async (password,id,title) => {
     try {
       const res = await fetch(`http://localhost/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete.php`);
+        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
         var data = await res.json();
         // console.log(data)
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const AddFetch = async (movie) => {
@@ -37,7 +37,7 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const EditFetch = async (movie) => {
@@ -55,7 +55,7 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
 
@@ -68,19 +68,19 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const DeleteFavoriteFetch = async (password,id,title) => {
     try {
       const res = await fetch(`http://localhost/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete_favorite.php`);
+        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
         var data = await res.json();
         // console.log(data)
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const AddFavoriteFetch = async (movie) => {
@@ -98,7 +98,7 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   const EditFavoriteFetch = async (movie) => {
@@ -116,7 +116,7 @@ const MoviesListFetch = async () => {
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return { "status": "error", "message": `[ERROR: ${error.message}] Serwer jest niedostępny` };
+        return { "status": "error", "message": `[ERROR: ${error.message}] Błąd podczas łączenia z serwerem.` };
     }
   };
   

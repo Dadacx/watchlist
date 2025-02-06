@@ -1,5 +1,5 @@
 import '../styles/Info.css'
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import SetTitle from '../components/SetTitle';
 import InfoMovie from '../components/Info/InfoMovie';

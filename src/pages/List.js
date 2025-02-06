@@ -68,7 +68,7 @@ const List = ({ data, error, setFavoriteData }) => {
       addMovieScreen = null;
   }
   useEffect(() => {
-    if(addMovie && addMovie.type) {
+    if (addMovie && addMovie.type) {
       // console.log(addMovie)
       AddFetch(addMovie).then((response) => {
         window.alert(response.message);
@@ -78,33 +78,33 @@ const List = ({ data, error, setFavoriteData }) => {
       });
     }
   }, [addMovie]);
-// Edytowanie
-var editMovieScreen
-switch (editMovie) {
-  case 'movie':
-    editMovieScreen = <MovieForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  case 'film-series':
-    editMovieScreen = <FilmSeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  case 'series':
-    editMovieScreen = <SeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  default:
-    editMovieScreen = null;
-}
-useEffect(() => {
-  if(editMovie && editMovie.type) {
-    // console.log(editMovie)
-    editMovie.id = selectedCardId;
-    EditFetch(editMovie).then((response) => {
-      window.alert(response.message);
-      if (response.status === 'success') {
-        setAddMovie(null);
-      }
-    });
+  // Edytowanie
+  var editMovieScreen
+  switch (editMovie) {
+    case 'movie':
+      editMovieScreen = <MovieForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    case 'film-series':
+      editMovieScreen = <FilmSeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    case 'series':
+      editMovieScreen = <SeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    default:
+      editMovieScreen = null;
   }
-}, [editMovie]);
+  useEffect(() => {
+    if (editMovie && editMovie.type) {
+      // console.log(editMovie)
+      editMovie.id = selectedCardId;
+      EditFetch(editMovie).then((response) => {
+        window.alert(response.message);
+        if (response.status === 'success') {
+          setAddMovie(null);
+        }
+      });
+    }
+  }, [editMovie]);
   function searchMovies(e) {
     const search = e.target.value.toLowerCase();
     const searchResult = applyFiltersAndSort().filter(movie => movie.title.toLowerCase().includes(search));
@@ -139,7 +139,7 @@ useEffect(() => {
     return filteredMovies;
   };
   useEffect(() => {
-    if(data) {
+    if (data) {
       applyFiltersAndSort();
     }
   }, [filters]);
@@ -157,15 +157,16 @@ useEffect(() => {
       sort: prevFilters.sort === sortOption ? null : sortOption, // Usuń sortowanie, jeśli jest aktywne; ustaw nowe, jeśli nieaktywne
     }));
   };
-  function deleteMovie(id,password) {
+  function deleteMovie(id, password) {
     DeleteFetch(password || window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((data) => {
       if (data.status === 'success') {
         alert(data.message)
         setMovies(movies.filter(movie => movie.id !== id))
-      }}).catch((error) => {
-        alert(error.message)
-        console.log(error)
-      })
+      }
+    }).catch((error) => {
+      alert(error.message)
+      console.log(error)
+    })
   }
   function addFavorite(id) {
     var movie = movies.find((item) => item.id === id)
@@ -178,23 +179,28 @@ useEffect(() => {
           ...prevData,
           data: [...prevData.data, movie],
         }))
-        deleteMovie(selectedCardId,movie.password)
+        deleteMovie(selectedCardId, movie.password)
       }
-        alert(data.message)
-        console.log(data.message)
-      }).catch((error) => {
-        alert(error.message)
-        console.log(error)
-      })
-}
+      alert(data.message)
+      console.log(data.message)
+    }).catch((error) => {
+      alert(error.message)
+      console.log(error)
+    })
+  }
   return (
     <>
       {addMovieScreen}
       {editMovieScreen}
       <div className='bar'>
-        <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
-          <input className="search-text" type="text" onChange={(e) => searchMovies(e)} placeholder="Wyszukaj film" />
-          <span className="search-btn"></span>
+      <div className='bar-box' onClick={() => window.document.querySelector('.search-text').focus()}>
+      <div className="add-movie-icon"></div>
+          </div>
+        <div className='search-container'>
+          <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
+            <input className="search-text" type="text" onChange={(e) => searchMovies(e)} placeholder="Wyszukaj film" />
+            <span className="search-btn"></span>
+          </div>
         </div>
         <div className='bar-box' title='Dodaj film' onClick={() => setAddMovie('movie')}>
           <div className="add-movie-icon"></div>
@@ -205,6 +211,7 @@ useEffect(() => {
         <div className='bar-box' title='Dodaj serial' onClick={() => setAddMovie('series')}>
           <div className="add-series-icon"></div>
         </div>
+        <div className='search-container'>
         <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
           <div className="filter-icon"></div>
           <div className="filter-text">
@@ -223,6 +230,7 @@ useEffect(() => {
             </div>
           )}
         </div>
+        </div>
         <div className='bar-box' title='Ulubione'>
           <Link to='/favorite' className="favorite-icon"></Link>
         </div>
@@ -237,11 +245,11 @@ useEffect(() => {
         {menuVisible && <div id='menu' className="menu" onClick={(e) => e.stopPropagation()}
           style={{ top: `${menuPosition.y}px`, left: `${menuPosition.x}px` }}>
           <img src={edit_icon} alt='edit_icon' className='menu-img' width={25} height={25}
-          onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
+            onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
           <img src={delete_icon} alt='delete_icon' className='menu-img' width={25} height={25}
-          onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
+            onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
           <img src={favorite_icon} alt='favorite_icon' className='menu-img' width={25} height={25}
-          onClick={() => { addFavorite(selectedCardId); setMenuVisible(false) }} />
+            onClick={() => { addFavorite(selectedCardId); setMenuVisible(false) }} />
         </div>}
       </div>
     </>

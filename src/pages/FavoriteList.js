@@ -2,7 +2,7 @@ import '../styles/List.css'
 import { Link } from "react-router-dom";
 import Card from '../components/Card';
 import { useEffect, useState } from 'react';
-import { FavoriteMoviesListFetch, DeleteFavoriteFetch, AddFavoriteFetch, EditFavoriteFetch } from '../components/Fetch';
+import { DeleteFavoriteFetch, AddFavoriteFetch, EditFavoriteFetch } from '../components/Fetch';
 import SetTitle from '../components/SetTitle';
 import MovieForm from '../components/Forms/MovieForm';
 import FilmSeriesForm from '../components/Forms/FilmSeriesForm';

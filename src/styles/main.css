@@ -22,3 +22,37 @@ body {
     font-size: 30px;
     margin-top: 30px;
 }
+
+@media screen and (max-width: 600px) {
+    a.card-link {
+        width: 100%;
+    }
+    div.card {
+        width: 100%;
+    }
+    div.bar {
+        flex-direction: column;
+        position: fixed;
+        left: 0px;
+        background-color: #697565;
+        padding: 5px;
+        border-radius: 10px;
+        justify-content: unset;
+        height: 340px;
+        transition: 0.4s;
+        /* height: 40px; */
+        overflow-y: clip;
+    }
+    div.search-container {
+        width: 40px;
+    }
+    div.search-box::before, div.filter-box::before {
+        visibility: visible;
+    }
+}
+@media screen and (max-width: 350px) {
+    a.card-link {
+        width: 90%;
+        margin: 6px;
+    }
+}
