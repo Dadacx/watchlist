@@ -1,7 +1,9 @@
+// const url = 'http://localhost'
+const url = 'https://frog02-20766.wykr.es'
 const MoviesListFetch = async () => {
     try {
-      const res = await fetch(`http://localhost/watchlist/get_movies.php`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/get_movies.php`);
+      const res = await fetch(`${url}/watchlist/get_movies.php`);
+        // const res = await fetch(`${url}/watchlist/get_movies.php`);
         var data = await res.json();
         // console.log(data)
         return data;
@@ -12,8 +14,8 @@ const MoviesListFetch = async () => {
   };
   const DeleteFetch = async (password,id,title) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
+      const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
+        // const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
         var data = await res.json();
         // console.log(data)
         return data;
@@ -24,8 +26,8 @@ const MoviesListFetch = async () => {
   };
   const AddFetch = async (movie) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/add.php`, {
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/add.php`, {
+      const res = await fetch(`${url}/watchlist/add.php`, {
+        // const res = await fetch(`${url}/watchlist/add.php`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -42,8 +44,8 @@ const MoviesListFetch = async () => {
   };
   const EditFetch = async (movie) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/edit.php`, {
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/edit.php`, {
+      const res = await fetch(`${url}/watchlist/edit.php`, {
+        // const res = await fetch(`${url}/watchlist/edit.php`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -61,8 +63,8 @@ const MoviesListFetch = async () => {
 
   const FavoriteMoviesListFetch = async () => {
     try {
-      const res = await fetch(`http://localhost/watchlist/get_favorite_movies.php`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/get_favorite_movies.php`);
+      const res = await fetch(`${url}/watchlist/get_favorite_movies.php`);
+        // const res = await fetch(`${url}/watchlist/get_favorite_movies.php`);
         var data = await res.json();
         // console.log(data)
         return data;
@@ -73,8 +75,8 @@ const MoviesListFetch = async () => {
   };
   const DeleteFavoriteFetch = async (password,id,title) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
+      const res = await fetch(`${url}/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
+        // const res = await fetch(`${url}/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
         var data = await res.json();
         // console.log(data)
         return data;
@@ -85,8 +87,8 @@ const MoviesListFetch = async () => {
   };
   const AddFavoriteFetch = async (movie) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/add_favorite.php`, {
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/add_favorite.php`, {
+      const res = await fetch(`${url}/watchlist/add_favorite.php`, {
+        // const res = await fetch(`${url}/watchlist/add_favorite.php`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -103,8 +105,8 @@ const MoviesListFetch = async () => {
   };
   const EditFavoriteFetch = async (movie) => {
     try {
-      const res = await fetch(`http://localhost/watchlist/edit_favorite.php`, {
-        // const res = await fetch(`https://frog02-20766.wykr.es/watchlist/edit_favorite.php`, {
+      const res = await fetch(`${url}/watchlist/edit_favorite.php`, {
+        // const res = await fetch(`${url}/watchlist/edit_favorite.php`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json" // ustawienie nagłówka na JSON
