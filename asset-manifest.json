@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/watchlist/static/css/main.febabea5.css",
-    "main.js": "/watchlist/static/js/main.1d42d94f.js",
+    "main.css": "/watchlist/static/css/main.85d95d1b.css",
+    "main.js": "/watchlist/static/js/main.de1df146.js",
     "static/js/453.522c1647.chunk.js": "/watchlist/static/js/453.522c1647.chunk.js",
+    "static/media/add_film_series.svg": "/watchlist/static/media/add_film_series.1b14abd16f196cd105f9.svg",
     "static/media/add_series.svg": "/watchlist/static/media/add_series.8b4273436ca26c1f646f.svg",
-    "static/media/add_film_series.svg": "/watchlist/static/media/add_film_series.93214dca9dcfe2932d30.svg",
     "static/media/favorite_fill.svg": "/watchlist/static/media/favorite_fill.6c529a7e7cefaa379367.svg",
     "static/media/edit.svg": "/watchlist/static/media/edit.49bd3a0c3a6b8c37d1b06a806006643f.svg",
     "static/media/favorite.svg": "/watchlist/static/media/favorite.a109ce07b2098a35008b127458971796.svg",
@@ -14,12 +14,12 @@
     "static/media/search_icon.svg": "/watchlist/static/media/search_icon.5d6311ee11e23b428dcc.svg",
     "static/media/close.svg": "/watchlist/static/media/close.9050967d43cc3d279403d3f849432d25.svg",
     "static/media/filter.svg": "/watchlist/static/media/filter.da38632be01d6283b9f5.svg",
-    "main.febabea5.css.map": "/watchlist/static/css/main.febabea5.css.map",
-    "main.1d42d94f.js.map": "/watchlist/static/js/main.1d42d94f.js.map",
+    "main.85d95d1b.css.map": "/watchlist/static/css/main.85d95d1b.css.map",
+    "main.de1df146.js.map": "/watchlist/static/js/main.de1df146.js.map",
     "453.522c1647.chunk.js.map": "/watchlist/static/js/453.522c1647.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.febabea5.css",
-    "static/js/main.1d42d94f.js"
+    "static/css/main.85d95d1b.css",
+    "static/js/main.de1df146.js"
   ]
 }
