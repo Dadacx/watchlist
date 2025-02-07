@@ -21,6 +21,8 @@
 }
 .form-box h1 {
     text-transform: uppercase;
+    margin-top: 10px;
+    text-align: center;
 }
 .form-form {
     width: 100%;
@@ -127,6 +129,7 @@
 .form-film-series-single-movie summary label {
     position: relative;
     display: flex;
+    flex-direction: row;
     align-items: center;
     width: 100%;
     height: 3rem; /* This height value must be equal to max-height value of <details> element  */

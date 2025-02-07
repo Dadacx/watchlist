@@ -10,7 +10,7 @@ import SeriesForm from '../components/Forms/SeriesFrom';
 import delete_icon from '../images/delete.svg';
 import edit_icon from '../images/edit.svg';
 
-const FavoriteList = ( {data, error }) => {
+const FavoriteList = ({ data, error }) => {
   const [movies, setMovies] = useState(data?.data)
   const [menuVisible, setMenuVisible] = useState(false)
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -70,7 +70,7 @@ const FavoriteList = ( {data, error }) => {
       addMovieScreen = null;
   }
   useEffect(() => {
-    if(addMovie && addMovie.type) {
+    if (addMovie && addMovie.type) {
       // console.log(addMovie)
       AddFavoriteFetch(addMovie).then((response) => {
         window.alert(response.message);
@@ -80,33 +80,33 @@ const FavoriteList = ( {data, error }) => {
       });
     }
   }, [addMovie]);
-// Edytowanie
-var editMovieScreen
-switch (editMovie) {
-  case 'movie':
-    editMovieScreen = <MovieForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  case 'film-series':
-    editMovieScreen = <FilmSeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  case 'series':
-    editMovieScreen = <SeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-    break;
-  default:
-    editMovieScreen = null;
-}
-useEffect(() => {
-  if(editMovie && editMovie.type) {
-    // console.log(editMovie)
-    editMovie.id = selectedCardId;
-    EditFavoriteFetch(editMovie).then((response) => {
-      window.alert(response.message);
-      if (response.status === 'success') {
-        setAddMovie(null);
-      }
-    });
+  // Edytowanie
+  var editMovieScreen
+  switch (editMovie) {
+    case 'movie':
+      editMovieScreen = <MovieForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    case 'film-series':
+      editMovieScreen = <FilmSeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    case 'series':
+      editMovieScreen = <SeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      break;
+    default:
+      editMovieScreen = null;
   }
-}, [editMovie]);
+  useEffect(() => {
+    if (editMovie && editMovie.type) {
+      // console.log(editMovie)
+      editMovie.id = selectedCardId;
+      EditFavoriteFetch(editMovie).then((response) => {
+        window.alert(response.message);
+        if (response.status === 'success') {
+          setAddMovie(null);
+        }
+      });
+    }
+  }, [editMovie]);
   function searchMovies(e) {
     const search = e.target.value.toLowerCase();
     const searchResult = applyFiltersAndSort().filter(movie => movie.title.toLowerCase().includes(search));
@@ -138,7 +138,7 @@ useEffect(() => {
     return filteredMovies;
   };
   useEffect(() => {
-    if(movies) {
+    if (movies) {
       applyFiltersAndSort();
     }
   }, [filters]);
@@ -161,19 +161,22 @@ useEffect(() => {
       alert(data.message)
       if (data.status === 'success') {
         setMovies(movies.filter(movie => movie.id !== id))
-      }}).catch((error) => {
-        alert(error.message)
-        console.log(error)
-      })
+      }
+    }).catch((error) => {
+      alert(error.message)
+      console.log(error)
+    })
   }
   return (
     <>
       {addMovieScreen}
       {editMovieScreen}
       <div className='bar'>
-        <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
-          <input className="search-text" type="text" onChange={(e) => searchMovies(e)} placeholder="Wyszukaj film" />
-          <span className="search-btn"></span>
+        <div className='search-container'>
+          <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
+            <input className="search-text" type="text" onChange={(e) => searchMovies(e)} placeholder="Wyszukaj film" />
+            <span className="search-btn"></span>
+          </div>
         </div>
         <div className='bar-box' title='Dodaj film' onClick={() => setAddMovie('movie')}>
           <div className="add-movie-icon"></div>
@@ -184,23 +187,25 @@ useEffect(() => {
         <div className='bar-box' title='Dodaj serial' onClick={() => setAddMovie('series')}>
           <div className="add-series-icon"></div>
         </div>
-        <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
-          <div className="filter-icon"></div>
-          <div className="filter-text">
-            {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
-              {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
-            </span>))}
-            {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
-          </div>
-          {filterMenuVisible && (
-            <div className='filter-menu'>
-              <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
-              <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
+        <div className='search-container'>
+          <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
+            <div className="filter-icon"></div>
+            <div className="filter-text">
+              {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
+                {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
+              </span>))}
+              {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
             </div>
-          )}
+            {filterMenuVisible && (
+              <div className='filter-menu'>
+                <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
+                <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
+              </div>
+            )}
+          </div>
         </div>
         <div className='bar-box' title='Zamknij ulubione'>
           <Link to='/' className="favorite-fill-icon"></Link>
@@ -216,9 +221,9 @@ useEffect(() => {
         {menuVisible && <div id='menu' className="menu" onClick={(e) => e.stopPropagation()}
           style={{ top: `${menuPosition.y}px`, left: `${menuPosition.x}px` }}>
           <img src={edit_icon} alt='edit_icon' className='menu-img' width={25} height={25}
-          onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
+            onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
           <img src={delete_icon} alt='delete_icon' className='menu-img' width={25} height={25}
-          onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
+            onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
         </div>}
       </div>
     </>

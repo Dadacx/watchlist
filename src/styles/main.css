@@ -24,10 +24,8 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+    /* List */
     a.card-link {
-        width: 100%;
-    }
-    div.card {
         width: 100%;
     }
     div.bar {
@@ -38,16 +36,45 @@ body {
         padding: 5px;
         border-radius: 10px;
         justify-content: unset;
-        height: 340px;
+        height: 290px;
         transition: 0.4s;
         /* height: 40px; */
-        overflow-y: clip;
+        /* overflow-y: clip; */
+        opacity: 0.9;
+    }
+    div.bar-box.hide {
+        display: block;
     }
     div.search-container {
         width: 40px;
     }
     div.search-box::before, div.filter-box::before {
         visibility: visible;
+    }
+    /* Card */
+    div.card {
+        width: 100%;
+    }
+    /* Forms */
+    div.form-box {
+        width: 90%;
+    }
+    div.form-form label {
+        flex-direction: column;
+        gap: 0;
+    }
+    div.form-form input, div.form-form textarea {
+        margin-top: 0;
+    }
+    /* Info */
+    div.short-info {
+        flex-direction: column;
+    }
+    img.info-img {
+        width: 100%;
+    }
+    table.info-table {
+        font-size: 15.5px;
     }
 }
 @media screen and (max-width: 350px) {

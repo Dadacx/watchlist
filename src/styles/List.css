@@ -33,6 +33,9 @@
     padding: 5px;
     cursor: pointer;
 }
+.bar-box.hide {
+    display: none;
+}
 .search-box::before, .filter-box::before {
     content: "";
     width: calc(100% + 10px);
@@ -136,7 +139,7 @@
     width: max-content;
     background: #3c3d37;
     position: absolute;
-    top: 50px;
+    top: 40px;
     z-index: 100;
     border-radius: 10px;
     border: 1px solid;

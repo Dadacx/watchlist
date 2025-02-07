@@ -193,9 +193,9 @@ const List = ({ data, error, setFavoriteData }) => {
       {addMovieScreen}
       {editMovieScreen}
       <div className='bar'>
-      <div className='bar-box' onClick={() => window.document.querySelector('.search-text').focus()}>
-      <div className="add-movie-icon"></div>
-          </div>
+        {/* <div className='bar-box hide' onClick={}>
+          <div className="add-movie-icon"></div>
+        </div> */}
         <div className='search-container'>
           <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
             <input className="search-text" type="text" onChange={(e) => searchMovies(e)} placeholder="Wyszukaj film" />
@@ -212,24 +212,24 @@ const List = ({ data, error, setFavoriteData }) => {
           <div className="add-series-icon"></div>
         </div>
         <div className='search-container'>
-        <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
-          <div className="filter-icon"></div>
-          <div className="filter-text">
-            {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
-              {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
-            </span>))}
-            {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
-          </div>
-          {filterMenuVisible && (
-            <div className='filter-menu'>
-              <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
-              <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
-              <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
+          <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
+            <div className="filter-icon"></div>
+            <div className="filter-text">
+              {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
+                {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
+              </span>))}
+              {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
             </div>
-          )}
-        </div>
+            {filterMenuVisible && (
+              <div className='filter-menu'>
+                <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
+                <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
+                <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
+              </div>
+            )}
+          </div>
         </div>
         <div className='bar-box' title='Ulubione'>
           <Link to='/favorite' className="favorite-icon"></Link>
