@@ -10,7 +10,7 @@ import SeriesForm from '../components/Forms/SeriesFrom';
 import delete_icon from '../images/delete.svg';
 import edit_icon from '../images/edit.svg';
 
-const FavoriteList = ({ data, error }) => {
+const FavoriteList = ({ data, setData, error }) => {
   const [movies, setMovies] = useState(data?.data)
   const [menuVisible, setMenuVisible] = useState(false)
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -22,7 +22,7 @@ const FavoriteList = ({ data, error }) => {
   const [selectedCardId, setSelectedCardId] = useState(null)
   const [addMovie, setAddMovie] = useState(null)
   const [editMovie, setEditMovie] = useState(null)
-  SetTitle('Ulubione')
+  SetTitle(`Ulubione filmy${data && data.data ? ` (${data.data.length})` : ""}`,data)
   if (data && !movies) {
     setMovies(data.data)
   }
@@ -55,19 +55,22 @@ const FavoriteList = ({ data, error }) => {
     setMenuVisible(true);
   };
   // Dodawanie
-  var addMovieScreen
-  switch (addMovie) {
-    case 'movie':
-      addMovieScreen = <MovieForm setAddMovie={setAddMovie} />
-      break;
-    case 'film-series':
-      addMovieScreen = <FilmSeriesForm setAddMovie={setAddMovie} />
-      break;
-    case 'series':
-      addMovieScreen = <SeriesForm setAddMovie={setAddMovie} />
-      break;
-    default:
-      addMovieScreen = null;
+  const getAddMovieScreen = () => {
+    if (!addMovie) return null;
+
+    var tempAddMovie = addMovie;
+    if (!tempAddMovie.type) tempAddMovie = { type: addMovie }
+
+    switch (tempAddMovie.type) {
+      case 'movie':
+        return <MovieForm setAddMovie={setAddMovie} initialData={addMovie} />;
+      case 'film-series':
+        return <FilmSeriesForm setAddMovie={setAddMovie} initialData={addMovie} />;
+      case 'series':
+        return <SeriesForm setAddMovie={setAddMovie} initialData={addMovie} />;
+      default:
+        return null;
+    }
   }
   useEffect(() => {
     if (addMovie && addMovie.type) {
@@ -75,25 +78,31 @@ const FavoriteList = ({ data, error }) => {
       AddFavoriteFetch(addMovie).then((response) => {
         window.alert(response.message);
         if (response.status === 'success') {
+          movies.push(addMovie)
+          setMovies(movies)
+          setData({ data: movies })
           setAddMovie(null);
         }
       });
     }
   }, [addMovie]);
   // Edytowanie
-  var editMovieScreen
-  switch (editMovie) {
-    case 'movie':
-      editMovieScreen = <MovieForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-      break;
-    case 'film-series':
-      editMovieScreen = <FilmSeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-      break;
-    case 'series':
-      editMovieScreen = <SeriesForm setAddMovie={setEditMovie} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
-      break;
-    default:
-      editMovieScreen = null;
+  const getEditMovieScreen = () => {
+    if (!editMovie) return null;
+
+    var tempAddMovie = editMovie;
+    if (!tempAddMovie.type) tempAddMovie = { type: editMovie }
+
+    switch (tempAddMovie.type) {
+      case 'movie':
+        return <MovieForm setAddMovie={setEditMovie} isEdit={true} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      case 'film-series':
+        return <FilmSeriesForm setAddMovie={setEditMovie} isEdit={true} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      case 'series':
+        return <SeriesForm setAddMovie={setEditMovie} isEdit={true} initialData={movies.filter(movie => movie.id === selectedCardId)[0]} />
+      default:
+        return null;
+    }
   }
   useEffect(() => {
     if (editMovie && editMovie.type) {
@@ -102,7 +111,10 @@ const FavoriteList = ({ data, error }) => {
       EditFavoriteFetch(editMovie).then((response) => {
         window.alert(response.message);
         if (response.status === 'success') {
-          setAddMovie(null);
+          movies[movies.findIndex(movie => movie.id === selectedCardId)] = editMovie
+          setMovies(movies)
+          setData({ data: movies })
+          setEditMovie(null);
         }
       });
     }
@@ -157,10 +169,11 @@ const FavoriteList = ({ data, error }) => {
     }));
   };
   function deleteMovie(id) {
-    DeleteFavoriteFetch(window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((data) => {
-      alert(data.message)
-      if (data.status === 'success') {
+    DeleteFavoriteFetch(window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((fetchData) => {
+      alert(fetchData.message)
+      if (fetchData.status === 'success') {
         setMovies(movies.filter(movie => movie.id !== id))
+        setData({...data,data:data.data.filter(movie => movie.id !== id)})
       }
     }).catch((error) => {
       alert(error.message)
@@ -169,8 +182,8 @@ const FavoriteList = ({ data, error }) => {
   }
   return (
     <>
-      {addMovieScreen}
-      {editMovieScreen}
+      {getAddMovieScreen()}
+      {getEditMovieScreen()}
       <div className='bar'>
         <div className='search-container'>
           <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>

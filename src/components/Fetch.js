@@ -1,5 +1,5 @@
-// const url = 'http://localhost'
-const url = 'https://frog02-20766.wykr.es'
+const url = 'http://localhost'
+// const url = 'https://frog02-20766.wykr.es'
 const MoviesListFetch = async () => {
     try {
       const res = await fetch(`${url}/watchlist/get_movies.php`);
@@ -35,7 +35,7 @@ const MoviesListFetch = async () => {
             body: JSON.stringify(movie) // konwersja danych do formatu JSON
           });
         var data = await res.json();
-        // console.log(data)
+        console.log(data)
         return data;
     } catch (error) {
         console.error('Error:', error);

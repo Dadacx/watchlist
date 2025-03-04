@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import close from '../../images/close.svg'
 // import { AddSeriesFetch } from '../Fetch';
 
-const SeriesFrom = ({ setAddMovie, initialData }) => {
+const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputSeasonsCount, setInputSeasonsCount] = useState(0);
   const title = useRef(null);
@@ -27,12 +27,12 @@ const SeriesFrom = ({ setAddMovie, initialData }) => {
       }
       const series = {
         type: 'series',
-        title: title.current.value,
-        original_title: original_title.current.value,
-        year: year.current.value,
-        link: link.current.value,
-        imgs: imgs.current.value,
-        seasonsCount: seasonsCount.current.value,
+        title: title.current.value.trim(),
+        original_title: original_title.current.value.trim(),
+        year: year.current.value.trim(),
+        link: link.current.value.trim(),
+        imgs: imgs.current.value.trim(),
+        seasonsCount: seasonsCount.current.value.trim(),
         episodes: JSON.stringify(episodes),
         password: window.prompt("Podaj hasło")
       }
@@ -105,7 +105,7 @@ const SeriesFrom = ({ setAddMovie, initialData }) => {
     <div className='form-box-container'>
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
-        <h1>{initialData ? "Edytuj serial" : "Dodaj serial"}</h1>
+        <h1>{isEdit ? "Edytuj serial" : "Dodaj serial"}</h1>
         <div className='form-form'>
           <label><span>Tytuł</span>
             <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='title' ref={title} defaultValue={initialData?.title} />
@@ -155,7 +155,7 @@ const SeriesFrom = ({ setAddMovie, initialData }) => {
             </label>
             {errors[`season-${i}`] && <div className='form-error'>{errors[`season-${i}`]}</div>}</>
           ))}
-          <button className='form-btn' onClick={Series}>{initialData ? "Zapisz zmiany" : "Dodaj"}</button>
+          <button className='form-btn' onClick={Series}>{isEdit ? "Zapisz zmiany" : "Dodaj"}</button>
         </div>
       </div>
     </div>

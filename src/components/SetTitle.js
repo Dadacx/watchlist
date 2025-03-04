@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-const SetTitle = (title) => {
+const SetTitle = (title,dependecy) => {
     useEffect(() => {
-        document.title = `${title ? title + " | " : ""}Filmy do obejrzenia`;
-    },[])
+        document.title = title;
+    },[dependecy])
 }
 
 export default SetTitle

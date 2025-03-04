@@ -40,8 +40,8 @@ const App = () => {
       <BrowserRouter basename="/watchlist">
         <Routes>
           <Route path="/" element={<Outlet />}>
-            <Route index element={<List data={data} error={error} setFavoriteData={setFavoriteData} />} />
-            <Route path="/favorite" element={<FavoriteList data={favoriteData} error={favoriteError} />} />
+            <Route index element={<List data={data} setData={setData} error={error} setFavoriteData={setFavoriteData} />} />
+            <Route path="/favorite" element={<FavoriteList data={favoriteData} setData={setFavoriteData} error={favoriteError} />} />
             <Route path="/:movie" element={<Info data={data} error={error} />} />
             <Route path="favorite/:movie" element={<Info data={favoriteData} error={favoriteError} />} />
           </Route>

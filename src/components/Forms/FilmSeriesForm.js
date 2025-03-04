@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import FilmSeriesSingleMovie from './FilmSeriesSingleMovie';
 import close from '../../images/close.svg';
 
-const FilmSeriesForm = ({ setAddMovie, initialData }) => {
+const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputMoviesCount, setInputMoviesCount] = useState(0);
   const title = useRef(null);
@@ -27,10 +27,10 @@ const FilmSeriesForm = ({ setAddMovie, initialData }) => {
         console.log('Formularz poprawny');
         const movieSeries = {
           type: 'film-series',
-          title: title.current.value,
-          description: description.current.value,
-          moviesCount: moviesCount.current.value,
-          imgs: imgs.current.value,
+          title: title.current.value.trim(),
+          description: description.current.value.trim(),
+          moviesCount: moviesCount.current.value.trim(),
+          imgs: imgs.current.value.trim(),
           movies: JSON.stringify(moviesData),
           password: window.prompt("Podaj hasło")
         }
@@ -88,7 +88,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData }) => {
         <div className='close' onClick={() => setAddMovie(null)}>
           <img src={close} alt='close_icon' />
         </div>
-        <h1>{initialData ? "Edytuj serie filmów" : "Dodaj serie filmów"}</h1>
+        <h1>{isEdit ? "Edytuj serie filmów" : "Dodaj serie filmów"}</h1>
         <div className='form-form'>
           <label>
             <span>Tytuł</span>
@@ -116,7 +116,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData }) => {
             <FilmSeriesSingleMovie key={i} initialTitle={`Film z serii #${i + 1}`} initialData={initialData?.movies?.[i]}
             ref={(el) => (movieRefs.current[i] = el)} />
           ))}
-          <button className='form-btn' onClick={FilmSeries}>{initialData ? "Zapisz zmiany" : "Dodaj"}</button>
+          <button className='form-btn' onClick={FilmSeries}>{isEdit ? "Zapisz zmiany" : "Dodaj"}</button>
         </div>
       </div>
     </div>

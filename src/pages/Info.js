@@ -24,7 +24,8 @@ const Info = ({ data, error }) => {
         return () => document.body.classList.remove("no-scroll"); // Czyszczenie klasy przy odmontowaniu
     }, []);
     const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
-    movieData && SetTitle(`${movieData.title} | Info`);
+    // movieData && SetTitle(`${movieData.title} | Info | Filmy do obejrzenia`);
+    SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`,movieData)
     return (
         <div className='info'>
             {movieData && movieData.type === 'movie' ? <InfoMovie movieData={movieData} /> :
