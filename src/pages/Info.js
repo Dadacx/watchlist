@@ -7,8 +7,10 @@ import InfoFilmSeries from '../components/Info/InfoFilmSeries';
 import InfoSeries from '../components/Info/InfoSeries';
 
 const Info = ({ data, error }) => {
+    const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null);
     const { movie } = useParams();
+    const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
 
     const openModal = (img) => {
         setSelectedImage(img);
@@ -19,11 +21,18 @@ const Info = ({ data, error }) => {
         setSelectedImage(null);
         document.body.classList.remove("no-scroll"); // Przywrócenie scrollowania
     };
+    const changeModalImage = (id) => {
+        var newImageID = selectedImage.id + id
+        if(newImageID < 0 ) newImageID = images.length - 1
+        if(newImageID > images.length - 1) newImageID = 0
+        console.log({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
+        openModal({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
+    }
 
     useEffect(() => {
         return () => document.body.classList.remove("no-scroll"); // Czyszczenie klasy przy odmontowaniu
     }, []);
-    const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
+    if(movieData && !images) setImages(movieData?.imgs.split('\n').slice(1))
     // movieData && SetTitle(`${movieData.title} | Info | Filmy do obejrzenia`);
     SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`,movieData)
     return (
@@ -34,14 +43,14 @@ const Info = ({ data, error }) => {
             <div className='gallery-section'>
                 <h1>Galeria</h1>
                 <div className="gallery">
-                    {movieData?.imgs.split('\n').map((item, i) => i > 0 && (<img key={`image-${i}`} src={item} alt={`image-${i}`}
-                        onClick={() => openModal({ src: item, alt: `image-${i}` })} />))}
+                    {images && images.map((item, i) => <img key={`image-${i}`} src={item} alt={`image-${i}`}
+                        onClick={() => openModal({ src: item, alt: `image-${i}`, id: i })} />)}
                 </div>
                 {selectedImage && (
-                    <div className="modal" onClick={closeModal}>
-                        <img src={selectedImage.src} alt={selectedImage.alt} />
-                        <div className='prev-img'></div>
-                        <div className='next-img'></div>
+                    <div className="modal">
+                        <img src={selectedImage.src} alt={selectedImage.alt} onClick={closeModal} />
+                        <div className='prev-img img-btn' onClick={() => changeModalImage(-1)}>{'<'}</div>
+                        <div className='next-img img-btn' onClick={() => changeModalImage(1)}>{'>'}</div>
                     </div>
                 )}
             </div>

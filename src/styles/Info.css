@@ -109,12 +109,25 @@ details.info-details summary {
     max-width: 90%;
     max-height: 90%;
     border-radius: 8px;
-  }
-  
-  .modal:focus,
-  .modal:hover {
     cursor: pointer;
   }
   .no-scroll {
     overflow: hidden;
   }
+ .prev-img {
+   left: 0;
+ }
+ .next-img {
+  right: 0;
+}
+.modal .img-btn {
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  background: rgba(97, 97, 97, 0.25);
+  padding: 15px;
+  font-size: 55px;
+  height: 100%;
+  align-items: center;
+  user-select: none;
+}
