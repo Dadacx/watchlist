@@ -67,6 +67,10 @@ body {
     div.form-form input, div.form-form textarea {
         margin-top: 0;
     }
+    /* ImagesPreview */
+    img.photos {
+        width: 100%;
+    }
     /* Info */
     div.short-info {
         flex-direction: column;

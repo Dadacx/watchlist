@@ -40,6 +40,8 @@ const Info = ({ data, error }) => {
                 {selectedImage && (
                     <div className="modal" onClick={closeModal}>
                         <img src={selectedImage.src} alt={selectedImage.alt} />
+                        <div className='prev-img'></div>
+                        <div className='next-img'></div>
                     </div>
                 )}
             </div>

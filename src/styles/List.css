@@ -1,5 +1,5 @@
 .movies {
-    margin: 20px;
+    margin: 5px;
     margin-top: 0;
     display: flex;
     flex-direction: row;
@@ -144,6 +144,11 @@
     border-radius: 10px;
     border: 1px solid;
     cursor: default;
+}
+.filter-option-title {
+    padding: 3px 8px;
+    text-align: center;
+    color: gray;
 }
 .filter-option {
     padding: 3px 8px;

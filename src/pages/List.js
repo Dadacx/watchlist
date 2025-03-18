@@ -7,6 +7,8 @@ import SetTitle from '../components/SetTitle';
 import MovieForm from '../components/Forms/MovieForm';
 import FilmSeriesForm from '../components/Forms/FilmSeriesForm';
 import SeriesForm from '../components/Forms/SeriesFrom';
+import Popup from '../components/Popup';
+import FilmClapboard from '../components/FilmClapboard';
 import delete_icon from '../images/delete.svg';
 import edit_icon from '../images/edit.svg';
 import favorite_icon from '../images/favorite.svg';
@@ -18,11 +20,13 @@ const List = ({ data, setData, error, setFavoriteData }) => {
   const [filterMenuVisible, setFilterMenuVisible] = useState(false)
   const [filters, setFilters] = useState({
     categories: [], // ['movies', 'series', 'film-series']
+    genres: [], // ['akcja', 'komedia', 'fantasy', 'horror', 'sci-fi', 'thriller', itd.]
     sort: null, // 'a-z', 'z-a'
   });
   const [selectedCardId, setSelectedCardId] = useState(null)
   const [addMovie, setAddMovie] = useState(null)
   const [editMovie, setEditMovie] = useState(null)
+  const [popup, setPopup] = useState(null);
   // data ? SetTitle(`Filmy do obejrzenia (${data.data.length})`) : SetTitle('Filmy do obejrzenia')
   if (data && !movies) {
     setMovies(data.data)
@@ -59,7 +63,6 @@ const List = ({ data, setData, error, setFavoriteData }) => {
     setMenuVisible(true);
   };
   const handleFiltersClose = (e) => {
-    // Ukryj menu, gdy contextmenu otwiera się poza kartami
     if (!e.target.closest('.filter-box')) {
       setFilterMenuVisible(false);
     }
@@ -73,11 +76,11 @@ const List = ({ data, setData, error, setFavoriteData }) => {
 
     switch (tempAddMovie.type) {
       case 'movie':
-        return <MovieForm setAddMovie={setAddMovie} initialData={addMovie} />;
+        return <MovieForm setAddMovie={setAddMovie} initialData={addMovie.type ? addMovie : null} />;
       case 'film-series':
-        return <FilmSeriesForm setAddMovie={setAddMovie} initialData={addMovie} />;
+        return <FilmSeriesForm setAddMovie={setAddMovie} initialData={addMovie.type ? addMovie : null} />;
       case 'series':
-        return <SeriesForm setAddMovie={setAddMovie} initialData={addMovie} />;
+        return <SeriesForm setAddMovie={setAddMovie} initialData={addMovie.type ? addMovie : null} />;
       default:
         return null;
     }
@@ -85,13 +88,17 @@ const List = ({ data, setData, error, setFavoriteData }) => {
   useEffect(() => {
     if (addMovie && addMovie.type) {
       // console.log(addMovie)
+      setPopup(<Popup key={Date.now()} content={<><FilmClapboard style={{ scale: 0.07, top: '-215px', left: '-220px' }} />
+        <p style={{ marginLeft: '45px' }}>Dodawanie...</p></>} />)
       AddFetch(addMovie).then((response) => {
-        window.alert(response.message);
         if (response.status === 'success') {
+          setPopup(<Popup key={Date.now()} content={<p>{response.message}</p>} color='success' />)
           movies.push(addMovie)
           setMovies(movies)
           setData({ data: movies })
           setAddMovie(null);
+        } else {
+          setPopup(<Popup key={Date.now()} content={<p>{response.message}</p>} color='error' />)
         }
       });
     }
@@ -116,14 +123,18 @@ const List = ({ data, setData, error, setFavoriteData }) => {
   }
   useEffect(() => {
     if (editMovie && editMovie.type) {
+      setPopup(<Popup key={Date.now()} content={<><FilmClapboard style={{ scale: 0.07, top: '-215px', left: '-220px' }} />
+        <p style={{ marginLeft: '45px' }}>Zapisywanie zmian...</p></>} />)
       editMovie.id = selectedCardId;
       EditFetch(editMovie).then((response) => {
-        window.alert(response.message);
         if (response.status === 'success') {
+          setPopup(<Popup key={Date.now()} content={<p>{response.message}</p>} color='success' />)
           movies[movies.findIndex(movie => movie.id === selectedCardId)] = editMovie
           setMovies(movies)
           setData({ data: movies })
           setEditMovie(null);
+        } else {
+          setPopup(<Popup key={Date.now()} content={<p>{response.message}</p>} color='error' />)
         }
       });
     }
@@ -148,6 +159,11 @@ const List = ({ data, setData, error, setFavoriteData }) => {
     if (filters.categories.length > 0) {
       filteredMovies = filteredMovies.filter(movie => filters.categories.includes(movie.type));
     }
+    if (filters.genres.length > 0) {
+      filteredMovies = filteredMovies.filter(movie =>
+        movie.genre && movie.genre.split(', ').some(genre => filters.genres.includes(genre))
+      );
+    }
     // Sortuj
     if (filters.sort === 'a-z') {
       filteredMovies.sort((a, b) => a.title.localeCompare(b.title));
@@ -170,21 +186,29 @@ const List = ({ data, setData, error, setFavoriteData }) => {
         : [...prevFilters.categories, category], // Dodaj kategorię, jeśli jest nieaktywna
     }));
   };
+  const toggleGenreFilter = (genre) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      genres: prevFilters.genres.includes(genre)
+        ? prevFilters.genres.filter(gen => gen !== genre) // Usuń gatunek, jeśli jest aktywna
+        : [...prevFilters.genres, genre], // Dodaj gatunek, jeśli jest nieaktywna
+    }));
+  };
   const toggleSortFilter = (sortOption) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       sort: prevFilters.sort === sortOption ? null : sortOption, // Usuń sortowanie, jeśli jest aktywne; ustaw nowe, jeśli nieaktywne
     }));
   };
-  function deleteMovie(id, password) {
-    DeleteFetch(password || window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((fetchData) => {
+  async function deleteMovie(id, password) {
+    await DeleteFetch(password || window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((fetchData) => {
+      setPopup(<Popup key={Date.now()} content={<p>{fetchData.message}</p>} color='error' />)
       if (fetchData.status === 'success') {
-        alert(fetchData.message)
         setMovies(movies.filter(movie => movie.id !== id))
-        setData({...data,data:data.data.filter(movie => movie.id !== id)})
+        setData({ ...data, data: data.data.filter(movie => movie.id !== id) })
       }
     }).catch((error) => {
-      alert(error.message)
+      setPopup(<Popup key={Date.now()} content={<p>{error.message}</p>} color='error' />)
       console.log(error)
     })
   }
@@ -199,12 +223,15 @@ const List = ({ data, setData, error, setFavoriteData }) => {
           ...prevData,
           data: [...prevData.data, movie],
         }))
-        deleteMovie(selectedCardId, movie.password)
+        deleteMovie(selectedCardId, movie.password).then(() => {
+          setPopup(<Popup key={Date.now()} content={<p>{data.message}</p>} color='success' />)
+        })
+      } else {
+        setPopup(<Popup key={Date.now()} content={<p>{data.message}</p>} color='error' />)
       }
-      alert(data.message)
       console.log(data.message)
     }).catch((error) => {
-      alert(error.message)
+      setPopup(<Popup key={Date.now()} content={<p>{error.message}</p>} color='error' />)
       console.log(error)
     })
   }
@@ -212,6 +239,7 @@ const List = ({ data, setData, error, setFavoriteData }) => {
     <>
       {getAddMovieScreen()}
       {getEditMovieScreen()}
+      {popup}
       <div className='bar'>
         <div className='search-container'>
           <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
@@ -235,15 +263,27 @@ const List = ({ data, setData, error, setFavoriteData }) => {
               {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
                 {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
               </span>))}
+              {filters.genres.map(genre => (<span key={genre} className="filter-label" onClick={() => toggleGenreFilter(genre)}>
+                {genre}{' '}
+              </span>))}
               {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
             </div>
             {filterMenuVisible && (
               <div className='filter-menu'>
+                <div className='filter-option-title'>- Sortowanie -</div>
                 <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
                 <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
+                <div className='filter-option-title'>- Kategoria -</div>
                 <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
                 <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
                 <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
+                <div className='filter-option-title'>- Gatunek -</div>
+                {data && Array.from(new Set(data.data.flatMap(item => item.genre ? item.genre.split(', ') : [])))
+                  .map((genre, index) => (
+                    <div key={index} className='filter-option' onClick={() => toggleGenreFilter(genre)}>
+                      {genre}
+                    </div>
+                  ))}
               </div>
             )}
           </div>
@@ -256,7 +296,7 @@ const List = ({ data, setData, error, setFavoriteData }) => {
         {error ? <div className='error'>{error.message}</div> : null}
         {movies ? movies.map((movie) => (
           <Link className='card-link' to={`/${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}`} key={movie.id}>
-            <Card key={movie.id} id={movie.id} img={movie.imgs.split('\n')[0]} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} handleContextMenu={handleContextMenu} />
+            <Card key={movie.id} id={movie.id} img={movie.imgs.split('\n')[0]} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} />
           </Link>
         )) : null}
         {menuVisible && <div id='menu' className="menu" onClick={(e) => e.stopPropagation()}

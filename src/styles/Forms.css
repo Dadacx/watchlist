@@ -1,5 +1,5 @@
 .form-box-container {
-    z-index: 100;
+    z-index: 60;
     margin-top: 10px;
     width: 100%;
     height: 98vh;
@@ -73,6 +73,11 @@
     border-radius: 15px;
     resize: vertical;
     height: unset;
+}
+.imgs-preview-btn {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
 }
 .form-btn {
     text-transform: uppercase;
@@ -148,7 +153,7 @@
 }
 .details-input:checked + details,
 details:has(.details-input:checked) {
-    max-height: 300px; /* Set a max-height value enough to show all the content */
+    max-height: 375px; /* Set a max-height value enough to show all the content */
 }
 
 .details-input:checked + details label::after,

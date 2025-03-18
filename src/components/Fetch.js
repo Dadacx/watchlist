@@ -1,3 +1,4 @@
+// const url = 'http://192.168.100.3'
 const url = 'http://localhost'
 // const url = 'https://frog02-20766.wykr.es'
 const MoviesListFetch = async () => {

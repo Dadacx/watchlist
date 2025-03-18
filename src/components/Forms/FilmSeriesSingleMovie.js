@@ -5,6 +5,7 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
   const [inputTitle, setInputTitle] = useState(initialTitle);
   const [errors, setErrors] = useState({});
   const title = useRef(null);
+  const genre = useRef(null);
   const year = useRef(null);
   const duration = useRef(null);
   const link = useRef(null);
@@ -15,6 +16,7 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
   const validateForm = () => {
     const newErrors = {};
     title.current.classList.remove('invalid');
+    genre.current.classList.remove('invalid');
     year.current.classList.remove('invalid');
     duration.current.classList.remove('invalid');
     link.current.classList.remove('invalid');
@@ -22,6 +24,10 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
     if (!title.current.value.trim()) {
       title.current.classList.add('invalid');
       newErrors.title = 'Tytuł jest wymagany';
+    }
+    if (!genre.current.value.trim()) {
+      genre.current.classList.add('invalid');
+      newErrors.genre = 'Gatunek jest wymagany';
     }
     const yearValue = parseInt(year.current.value, 10);
     if (!year.current.value.trim() || isNaN(yearValue)) {
@@ -41,6 +47,7 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
   };
   const getMovieData = () => ({
     title: title.current.value.trim(),
+    genre: genre.current.value.trim(),
     year: year.current.value.trim(),
     duration: duration.current.value.trim(),
     link: link.current.value.trim(),
@@ -67,6 +74,11 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
           <input onChange={(e) => {setInputTitle(e.target.value);RemoveInvalid(e)}} type='text' id='title' ref={title} defaultValue={initialData?.title} />
         </label>
         {errors.title && <div className='form-error'>{errors.title}</div>}
+        <label className='single-movie'>
+          <span>Gatunek</span>
+          <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='genre' ref={genre} defaultValue={initialData?.genre} />
+        </label>
+        {errors.genre && <div className='form-error'>{errors.genre}</div>}
         <label className='single-movie'>
           <span>Rok premiery</span>
           <input onChange={(e) => {RemoveInvalid(e)}} type='number' id='year' ref={year} defaultValue={initialData?.year} />

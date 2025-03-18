@@ -1,0 +1,52 @@
+.imgs-preview-box {
+    width: 75%;
+    position: fixed;
+    border-radius: 25px;
+    background-color: #3c3d37;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 21px;
+    height: fit-content;
+    max-height: 83%;
+    margin-top: 35px;
+    border: 2px solid;
+    z-index: 65;
+}
+.imgs-preview-close {
+    position: fixed;
+    top: 6.5%;
+    left: 13.5%;
+    height: 40px;
+    cursor: pointer;
+}
+.imgs-preview-close img {
+    width: 40px;
+}
+.photos-preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.images-preview-img-container {
+    position: relative;
+}
+.images-preview-img-container .delete-icon {
+    position: absolute;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: red;
+    right: 0px;
+    cursor: pointer;
+    visibility: hidden;
+}
+.images-preview-img-container:hover .delete-icon {
+    visibility: visible;
+}
+.photos {
+    width: 450px;
+    border-radius: 10px;
+}

@@ -3,7 +3,7 @@ import "../styles/Card.css";
 import getAverageColor from "./AverageColor";
 import TruncatedText from "./TruncatedText";
 
-const Card = ({ id, img, title, year, description, handleContextMenu }) => {
+const Card = ({ id, img, title, year, description, genre, handleContextMenu }) => {
   const [shadowColor, setShadowColor] = useState("rgba(108,108,108,var(--shadow-visibility))");
   const [remainingLines, setRemainingLines] = useState(8); // Domyślnie 8 linii dla opisu
   const titleRef = useRef(null);
@@ -49,9 +49,8 @@ const Card = ({ id, img, title, year, description, handleContextMenu }) => {
         <span className="title" ref={titleRef}>
           {title}
         </span>
-        <span className="year" ref={yearRef}>{year}</span>
+        <span className="year" ref={yearRef}>{year}{genre && ` • ${genre.split(',').map(genre => genre.trim()).join(" ")}`}</span>
         <span className="description">
-          {/* {console.log(remainingLines)} */}
           <TruncatedText text={description} maxLines={remainingLines} />
         </span>
       </div>

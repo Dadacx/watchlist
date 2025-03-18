@@ -1,11 +1,13 @@
 import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
 import FilmSeriesSingleMovie from './FilmSeriesSingleMovie';
+import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg';
 
 const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputMoviesCount, setInputMoviesCount] = useState(0);
+  const [showImagesPreview, setShowImagesPreview] = useState(false)
   const title = useRef(null);
   const description = useRef(null);
   const moviesCount = useRef(null);
@@ -14,10 +16,10 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   const [movies, setMovies] = useState([]);
 
   if (initialData && typeof initialData.movies === 'string') initialData.movies = JSON.parse(initialData.movies)
-  
-    useEffect(() => {
-      if(initialData) setInputMoviesCount(initialData.movies?.length)
-    }, [initialData]);
+
+  useEffect(() => {
+    if (initialData) setInputMoviesCount(initialData.movies?.length)
+  }, [initialData]);
   const FilmSeries = () => {
     if (validateForm()) {
       const isMoviesValid = movieRefs.current.every((ref) => ref?.validateForm?.());
@@ -82,8 +84,12 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
       return newErrors;
     })
   }
+  const updateImages = (newImgs) => {
+    imgs.current.value = newImgs
+  }
   return (
     <div className='form-box-container'>
+      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview} updateImages={updateImages} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}>
           <img src={close} alt='close_icon' />
@@ -92,29 +98,29 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
         <div className='form-form'>
           <label>
             <span>Tytuł</span>
-            <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='title' ref={title} defaultValue={initialData?.title} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='title' ref={title} defaultValue={initialData?.title} />
           </label>
           {errors.title && <div className='form-error'>{errors.title}</div>}
           <label>
             <span>Opis</span>
-            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='5' id='description' ref={description} defaultValue={initialData?.description} />
+            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='5' id='description' ref={description} defaultValue={initialData?.description} />
           </label>
           {errors.description && <div className='form-error'>{errors.description}</div>}
           <label>
             <span>Liczba filmów w serii</span>
             <input
-              type='number' ref={moviesCount} id='moviesCount'  defaultValue={initialData?.movies?.length}
-              onChange={(e) => {setInputMoviesCount(parseInt(e.target.value, 10) || 0);RemoveInvalid(e)}} />
+              type='number' ref={moviesCount} id='moviesCount' defaultValue={initialData?.movies?.length}
+              onChange={(e) => { setInputMoviesCount(parseInt(e.target.value, 10) || 0); RemoveInvalid(e) }} />
           </label>
           {errors.moviesCount && <div className='form-error'>{errors.moviesCount}</div>}
           <label>
-            <span>Linki do zdjęć<br />(jeden pod drugim)</span>
-            <textarea onChange={(e) => {RemoveInvalid(e)}} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
+          <span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
+            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
           {Array.from({ length: inputMoviesCount }, (_, i) => (
             <FilmSeriesSingleMovie key={i} initialTitle={`Film z serii #${i + 1}`} initialData={initialData?.movies?.[i]}
-            ref={(el) => (movieRefs.current[i] = el)} />
+              ref={(el) => (movieRefs.current[i] = el)} />
           ))}
           <button className='form-btn' onClick={FilmSeries}>{isEdit ? "Zapisz zmiany" : "Dodaj"}</button>
         </div>

@@ -1,10 +1,13 @@
 import '../../styles/Forms.css'
 import { useRef, useState } from 'react';
+import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg'
 
 const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
+  const [showImagesPreview, setShowImagesPreview] = useState(false)
   const title = useRef(null);
+  const genre = useRef(null);
   const original_title = useRef(null);
   const year = useRef(null);
   const description = useRef(null);
@@ -18,6 +21,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
       const movie = {
         type: 'movie',
         title: title.current.value.trim(),
+        genre: genre.current.value.trim(),
         original_title: original_title.current.value.trim(),
         year: year.current.value.trim(),
         description: description.current.value.trim(),
@@ -33,6 +37,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const validateForm = () => {
     const newErrors = {};
     title.current.classList.remove('invalid');
+    genre.current.classList.remove('invalid');
     original_title.current.classList.remove('invalid');
     year.current.classList.remove('invalid');
     description.current.classList.remove('invalid');
@@ -43,6 +48,10 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
     if (!title.current.value.trim()) {
       title.current.classList.add('invalid');
       newErrors.title = 'Tytuł jest wymagany';
+    }
+    if (!genre.current.value.trim()) {
+      genre.current.classList.add('invalid');
+      newErrors.genre = 'Gatunek jest wymagany';
     }
     if (!original_title.current.value.trim()) {
       original_title.current.classList.add('invalid');
@@ -87,9 +96,13 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
       return newErrors;
     })
   }
+  const updateImages = (newImgs) => {
+    imgs.current.value = newImgs
+  }
 
   return (
     <div className='form-box-container'>
+      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview} updateImages={updateImages} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
         <h1>{isEdit ? "Edytuj film" : "Dodaj film"}</h1>
@@ -98,6 +111,10 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
             <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='title' ref={title} defaultValue={initialData?.title} />
           </label>
           {errors.title && <div className='form-error'>{errors.title}</div>}
+          <label><span>Gatunek</span>
+            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='genre' ref={genre} defaultValue={initialData?.genre} />
+          </label>
+          {errors.genre && <div className='form-error'>{errors.genre}</div>}
           <label><span>Oryginalny tytuł</span>
             <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='original_title' ref={original_title} defaultValue={initialData?.original_title} />
           </label>
@@ -118,7 +135,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
             <input onChange={(e) => { RemoveInvalid(e) }} type='url' id='link' ref={link} defaultValue={initialData?.link} />
           </label>
           {errors.link && <div className='form-error'>{errors.link}</div>}
-          <label><span>Linki do zdjęć<br />(jeden pod drugim)</span>
+          <label><span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
             <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}

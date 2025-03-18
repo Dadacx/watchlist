@@ -30,6 +30,7 @@ const InfoSeries = ({ movieData }) => {
                     <tbody>
                         <tr><td>orginalny tytuł</td><td>{movieData.original_title}</td></tr>
                         <tr><td>rok premiery</td><td>{movieData.year}</td></tr>
+                        <tr><td>gatunek</td><td>{movieData.genre}</td></tr>
                         <tr><td>liczba sezonów</td><td>{movieData.episodes.length}</td></tr>
                         <tr><td>Link do filmweb</td><td><Link target='_blank' to={movieData.link}>Link</Link></td></tr>
                     </tbody>
