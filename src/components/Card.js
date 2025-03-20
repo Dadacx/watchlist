@@ -26,6 +26,7 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
       const usedLines = parseInt(remainingSpace / lineHeight)
       setRemainingLines(Math.max(usedLines, 0)); // Odejmujemy zajęte linie
   }
+  const genreString = genre ? genre.split(',').map(genre => genre.trim()).join(" | ") : '';
 
   return (
     <div
@@ -49,7 +50,7 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
         <span className="title" ref={titleRef}>
           {title}
         </span>
-        <span className="year" ref={yearRef}>{year}{genre && ` • ${genre.split(',').map(genre => genre.trim()).join(" ")}`}</span>
+        <span className={`year${genre ? ' genre' : ''}`} ref={yearRef} title={genreString}>{year}{genreString && ` • ${genreString}`}</span>
         <span className="description">
           <TruncatedText text={description} maxLines={remainingLines} />
         </span>

@@ -15,10 +15,8 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   const movieRefs = useRef([]);
   const [movies, setMovies] = useState([]);
 
-  if (initialData && typeof initialData.movies === 'string') initialData.movies = JSON.parse(initialData.movies)
-
   useEffect(() => {
-    if (initialData) setInputMoviesCount(initialData.movies?.length)
+    if (initialData) setInputMoviesCount(ifMoviesString(initialData?.movies).length)
   }, [initialData]);
   const FilmSeries = () => {
     if (validateForm()) {
@@ -77,6 +75,10 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const ifMoviesString = (movies) => {
+    if (typeof movies === 'string') return JSON.parse(movies)
+      return movies
+  }
   const RemoveInvalid = (e) => {
     e.target.classList.remove('invalid'); setErrors((prevErrors) => {
       const newErrors = { ...prevErrors };
@@ -109,7 +111,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
           <label>
             <span>Liczba filmów w serii</span>
             <input
-              type='number' ref={moviesCount} id='moviesCount' defaultValue={initialData?.movies?.length}
+              type='number' ref={moviesCount} id='moviesCount' defaultValue={ifMoviesString(initialData?.movies)?.length}
               onChange={(e) => { setInputMoviesCount(parseInt(e.target.value, 10) || 0); RemoveInvalid(e) }} />
           </label>
           {errors.moviesCount && <div className='form-error'>{errors.moviesCount}</div>}
@@ -119,7 +121,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
           {Array.from({ length: inputMoviesCount }, (_, i) => (
-            <FilmSeriesSingleMovie key={i} initialTitle={`Film z serii #${i + 1}`} initialData={initialData?.movies?.[i]}
+            <FilmSeriesSingleMovie key={i} initialTitle={`Film z serii #${i + 1}`} initialData={ifMoviesString(initialData?.movies)?.[i]}
               ref={(el) => (movieRefs.current[i] = el)} />
           ))}
           <button className='form-btn' onClick={FilmSeries}>{isEdit ? "Zapisz zmiany" : "Dodaj"}</button>

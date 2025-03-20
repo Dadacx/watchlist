@@ -1,7 +1,7 @@
 import './styles/main.css'
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import List from './pages/List';
+import MoviesList from './pages/MoviesList';
 import FavoriteList from './pages/FavoriteList';
 import Info from './pages/Info';
 import { MoviesListFetch, FavoriteMoviesListFetch } from './components/Fetch';
@@ -11,7 +11,9 @@ const App = () => {
   const [error, setError] = useState(null);
   const [favoriteData, setFavoriteData] = useState(null);
   const [favoriteError, setFavoriteError] = useState(null);
+  const [refreshData, setRefreshData] = useState(false);
   useEffect(() => {
+    console.log('fetching data')
     const fetchData = async () => {
       const fetchedData = await MoviesListFetch();
       if (fetchedData.status === 'error') {
@@ -34,14 +36,14 @@ const App = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refreshData]);
   return (
     <div className="container">
       <BrowserRouter basename="/watchlist">
         <Routes>
           <Route path="/" element={<Outlet />}>
-            <Route index element={<List data={data} setData={setData} error={error} setFavoriteData={setFavoriteData} />} />
-            <Route path="/favorite" element={<FavoriteList data={favoriteData} setData={setFavoriteData} error={favoriteError} />} />
+            <Route index element={<MoviesList data={data} setData={setData} error={error} setFavoriteData={setFavoriteData} setRefreshData={setRefreshData} /> } />
+            <Route path="/favorite" element={<FavoriteList data={favoriteData} setData={setFavoriteData} error={favoriteError} setRefreshData={setRefreshData} />} />
             <Route path="/:movie" element={<Info data={data} error={error} />} />
             <Route path="favorite/:movie" element={<Info data={favoriteData} error={favoriteError} />} />
           </Route>

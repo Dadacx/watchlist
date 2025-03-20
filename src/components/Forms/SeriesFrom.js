@@ -15,7 +15,6 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const imgs = useRef(null);
   const seasonsCount = useRef(null);
 
-  if (initialData && typeof initialData.episodes === 'string') initialData.episodes = JSON.parse(initialData.episodes)
   useEffect(() => {
     if (initialData) setInputSeasonsCount(initialData.episodes.length)
   }, [initialData]);
@@ -39,6 +38,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
         episodes: JSON.stringify(episodes),
         password: window.prompt("Podaj hasło")
       }
+      console.log(typeof series.episodes)
       console.log(series)
       setAddMovie(series);
     }
@@ -101,6 +101,10 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const ifEpisodesString = (episodes) => {
+    if (typeof episodes === 'string') return JSON.parse(episodes)
+      return episodes
+  }
   const RemoveInvalid = (e) => {
     e.target.classList.remove('invalid'); setErrors((prevErrors) => {
       const newErrors = { ...prevErrors };
@@ -155,7 +159,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
                 })
               )); RemoveInvalid(e)
             }}
-              type='number' id='seasonsCount' ref={seasonsCount} defaultValue={initialData?.episodes.length} />
+              type='number' id='seasonsCount' ref={seasonsCount} defaultValue={ifEpisodesString(initialData?.episodes)?.length} />
           </label>
           {errors.seasonsCount && <div className='form-error'>{errors.seasonsCount}</div>}
           {Array.from({ length: inputSeasonsCount }, (_, i) => (<>
@@ -165,7 +169,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
                 onChange={(e) => { RemoveInvalid(e); }}
                 rows='10'
                 id={`season-${i}`}
-                defaultValue={initialData?.episodes[i]?.join('\n')}
+                defaultValue={ifEpisodesString(initialData?.episodes) ? ifEpisodesString(initialData?.episodes)[i]?.join('\n') : ''}
               />
             </label>
             {errors[`season-${i}`] && <div className='form-error'>{errors[`season-${i}`]}</div>}</>
