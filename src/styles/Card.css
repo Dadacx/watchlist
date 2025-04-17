@@ -31,6 +31,7 @@
     margin-top: 10px;
 }
 .year {
+    /* height: 19px; */
     font-size: 14px;
     color: gray;
 }
@@ -41,7 +42,8 @@
     white-space: pre-wrap;
     word-break: break-word;
     display: -webkit-box;
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-y: clip;
 }
 .description {
     margin-top: 10px;

@@ -12,6 +12,21 @@ const Info = ({ data, error }) => {
     const { movie } = useParams();
     const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
 
+    useEffect(() => {
+        const handleKeyUp = (e) => {
+            if (e.code === 'ArrowLeft') {
+                changeModalImage(-1);
+            }
+            if (e.code === 'ArrowRight') {
+                changeModalImage(1);
+            }
+        };
+        document.addEventListener('keyup', handleKeyUp);
+        return () => {
+            document.removeEventListener('keyup', handleKeyUp);
+        };
+    }, [selectedImage])
+
     const openModal = (img) => {
         setSelectedImage(img);
         document.body.classList.add("no-scroll"); // Blokowanie scrollowania
@@ -23,8 +38,8 @@ const Info = ({ data, error }) => {
     };
     const changeModalImage = (id) => {
         var newImageID = selectedImage.id + id
-        if(newImageID < 0 ) newImageID = images.length - 1
-        if(newImageID > images.length - 1) newImageID = 0
+        if (newImageID < 0) newImageID = images.length - 1
+        if (newImageID > images.length - 1) newImageID = 0
         console.log({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
         openModal({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
     }
@@ -32,14 +47,14 @@ const Info = ({ data, error }) => {
     useEffect(() => {
         return () => document.body.classList.remove("no-scroll"); // Czyszczenie klasy przy odmontowaniu
     }, []);
-    if(movieData && !images) setImages(movieData?.imgs.split('\n').slice(1))
+    if (movieData && !images) setImages(movieData?.imgs.split('\n').slice(1))
     // movieData && SetTitle(`${movieData.title} | Info | Filmy do obejrzenia`);
-    SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`,movieData)
+    SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`, movieData)
     return (
         <div className='info'>
             {movieData && movieData.type === 'movie' ? <InfoMovie movieData={movieData} /> :
-             movieData && movieData.type === 'film-series' ? <InfoFilmSeries movieData={movieData} /> :
-             movieData && movieData.type === 'series' ? <InfoSeries movieData={movieData} /> : null}
+                movieData && movieData.type === 'film-series' ? <InfoFilmSeries movieData={movieData} /> :
+                    movieData && movieData.type === 'series' ? <InfoSeries movieData={movieData} /> : null}
             <div className='gallery-section'>
                 <h1>Galeria</h1>
                 <div className="gallery">
