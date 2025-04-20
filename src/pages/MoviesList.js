@@ -1,6 +1,6 @@
 import '../styles/List.css';
 import List from '../components/List';
-import { DeleteFetch, AddFetch, EditFetch, AddFavoriteFetch } from '../components/Fetch';
+import { DeleteFetch, MultipleDeleteFetch, AddFetch, EditFetch, AddFavoriteFetch } from '../components/Fetch';
 
 const MoviesList = ({ data, setData, error, setFavoriteData, setRefreshData }) => {
   return (
@@ -14,6 +14,7 @@ const MoviesList = ({ data, setData, error, setFavoriteData, setRefreshData }) =
         fetchAdd={AddFetch}
         fetchEdit={EditFetch}
         fetchDelete={DeleteFetch}
+        fetchMultipleDelete={MultipleDeleteFetch}
         fetchAddFavorite={AddFavoriteFetch}
         isFavoriteList={false}
         setRefreshData={setRefreshData}

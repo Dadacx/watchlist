@@ -2,24 +2,23 @@ import { useEffect, useState } from 'react';
 import SetTitle from './SetTitle';
 import Popup from './Popup';
 import FilmClapboard from './FilmClapboard';
-import delete_icon from '../images/delete.svg';
-import edit_icon from '../images/edit.svg';
-import favorite_icon from '../images/favorite.svg';
 import MovieForm from './Forms/MovieForm';
 import FilmSeriesForm from './Forms/FilmSeriesForm';
 import SeriesForm from './Forms/SeriesFrom';
+import ContextMenu from './ContextMenu';
 import { Link } from "react-router-dom";
 import Card from './Card';
 
-const List = ({ 
-  data, 
-  setData, 
-  error, 
-  setFavoriteData, 
-  title, 
-  fetchAdd, 
-  fetchEdit, 
-  fetchDelete, 
+const List = ({
+  data,
+  setData,
+  error,
+  setFavoriteData,
+  title,
+  fetchAdd,
+  fetchEdit,
+  fetchDelete,
+  fetchMultipleDelete,
   fetchAddFavorite,
   isFavoriteList = false,
   setRefreshData
@@ -37,6 +36,8 @@ const List = ({
   const [addMovie, setAddMovie] = useState(null);
   const [editMovie, setEditMovie] = useState(null);
   const [popup, setPopup] = useState(null);
+  const [ids, setIds] = useState([]);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
 
   console.log(data);
   SetTitle(`${title}${data && data.data ? ` (${data.data.length})` : ""}`, data);
@@ -172,7 +173,7 @@ const List = ({
       filteredMovies = filteredMovies.filter(movie => filters.categories.includes(movie.type));
     }
     if (filters.genres.length > 0) {
-      filteredMovies = filteredMovies.filter(movie => 
+      filteredMovies = filteredMovies.filter(movie =>
         movie.genre && movie.genre.split(', ').some(genre => filters.genres.includes(genre))
       );
     }
@@ -227,6 +228,38 @@ const List = ({
       console.log(error);
     });
   };
+  const deleteMultipleMovies = async () => {
+    if (ids.length === 0) return;
+    await fetchMultipleDelete(window.prompt("Podaj hasło"), ids).then((fetchData) => {
+      setPopup(<Popup key={Date.now()} content={<p>{fetchData.message}</p>} color='error' />);
+      if (fetchData.status === 'success') {
+        setIsMultipleDelete(false);
+        setIds([]);
+        setRefreshData((prev) => !prev);
+      }
+    }).catch((error) => {
+      setPopup(<Popup key={Date.now()} content={<p>{error.message}</p>} color='error' />);
+      console.log(error);
+    });
+  };
+  const handleMultipleDelete = (id) => {
+    console.log(id, ids)
+    setIsMultipleDelete(true);
+
+    setIds((prevIds) => {
+      if (prevIds.includes(id)) {
+        document.querySelector(`[data-id="${id}"]`).style.border = "none";
+        const newIds = prevIds.filter((prevId) => prevId !== id);
+        if (newIds.length === 0) {
+          setIsMultipleDelete(false);
+        }
+        return newIds;
+      } else {
+        document.querySelector(`[data-id="${id}"]`).style.border = "2px solid red";
+        return [...prevIds, id];
+      }
+    });
+  };
 
   const addFavorite = (id) => {
     var movie = movies.find((item) => item.id === id);
@@ -257,6 +290,7 @@ const List = ({
       {getAddMovieScreen()}
       {getEditMovieScreen()}
       {popup}
+      {isMultipleDelete && <div className='multiple-delete-icon' title='Usuń zaznaczone' onClick={deleteMultipleMovies}></div>}
       <div className='bar'>
         <div className='search-container'>
           <div className='bar-box search-box' onClick={() => window.document.querySelector('.search-text').focus()}>
@@ -316,17 +350,10 @@ const List = ({
             <Card key={movie.id} id={movie.id} img={movie.imgs.split('\n')[0]} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} />
           </Link>
         )) : null}
-        {menuVisible && <div id='menu' className="menu" onClick={(e) => e.stopPropagation()}
-          style={{ top: `${menuPosition.y}px`, left: `${menuPosition.x}px` }}>
-          <img src={edit_icon} alt='edit_icon' className='menu-img' width={25} height={25}
-            onClick={() => { setEditMovie(movies.filter(movie => movie.id === selectedCardId)[0].type); setMenuVisible(false) }} />
-          <img src={delete_icon} alt='delete_icon' className='menu-img' width={25} height={25}
-            onClick={() => { deleteMovie(selectedCardId); setMenuVisible(false) }} />
-          {!isFavoriteList && (
-            <img src={favorite_icon} alt='favorite_icon' className='menu-img' width={25} height={25}
-              onClick={() => { addFavorite(selectedCardId); setMenuVisible(false) }} />
-          )}
-        </div>}
+        {menuVisible && <ContextMenu menuPosition={menuPosition} setEditMovie={setEditMovie} movies={movies}
+          selectedCardId={selectedCardId} setMenuVisible={setMenuVisible} deleteMovie={deleteMovie}
+          deleteMultipleMovies={deleteMultipleMovies} isFavoriteList={isFavoriteList} addFavorite={addFavorite}
+          handleMultipleDelete={handleMultipleDelete} />}
       </div>
     </>
   );

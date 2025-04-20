@@ -35,6 +35,7 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
       style={{
         boxShadow: "0px 0px 24px 6px " + shadowColor,
       }}
+      data-id={id}
     >
       <span style={{ display: "none" }}>{id}</span>
       <img

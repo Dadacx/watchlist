@@ -52,9 +52,6 @@
     transition: 0.4s;
     visibility: hidden;
 }
-.search-box:focus-within::before {
-    /* width: 302px; */
-}
 .search-box:focus-within>.search-text {
     width: 240px;
     padding: 0 6px;
@@ -179,22 +176,18 @@
 .filter-text span:hover {
     background-color: #cf0000;
 }
-.menu {
-    position: absolute;
+.multiple-delete-icon {
+    background: url('../images/delete.svg'), red;
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
     padding: 5px;
-    background: #181C14;/*#383937 */
-    border: 1px solid;
-    border-radius: 5px;
-    color: #ecdfcc;
-    line-height: 0;
-}
-.menu-img {
-    margin: 2px;
-    padding: 5px;
+    border-radius: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 58px;
     cursor: pointer;
-    background-color: #3c3d37;
-    border-radius: 3px;
-}
-.menu-img:hover {
-    background-color: #64665d;
+    border: 2px solid;
 }

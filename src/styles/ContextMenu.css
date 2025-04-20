@@ -1,0 +1,19 @@
+.menu {
+    position: absolute;
+    padding: 5px;
+    background: #181C14;/*#383937 */
+    border: 1px solid;
+    border-radius: 5px;
+    color: #ecdfcc;
+    line-height: 0;
+}
+.menu-img {
+    margin: 2px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #3c3d37;
+    border-radius: 3px;
+}
+.menu-img:hover {
+    background-color: #64665d;
+}

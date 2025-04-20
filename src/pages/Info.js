@@ -20,6 +20,9 @@ const Info = ({ data, error }) => {
             if (e.code === 'ArrowRight') {
                 changeModalImage(1);
             }
+            if (e.code === 'Escape') {
+                closeModal();
+            }
         };
         document.addEventListener('keyup', handleKeyUp);
         return () => {
