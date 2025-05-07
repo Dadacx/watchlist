@@ -5,6 +5,7 @@ import MoviesList from './pages/MoviesList';
 import FavoriteList from './pages/FavoriteList';
 import Info from './pages/Info';
 import { MoviesListFetch, FavoriteMoviesListFetch } from './components/Fetch';
+import DevTools from './components/DevTools';
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -13,30 +14,52 @@ const App = () => {
   const [favoriteError, setFavoriteError] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
   useEffect(() => {
-    console.log('fetching data')
+    console.log('fetching data');
+    
     const fetchData = async () => {
-      const fetchedData = await MoviesListFetch();
-      if (fetchedData.status === 'error') {
-        setError(fetchedData)
+      try {
+        const fetchedData = await MoviesListFetch();
+        if (fetchedData.status === 'error') {
+          setError(fetchedData);
+          setData(null);
+        } else {
+          setError(null);
+          fetchedData.data.map((item) => {
+            item.imgs = JSON.parse(item.imgs);
+            return item;
+          }
+          );
+          setData(fetchedData);
+          console.log(fetchedData);
+        }
+  
+        const fetchedFavoriteData = await FavoriteMoviesListFetch();
+        if (fetchedFavoriteData.status === 'error') {
+          setFavoriteError(fetchedFavoriteData);
+          setFavoriteData(null);
+        } else {
+          setFavoriteError(null);
+          // fetchedFavoriteData.data.map((item) => {
+          //   item.imgs = JSON.parse(item.imgs);
+          //   return item;
+          // }
+          // );
+          setFavoriteData(fetchedFavoriteData);
+          console.log(fetchedFavoriteData);
+        }
+      } catch (err) {
+        console.error("Błąd w fetchData():", err);
+        // Globalny fallback — np. jeśli fetch rzucił wyjątek
+        setError({ status: 'error', message: `[ERROR: ${err.message}] Błąd podczas pobierania danych.` });
         setData(null);
-      } else {
-        setError(null)
-        setData(fetchedData);
-        console.log(fetchedData)
-      }
-
-      const fetchedFavoriteData = await FavoriteMoviesListFetch();
-      if (fetchedFavoriteData.status === 'error') {
-        setFavoriteError(fetchedFavoriteData)
+        setFavoriteError({ status: 'error', message: `[ERROR: ${err.message}] Błąd ulubionych.` });
         setFavoriteData(null);
-      } else {
-        setFavoriteError(null)
-        setFavoriteData(fetchedFavoriteData);
-        console.log(fetchedFavoriteData)
       }
     };
+  
     fetchData();
   }, [refreshData]);
+  
   return (
     <div className="container">
       <BrowserRouter basename="/watchlist">
@@ -49,6 +72,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
+      <DevTools data={data} setData={setData} favoriteData={favoriteData} setFavoriteData={setFavoriteData} error={error} setError={setError} />
     </div>
   );
 }

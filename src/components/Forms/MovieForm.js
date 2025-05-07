@@ -3,6 +3,10 @@ import { useRef, useState } from 'react';
 import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg'
 
+const isObject = (object) => {
+  if (typeof object === 'string') return JSON.parse(object)
+    return object
+}
 const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [showImagesPreview, setShowImagesPreview] = useState(false)
@@ -14,6 +18,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const duration = useRef(null);
   const link = useRef(null);
   const imgs = useRef(null);
+  const imgsTitle = useRef(isObject(initialData?.imgs)?.map((item) => item.title) || []);
 
   function Movie() {
     if (validateForm()) {
@@ -27,7 +32,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
         description: description.current.value.trim(),
         duration: duration.current.value.trim(),
         link: link.current.value.trim(),
-        imgs: imgs.current.value.trim(),
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img,i) => { return {title: imgsTitle.current[i] || '', img: img} })),
         password: window.prompt("Podaj hasło")
       }
       console.log(movie)
@@ -99,10 +104,14 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const updateImages = (newImgs) => {
     imgs.current.value = newImgs
   }
+  const updateImgsTitle = (newTitle) => {
+    imgsTitle.current = newTitle
+  }
 
   return (
     <div className='form-box-container'>
-      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview} updateImages={updateImages} />}
+      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
+      updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
         <h1>{isEdit ? "Edytuj film" : "Dodaj film"}</h1>
@@ -136,7 +145,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
           </label>
           {errors.link && <div className='form-error'>{errors.link}</div>}
           <label><span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
-            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
+            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={isObject(initialData?.imgs)?.map((item) => item.img).join("\n")} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
           <button className='form-btn' onClick={Movie}>{isEdit ? "Zapisz zmiany" : "Dodaj"}</button>

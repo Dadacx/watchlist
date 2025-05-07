@@ -5,7 +5,7 @@ const InfoFilmSeries = ({ movieData }) => {
     return (
         <>
             <div className='short-info'>
-                <img className='info-img' alt='info-image' src={movieData.imgs.split('\n')[0]} />
+                <img className='info-img' alt='info-image' src={movieData.imgs[0].img} />
                 <div className='content'>
                     <span className='info-title'>{movieData.title}</span>
                     <span className='info-description'>{movieData.description}</span>

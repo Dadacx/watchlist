@@ -43,14 +43,14 @@ const Info = ({ data, error }) => {
         var newImageID = selectedImage.id + id
         if (newImageID < 0) newImageID = images.length - 1
         if (newImageID > images.length - 1) newImageID = 0
-        console.log({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
-        openModal({ src: images[newImageID], alt: `image-${newImageID}`, id: newImageID })
+        console.log({ src: images[newImageID].img, title:images[newImageID].title, alt: `image-${newImageID}`, id: newImageID })
+        openModal({ src: images[newImageID].img, title:images[newImageID].title, alt: `image-${newImageID}`, id: newImageID })
     }
 
     useEffect(() => {
         return () => document.body.classList.remove("no-scroll"); // Czyszczenie klasy przy odmontowaniu
     }, []);
-    if (movieData && !images) setImages(movieData?.imgs.split('\n').slice(1))
+    if (movieData && !images) setImages(movieData?.imgs.slice(1))
     // movieData && SetTitle(`${movieData.title} | Info | Filmy do obejrzenia`);
     SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`, movieData)
     return (
@@ -61,8 +61,8 @@ const Info = ({ data, error }) => {
             <div className='gallery-section'>
                 <h1>Galeria</h1>
                 <div className="gallery">
-                    {images && images.map((item, i) => <img key={`image-${i}`} src={item} alt={`image-${i}`}
-                        onClick={() => openModal({ src: item, alt: `image-${i}`, id: i })} />)}
+                    {images && images.map((item, i) => <img key={`image-${i}`} src={item.img} alt={`image-${i}`}
+                        onClick={() => openModal({ src: item.img, title: item.title, alt: `image-${i}`, id: i })} />)}
                 </div>
                 {selectedImage && (
                     <div className="modal">

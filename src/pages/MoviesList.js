@@ -5,7 +5,8 @@ import { DeleteFetch, MultipleDeleteFetch, AddFetch, EditFetch, AddFavoriteFetch
 const MoviesList = ({ data, setData, error, setFavoriteData, setRefreshData }) => {
   return (
     <>
-      {data && <List
+      {/* {(data || error) && <List */}
+      <List
         data={data}
         setData={setData}
         error={error}
@@ -18,7 +19,7 @@ const MoviesList = ({ data, setData, error, setFavoriteData, setRefreshData }) =
         fetchAddFavorite={AddFavoriteFetch}
         isFavoriteList={false}
         setRefreshData={setRefreshData}
-      />}
+      />
     </>
   );
 };

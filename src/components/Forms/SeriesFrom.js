@@ -3,6 +3,10 @@ import { useRef, useState, useEffect } from 'react';
 import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg'
 
+const isObject = (object) => {
+  if (typeof object === 'string') return JSON.parse(object)
+    return object
+}
 const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputSeasonsCount, setInputSeasonsCount] = useState(0);
@@ -13,10 +17,11 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const year = useRef(null);
   const link = useRef(null);
   const imgs = useRef(null);
+  const imgsTitle = useRef(isObject(initialData?.imgs)?.map((item) => item.title) || []);
   const seasonsCount = useRef(null);
 
   useEffect(() => {
-    if (initialData) setInputSeasonsCount(initialData.episodes.length)
+    if (initialData) setInputSeasonsCount(ifEpisodesString(initialData?.episodes).length)
   }, [initialData]);
   function Series() {
     if (validateForm()) {
@@ -33,7 +38,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
         original_title: original_title.current.value.trim(),
         year: year.current.value.trim(),
         link: link.current.value.trim(),
-        imgs: imgs.current.value.trim(),
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img,i) => { return {title: imgsTitle.current[i] || '', img: img} })),
         seasonsCount: seasonsCount.current.value.trim(),
         episodes: JSON.stringify(episodes),
         password: window.prompt("Podaj hasło")
@@ -115,9 +120,13 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const updateImages = (newImgs) => {
     imgs.current.value = newImgs
   }
+  const updateImgsTitle = (newTitle) => {
+    imgsTitle.current = newTitle
+  }
   return (
     <div className='form-box-container'>
-      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview} updateImages={updateImages} />}
+      {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
+      updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
         <h1>{isEdit ? "Edytuj serial" : "Dodaj serial"}</h1>
@@ -143,7 +152,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
           </label>
           {errors.link && <div className='form-error'>{errors.link}</div>}
           <label><span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
-            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={initialData?.imgs} />
+            <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={isObject(initialData?.imgs)?.map((item) => item.img).join("\n")} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}
           <label>

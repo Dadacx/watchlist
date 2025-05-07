@@ -5,7 +5,8 @@ import { DeleteFavoriteFetch, MultipleDeleteFavoriteFetch, AddFavoriteFetch, Edi
 const FavoriteList = ({ data, setData, error, setRefreshData }) => {
   return (
     <>
-      {data && <List
+      {/* {(data || error) && <List */}
+      <List
         data={data}
         setData={setData}
         error={error}
@@ -18,7 +19,8 @@ const FavoriteList = ({ data, setData, error, setRefreshData }) => {
         fetchAddFavorite={null} // Nie można dodawać ulubionych do ulubionych
         isFavoriteList={true}
         setRefreshData={setRefreshData}
-      />}
+      />
+      
     </>
   );
 };
