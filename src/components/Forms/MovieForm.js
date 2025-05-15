@@ -4,6 +4,7 @@ import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg'
 
 const isObject = (object) => {
+  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return {title:'',img:item} })
   if (typeof object === 'string') return JSON.parse(object)
     return object
 }

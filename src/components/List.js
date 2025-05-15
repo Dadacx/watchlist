@@ -8,6 +8,7 @@ import SeriesForm from './Forms/SeriesFrom';
 import ContextMenu from './ContextMenu';
 import { Link } from "react-router-dom";
 import Card from './Card';
+import { useDevTools } from './DevToolsContext';
 
 const List = ({
   data,
@@ -38,6 +39,19 @@ const List = ({
   const [popup, setPopup] = useState(null);
   const [ids, setIds] = useState([]);
   const [isMultipleDelete, setIsMultipleDelete] = useState(false);
+
+  // DevTools
+  const { setDevTools } = useDevTools();
+  useEffect(() => {
+    setDevTools((prev) => {
+      return {
+        ...prev,
+        movies: movies,
+        setMovies: setMovies,
+        filters: filters
+      };
+    })
+  }, [movies, filters]);
 
   console.log(data);
   SetTitle(`${title}${data && data.data ? ` (${data.data.length})` : ""}`, data);

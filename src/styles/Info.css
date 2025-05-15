@@ -131,3 +131,20 @@ details.info-details summary {
   align-items: center;
   user-select: none;
 }
+.modal-img-title {
+  position: absolute;
+  bottom: 40px;
+  font-size: 25px;
+  width: calc(100% - 155px);
+}
+
+
+.test {
+  position: absolute;
+    top: 40%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: -webkit-fill-available;
+    align-content: center;
+}

@@ -30,6 +30,10 @@ const Info = ({ data, error }) => {
         };
     }, [selectedImage])
 
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [movieData])
+
     const openModal = (img) => {
         setSelectedImage(img);
         document.body.classList.add("no-scroll"); // Blokowanie scrollowania
@@ -67,6 +71,7 @@ const Info = ({ data, error }) => {
                 {selectedImage && (
                     <div className="modal">
                         <img src={selectedImage.src} alt={selectedImage.alt} onClick={closeModal} />
+                        <span className='modal-img-title'>{selectedImage.title}</span>
                         <div className='prev-img img-btn' onClick={() => changeModalImage(-1)}>{'<'}</div>
                         <div className='next-img img-btn' onClick={() => changeModalImage(1)}>{'>'}</div>
                     </div>

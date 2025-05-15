@@ -5,7 +5,8 @@ import MoviesList from './pages/MoviesList';
 import FavoriteList from './pages/FavoriteList';
 import Info from './pages/Info';
 import { MoviesListFetch, FavoriteMoviesListFetch } from './components/Fetch';
-import DevTools from './components/DevTools';
+// import DevTools from './components/DevTools';
+import { useDevTools } from './components/DevToolsContext';
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -13,6 +14,7 @@ const App = () => {
   const [favoriteData, setFavoriteData] = useState(null);
   const [favoriteError, setFavoriteError] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
+
   useEffect(() => {
     console.log('fetching data');
     
@@ -25,7 +27,7 @@ const App = () => {
         } else {
           setError(null);
           fetchedData.data.map((item) => {
-            item.imgs = JSON.parse(item.imgs);
+            item.imgs = item.imgs.startsWith("http") ? item.imgs : JSON.parse(item.imgs);
             return item;
           }
           );
@@ -39,11 +41,11 @@ const App = () => {
           setFavoriteData(null);
         } else {
           setFavoriteError(null);
-          // fetchedFavoriteData.data.map((item) => {
-          //   item.imgs = JSON.parse(item.imgs);
-          //   return item;
-          // }
-          // );
+          fetchedFavoriteData.data.map((item) => {
+            item.imgs = item.imgs.startsWith("http") ? item.imgs : JSON.parse(item.imgs);
+            return item;
+          }
+          );
           setFavoriteData(fetchedFavoriteData);
           console.log(fetchedFavoriteData);
         }
@@ -59,8 +61,28 @@ const App = () => {
   
     fetchData();
   }, [refreshData]);
+
+  // DevTools
+  const { setDevTools } = useDevTools();
+  useEffect(() => {
+    // setDevTools({data:data, setData: setData, favoriteData: favoriteData, setFavoriteData: setFavoriteData, error: error, setError: setError, favoriteError: favoriteError, setFavoriteError: setFavoriteError});
+    setDevTools((prev) => {
+      return {
+        ...prev,
+        data: data,
+        setData: setData,
+        favoriteData: favoriteData,
+        setFavoriteData: setFavoriteData,
+        error: error,
+        setError: setError,
+        favoriteError: favoriteError,
+        setFavoriteError: setFavoriteError,
+      };
+    })
+  }, [data, favoriteData, error]);
   
   return (
+    
     <div className="container">
       <BrowserRouter basename="/watchlist">
         <Routes>
@@ -72,7 +94,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-      <DevTools data={data} setData={setData} favoriteData={favoriteData} setFavoriteData={setFavoriteData} error={error} setError={setError} />
+      {/* <DevTools data={data} setData={setData} favoriteData={favoriteData} setFavoriteData={setFavoriteData} error={error} setError={setError} /> */}
     </div>
   );
 }

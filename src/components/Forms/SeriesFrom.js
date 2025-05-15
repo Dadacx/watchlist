@@ -4,6 +4,7 @@ import ImagesPreview from './ImagesPreview';
 import close from '../../images/close.svg'
 
 const isObject = (object) => {
+  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return {title:'',img:item} })
   if (typeof object === 'string') return JSON.parse(object)
     return object
 }
@@ -19,7 +20,7 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const imgs = useRef(null);
   const imgsTitle = useRef(isObject(initialData?.imgs)?.map((item) => item.title) || []);
   const seasonsCount = useRef(null);
-
+console.log(isObject(initialData?.imgs))
   useEffect(() => {
     if (initialData) setInputSeasonsCount(ifEpisodesString(initialData?.episodes).length)
   }, [initialData]);
