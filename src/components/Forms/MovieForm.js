@@ -1,16 +1,21 @@
 import '../../styles/Forms.css'
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import ImagesPreview from './ImagesPreview';
+import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg'
+import json_icon from '../../images/json.svg'
+import { useDevTools } from '../DevToolsContext';
 
 const isObject = (object) => {
-  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return {title:'',img:item} })
+  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return { title: '', img: item } })
   if (typeof object === 'string') return JSON.parse(object)
-    return object
+  return object
 }
-const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
+const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [showImagesPreview, setShowImagesPreview] = useState(false)
+  const [showAddFromJson, setShowAddFromJson] = useState(false)
+  const [initialData, setInitialData] = useState(startData)
   const title = useRef(null);
   const genre = useRef(null);
   const original_title = useRef(null);
@@ -20,6 +25,21 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
   const link = useRef(null);
   const imgs = useRef(null);
   const imgsTitle = useRef(isObject(initialData?.imgs)?.map((item) => item.title) || []);
+
+  useEffect(() => {
+    setInitialData(startData)
+  }, [startData])
+    // DevTools
+    const { setDevTools, movieFormTestData } = useDevTools();
+    useEffect(() => {
+      imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
+      setDevTools((prev) => {
+        return {
+          ...prev,
+          fillMovieForm: () => setInitialData(movieFormTestData)
+        };
+      })
+    }, [initialData]);
 
   function Movie() {
     if (validateForm()) {
@@ -33,7 +53,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
         description: description.current.value.trim(),
         duration: duration.current.value.trim(),
         link: link.current.value.trim(),
-        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img,i) => { return {title: imgsTitle.current[i] || '', img: img} })),
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
         password: window.prompt("Podaj hasło")
       }
       console.log(movie)
@@ -106,15 +126,24 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
     imgs.current.value = newImgs
   }
   const updateImgsTitle = (newTitle) => {
+    console.log(newTitle)
     imgsTitle.current = newTitle
+    setInitialData((prev) => {
+      return {
+        ...prev,
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: newTitle[i] || '', img: img } }))
+      }
+    })
   }
 
   return (
     <div className='form-box-container'>
       {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
-      updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        {showAddFromJson && <AddFromJson setInitialData={setInitialData} setShowAddFromJson={setShowAddFromJson} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
+        {!isEdit && <div className='from-json' onClick={() => setShowAddFromJson(true)}><img src={json_icon} alt='add_from_json_icon' /></div>}
         <h1>{isEdit ? "Edytuj film" : "Dodaj film"}</h1>
         <div className='form-form'>
           <label><span>Tytuł</span>
@@ -138,7 +167,7 @@ const MovieForm = ({ setAddMovie, initialData, isEdit }) => {
           </label>
           {errors.description && <div className='form-error'>{errors.description}</div>}
           <label><span>Czas trwania</span>
-            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='duration' ref={duration} defaultValue={initialData?.duration} />
+            <input onChange={(e) => { RemoveInvalid(e) }} type='text' id='duration' ref={duration} defaultValue={initialData?.duration} placeholder='1h 12m' />
           </label>
           {errors.duration && <div className='form-error'>{errors.duration}</div>}
           <label><span>Link</span>

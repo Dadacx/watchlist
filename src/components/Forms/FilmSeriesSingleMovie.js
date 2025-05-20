@@ -86,7 +86,7 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
         {errors.year && <div className='form-error'>{errors.year}</div>}
         <label className='single-movie'>
           <span>Czas trwania</span>
-          <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='duration' ref={duration} defaultValue={initialData?.duration} />
+          <input onChange={(e) => {RemoveInvalid(e)}} type='text' id='duration' ref={duration} defaultValue={initialData?.duration} placeholder='1h 12m' />
         </label>
         {errors.duration && <div className='form-error'>{errors.duration}</div>}
         <label className='single-movie'>

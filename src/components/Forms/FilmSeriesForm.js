@@ -1,18 +1,23 @@
 import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
 import FilmSeriesSingleMovie from './FilmSeriesSingleMovie';
+import { useDevTools } from '../DevToolsContext';
 import ImagesPreview from './ImagesPreview';
+import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg';
+import json_icon from '../../images/json.svg'
 
 const isObject = (object) => {
-  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return {title:'',img:item} })
+  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return { title: '', img: item } })
   if (typeof object === 'string') return JSON.parse(object)
-    return object
+  return object
 }
-const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
+const FilmSeriesForm = ({ setAddMovie, initialData: startData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputMoviesCount, setInputMoviesCount] = useState(0);
   const [showImagesPreview, setShowImagesPreview] = useState(false)
+  const [showAddFromJson, setShowAddFromJson] = useState(false)
+  const [initialData, setInitialData] = useState(startData)
   const title = useRef(null);
   const description = useRef(null);
   const moviesCount = useRef(null);
@@ -22,8 +27,24 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
+    setInitialData(startData)
+  }, [startData])
+  useEffect(() => {
+    imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
     if (initialData) setInputMoviesCount(ifMoviesString(initialData?.movies).length)
   }, [initialData]);
+    // DevTools
+    const { setDevTools, filmSeriesFormTestData } = useDevTools();
+    useEffect(() => {
+      imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
+      setDevTools((prev) => {
+        return {
+          ...prev,
+          fillFilmSeriesForm: () => setInitialData(filmSeriesFormTestData)
+        };
+      })
+    }, [initialData]);
+
   const FilmSeries = () => {
     if (validateForm()) {
       const isMoviesValid = movieRefs.current.every((ref) => ref?.validateForm?.());
@@ -36,7 +57,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
           title: title.current.value.trim(),
           description: description.current.value.trim(),
           moviesCount: moviesCount.current.value.trim(),
-          imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img,i) => { return {title: imgsTitle.current[i] || '', img: img} })),
+          imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
           movies: JSON.stringify(moviesData),
           password: window.prompt("Podaj hasło")
         }
@@ -83,7 +104,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   };
   const ifMoviesString = (movies) => {
     if (typeof movies === 'string') return JSON.parse(movies)
-      return movies
+    return movies
   }
   const RemoveInvalid = (e) => {
     e.target.classList.remove('invalid'); setErrors((prevErrors) => {
@@ -97,15 +118,23 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
   }
   const updateImgsTitle = (newTitle) => {
     imgsTitle.current = newTitle
+    setInitialData((prev) => {
+      return {
+        ...prev,
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: newTitle[i] || '', img: img } }))
+      }
+    })
   }
   return (
     <div className='form-box-container'>
       {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
-      updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        {showAddFromJson && <AddFromJson setInitialData={setInitialData} setShowAddFromJson={setShowAddFromJson} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}>
           <img src={close} alt='close_icon' />
         </div>
+        {!isEdit && <div className='from-json' onClick={() => setShowAddFromJson(true)}><img src={json_icon} alt='add_from_json_icon' /></div>}
         <h1>{isEdit ? "Edytuj serie filmów" : "Dodaj serie filmów"}</h1>
         <div className='form-form'>
           <label>
@@ -126,7 +155,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData, isEdit }) => {
           </label>
           {errors.moviesCount && <div className='form-error'>{errors.moviesCount}</div>}
           <label>
-          <span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
+            <span>Linki do zdjęć<br />(jeden pod drugim)<br /><span className='imgs-preview-btn' onClick={() => setShowImagesPreview(true)}>(Podgląd zdjęć)</span></span>
             <textarea onChange={(e) => { RemoveInvalid(e) }} rows='10' id='imgs' ref={imgs} defaultValue={isObject(initialData?.imgs)?.map((item) => item.img).join("\n")} />
           </label>
           {errors.imgs && <div className='form-error'>{errors.imgs}</div>}

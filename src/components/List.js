@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SetTitle from './SetTitle';
 import Popup from './Popup';
 import FilmClapboard from './FilmClapboard';
@@ -10,19 +10,8 @@ import { Link } from "react-router-dom";
 import Card from './Card';
 import { useDevTools } from './DevToolsContext';
 
-const List = ({
-  data,
-  setData,
-  error,
-  setFavoriteData,
-  title,
-  fetchAdd,
-  fetchEdit,
-  fetchDelete,
-  fetchMultipleDelete,
-  fetchAddFavorite,
-  isFavoriteList = false,
-  setRefreshData
+const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdit, fetchDelete, fetchMultipleDelete, fetchAddFavorite,
+  isFavoriteList = false, setRefreshData
 }) => {
   const [movies, setMovies] = useState(data?.data);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -33,6 +22,7 @@ const List = ({
     genres: [], // ['akcja', 'komedia', 'fantasy', 'horror', 'sci-fi', 'thriller', itd.]
     sort: null, // 'a-z', 'z-a'
   });
+  const filterRefs = useRef({})
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [addMovie, setAddMovie] = useState(null);
   const [editMovie, setEditMovie] = useState(null);
@@ -48,7 +38,8 @@ const List = ({
         ...prev,
         movies: movies,
         setMovies: setMovies,
-        filters: filters
+        filters: filters,
+        filterRefs: filterRefs,
       };
     })
   }, [movies, filters]);
@@ -92,7 +83,7 @@ const List = ({
   };
 
   const handleFiltersClose = (e) => {
-    if (!e.target.closest('.filter-box')) {
+    if (!e.target.closest('.filter-box') && !e.target.closest('.filter-label')) {
       setFilterMenuVisible(false);
     }
   };
@@ -133,7 +124,7 @@ const List = ({
 
   const getEditMovieScreen = () => {
     if (!editMovie) return null;
-    console.log(selectedCardId);
+    console.log('ID: ' + selectedCardId);
     var tempAddMovie = editMovie;
     if (!tempAddMovie.type) tempAddMovie = { type: editMovie };
 
@@ -206,7 +197,14 @@ const List = ({
     }
   }, [filters]);
 
-  const toggleCategoryFilter = (category) => {
+  const toggleCategoryFilter = (category, hide) => {
+    const el = filterRefs.current[category];
+
+    if (hide) {
+      if (el) el.style.display = "none";
+    } else {
+      if (el) el.style.display = "block";
+    }
     setFilters((prevFilters) => ({
       ...prevFilters,
       categories: prevFilters.categories.includes(category)
@@ -215,7 +213,14 @@ const List = ({
     }));
   };
 
-  const toggleGenreFilter = (genre) => {
+  const toggleGenreFilter = (genre, hide) => {
+    const el = filterRefs.current[genre];
+
+    if (hide) {
+      if (el) el.style.display = "none";
+    } else {
+      if (el) el.style.display = "block";
+    }
     setFilters((prevFilters) => ({
       ...prevFilters,
       genres: prevFilters.genres.includes(genre)
@@ -224,7 +229,15 @@ const List = ({
     }));
   };
 
-  const toggleSortFilter = (sortOption) => {
+  const toggleSortFilter = (sortOption, hide) => {
+    const el = filterRefs.current[sortOption];
+
+    if (hide) {
+      if (el) el.style.display = "none";
+      filterRefs.current[sortOption.split("").reverse().join("")].style.display = 'block'
+    } else {
+      if (el) el.style.display = "block";
+    }
     setFilters((prevFilters) => ({
       ...prevFilters,
       sort: prevFilters.sort === sortOption ? null : sortOption,
@@ -279,6 +292,7 @@ const List = ({
     var movie = movies.find((item) => item.id === id);
     if (movie.movies && typeof movie.movies === "object") movie.movies = JSON.stringify(movie.movies);
     if (movie.episodes && typeof movie.episodes === "object") movie.episodes = JSON.stringify(movie.episodes);
+    if (movie.imgs && typeof movie.imgs === "object") movie.imgs = JSON.stringify(movie.imgs);
     movie.password = window.prompt("Podaj hasło");
     fetchAddFavorite(movie).then((data) => {
       if (data.status === 'success') {
@@ -321,36 +335,50 @@ const List = ({
         <div className='bar-box' title='Dodaj serial' onClick={() => setAddMovie('series')}>
           <div className="add-series-icon"></div>
         </div>
-        <div className='search-container'>
-          <div className='bar-box filter-box' title='Filtruj' onClick={() => setFilterMenuVisible(!filterMenuVisible)}>
-            <div className="filter-icon"></div>
-            <div className="filter-text">
-              {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
-                {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
-              </span>))}
-              {filters.genres.map(genre => (<span key={genre} className="filter-label" onClick={() => toggleGenreFilter(genre)}>
-                {genre}{' '}
-              </span>))}
-              {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
-            </div>
-            {filterMenuVisible && (
-              <div className='filter-menu'>
-                <div className='filter-option-title'>- Sortowanie -</div>
-                <div className='filter-option' onClick={() => toggleSortFilter('a-z')}>Od A-Z</div>
-                <div className='filter-option' onClick={() => toggleSortFilter('z-a')}>Od Z-A</div>
-                <div className='filter-option-title'>- Kategoria -</div>
-                <div className='filter-option' onClick={() => toggleCategoryFilter('movie')}>Filmy</div>
-                <div className='filter-option' onClick={() => toggleCategoryFilter('film-series')}>Serie filmów</div>
-                <div className='filter-option' onClick={() => toggleCategoryFilter('series')}>Seriale</div>
-                <div className='filter-option-title'>- Gatunek -</div>
-                {data && Array.from(new Set(data.data.flatMap(item => item.genre ? item.genre.split(', ') : [])))
-                  .map((genre, index) => (
-                    <div key={index} className='filter-option' onClick={() => toggleGenreFilter(genre)}>
-                      {genre}
-                    </div>
-                  ))}
+        <div className='filter-container'>
+          <div className='bar-box filter-box' title='Filtruj' >
+            <div className="filter-icon" onClick={() => setFilterMenuVisible(!filterMenuVisible)}></div>
+            <div className='filter-wrapper'>
+              <div className="filter-text">
+                {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
+                  {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
+                </span>))}
+                {filters.genres.map(genre => (<span key={genre} className="filter-label" onClick={() => toggleGenreFilter(genre)}>
+                  {genre}{' '}
+                </span>))}
+                {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
               </div>
-            )}
+              {filterMenuVisible && (
+                <div className='filter-menu'>
+                  <div className='filter-option-title'>- Sortowanie -</div>
+                  <div className='filter-option' onClick={() => toggleSortFilter('a-z', true)} ref={(el) => {
+                    if (el) filterRefs.current['a-z'] = el;
+                  }}>Od A-Z</div>
+                  <div className='filter-option' onClick={() => toggleSortFilter('z-a', true)} ref={(el) => {
+                    if (el) filterRefs.current['z-a'] = el;
+                  }}>Od Z-A</div>
+                  <div className='filter-option-title'>- Kategoria -</div>
+                  <div className='filter-option' onClick={() => toggleCategoryFilter('movie', true)} ref={(el) => {
+                    if (el) filterRefs.current['movie'] = el;
+                  }}>Filmy</div>
+                  <div className='filter-option' onClick={() => toggleCategoryFilter('film-series', true)} ref={(el) => {
+                    if (el) filterRefs.current['film-series'] = el;
+                  }}>Serie filmów</div>
+                  <div className='filter-option' onClick={() => toggleCategoryFilter('series', true)} ref={(el) => {
+                    if (el) filterRefs.current['series'] = el;
+                  }}>Seriale</div>
+                  <div className='filter-option-title'>- Gatunek -</div>
+                  {data && Array.from(new Set(data.data.flatMap(item => item.genre ? item.genre.split(', ') : [])))
+                    .map((genre, index) => (
+                      <div key={index} className='filter-option' onClick={(e) => toggleGenreFilter(genre, true)} ref={(el) => {
+                        if (el) filterRefs.current[genre] = el;
+                      }}>
+                        {genre}
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className='bar-box' title={isFavoriteList ? 'Zamknij ulubione' : 'Ulubione'}>

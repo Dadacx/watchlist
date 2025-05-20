@@ -8,11 +8,11 @@ const ImagesPreview = ({ images, setShowImagesPreview, updateImages, imgsTitle, 
     const [imgs, setImgs] = useState(images.split('\n'))
     const thumbnail = imgs[0]
 
-    if (imgsTitle.length < imgs.length) {
+    if (imgsTitle?.length < imgs.length) {
         for (let i = imgsTitle.length; i < imgs.length; i++) {
             imgsTitle.push('')
         }
-    } else if (imgsTitle.length > imgs.length) {
+    } else if (imgsTitle?.length > imgs.length) {
         for (let i = imgsTitle.length; i > imgs.length; i--) {
             imgsTitle.pop()
         }
@@ -22,7 +22,7 @@ const ImagesPreview = ({ images, setShowImagesPreview, updateImages, imgsTitle, 
         const index = imgs.indexOf(image);
         console.log(index)
         const newTitle = window.prompt("Podaj tytuł zdjęcia", imgsTitle[index])
-        imgsTitle[index] = newTitle
+        imgsTitle[index] = newTitle ? newTitle : ''
         updateImgsTitle(imgsTitle)
     }
     console.log(imgsTitle)
@@ -52,12 +52,12 @@ const ImagesPreview = ({ images, setShowImagesPreview, updateImages, imgsTitle, 
             <div className='photos-preview'>
                 {imgs.length > 0 ? imgs.map((img, i) => {
                     if (i === 0) return null
-                    return (<div className='images-preview-img-container'>
+                    return (<div key={i} className='images-preview-img-container'>
                         <div className='preview-img-icons'>
                             <img className='edit-title-icon' alt='edit-title-icon' src={edit_title_icon}
                                 onClick={() => updateTitle(img)} title='Edytuj tytuł' />
                             <img className='delete-icon' alt='delete-icon' src={delete_icon} onClick={() => deleteImage(img)}
-                            title='Usuń' />
+                                title='Usuń' />
                         </div>
                         <img key={i} className='photos' alt={`photo-${i}`} src={img} />
                     </div>)

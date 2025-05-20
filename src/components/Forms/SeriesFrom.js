@@ -1,17 +1,22 @@
 import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
+import { useDevTools } from '../DevToolsContext';
 import ImagesPreview from './ImagesPreview';
+import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg'
+import json_icon from '../../images/json.svg'
 
 const isObject = (object) => {
-  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return {title:'',img:item} })
+  if (typeof object === 'string' && object.startsWith("http")) return object.split("\n").map((item) => { return { title: '', img: item } })
   if (typeof object === 'string') return JSON.parse(object)
-    return object
+  return object
 }
-const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
+const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
   const [errors, setErrors] = useState({});
   const [inputSeasonsCount, setInputSeasonsCount] = useState(0);
   const [showImagesPreview, setShowImagesPreview] = useState(false)
+  const [showAddFromJson, setShowAddFromJson] = useState(false)
+  const [initialData, setInitialData] = useState(startData)
   const title = useRef(null);
   const genre = useRef(null);
   const original_title = useRef(null);
@@ -20,10 +25,26 @@ const SeriesFrom = ({ setAddMovie, initialData, isEdit }) => {
   const imgs = useRef(null);
   const imgsTitle = useRef(isObject(initialData?.imgs)?.map((item) => item.title) || []);
   const seasonsCount = useRef(null);
-console.log(isObject(initialData?.imgs))
+
   useEffect(() => {
+    setInitialData(startData)
+  }, [startData])
+  useEffect(() => {
+    imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
     if (initialData) setInputSeasonsCount(ifEpisodesString(initialData?.episodes).length)
   }, [initialData]);
+      // DevTools
+    const { setDevTools, seriesFormTestData } = useDevTools();
+    useEffect(() => {
+      imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
+      setDevTools((prev) => {
+        return {
+          ...prev,
+          fillSeriesForm: () => setInitialData(seriesFormTestData)
+        };
+      })
+    }, [initialData]);
+
   function Series() {
     if (validateForm()) {
       console.log('Formularz poprawny');
@@ -39,7 +60,7 @@ console.log(isObject(initialData?.imgs))
         original_title: original_title.current.value.trim(),
         year: year.current.value.trim(),
         link: link.current.value.trim(),
-        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img,i) => { return {title: imgsTitle.current[i] || '', img: img} })),
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
         seasonsCount: seasonsCount.current.value.trim(),
         episodes: JSON.stringify(episodes),
         password: window.prompt("Podaj hasło")
@@ -109,7 +130,7 @@ console.log(isObject(initialData?.imgs))
   };
   const ifEpisodesString = (episodes) => {
     if (typeof episodes === 'string') return JSON.parse(episodes)
-      return episodes
+    return episodes
   }
   const RemoveInvalid = (e) => {
     e.target.classList.remove('invalid'); setErrors((prevErrors) => {
@@ -123,13 +144,21 @@ console.log(isObject(initialData?.imgs))
   }
   const updateImgsTitle = (newTitle) => {
     imgsTitle.current = newTitle
+    setInitialData((prev) => {
+      return {
+        ...prev,
+        imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: newTitle[i] || '', img: img } }))
+      }
+    })
   }
   return (
     <div className='form-box-container'>
       {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
-      updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
+        {showAddFromJson && <AddFromJson setInitialData={setInitialData} setShowAddFromJson={setShowAddFromJson} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
+        {!isEdit && <div className='from-json' onClick={() => setShowAddFromJson(true)}><img src={json_icon} alt='add_from_json_icon' /></div>}
         <h1>{isEdit ? "Edytuj serial" : "Dodaj serial"}</h1>
         <div className='form-form'>
           <label><span>Tytuł</span>

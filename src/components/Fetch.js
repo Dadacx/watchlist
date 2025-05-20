@@ -1,10 +1,9 @@
-// const url = 'http://192.168.100.4'
+// const url = 'http://192.168.100.9'
 const url = 'http://localhost'
 // const url = 'https://frog02-20766.wykr.es'
 const MoviesListFetch = async () => {
   try {
     const res = await fetch(`${url}/watchlist/get_movies.php`);
-    // const res = await fetch(`${url}/watchlist/get_movies.php`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -16,7 +15,6 @@ const MoviesListFetch = async () => {
 const DeleteFetch = async (password, id, title) => {
   try {
     const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
-    // const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -29,7 +27,6 @@ const MultipleDeleteFetch = async (password, ids) => {
   console.log(ids.join(","))
   try {
     const res = await fetch(`${url}/watchlist/multiple_delete.php?password=${password}&ids=${ids.join(",")}`);
-    // const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -41,7 +38,6 @@ const MultipleDeleteFetch = async (password, ids) => {
 const AddFetch = async (movie) => {
   try {
     const res = await fetch(`${url}/watchlist/add.php`, {
-      // const res = await fetch(`${url}/watchlist/add.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -59,7 +55,6 @@ const AddFetch = async (movie) => {
 const EditFetch = async (movie) => {
   try {
     const res = await fetch(`${url}/watchlist/edit.php`, {
-      // const res = await fetch(`${url}/watchlist/edit.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -78,7 +73,6 @@ const EditFetch = async (movie) => {
 const FavoriteMoviesListFetch = async () => {
   try {
     const res = await fetch(`${url}/watchlist/get_favorite_movies.php`);
-    // const res = await fetch(`${url}/watchlist/get_favorite_movies.php`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -90,7 +84,6 @@ const FavoriteMoviesListFetch = async () => {
 const DeleteFavoriteFetch = async (password, id, title) => {
   try {
     const res = await fetch(`${url}/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
-    // const res = await fetch(`${url}/watchlist/delete_favorite.php?password=${password}&id=${id}&title=${title}`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -102,7 +95,6 @@ const DeleteFavoriteFetch = async (password, id, title) => {
 const MultipleDeleteFavoriteFetch = async (password, ids) => {
   try {
     const res = await fetch(`${url}/watchlist/multiple_delete_favorite.php?password=${password}&ids=${ids.join(",")}`);
-    // const res = await fetch(`${url}/watchlist/delete.php?password=${password}&id=${id}&title=${title}`);
     var data = await res.json();
     // console.log(data)
     return data;
@@ -114,7 +106,6 @@ const MultipleDeleteFavoriteFetch = async (password, ids) => {
 const AddFavoriteFetch = async (movie) => {
   try {
     const res = await fetch(`${url}/watchlist/add_favorite.php`, {
-      // const res = await fetch(`${url}/watchlist/add_favorite.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json" // ustawienie nagłówka na JSON
@@ -132,7 +123,6 @@ const AddFavoriteFetch = async (movie) => {
 const EditFavoriteFetch = async (movie) => {
   try {
     const res = await fetch(`${url}/watchlist/edit_favorite.php`, {
-      // const res = await fetch(`${url}/watchlist/edit_favorite.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json" // ustawienie nagłówka na JSON
