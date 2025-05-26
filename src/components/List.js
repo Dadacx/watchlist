@@ -6,6 +6,7 @@ import MovieForm from './Forms/MovieForm';
 import FilmSeriesForm from './Forms/FilmSeriesForm';
 import SeriesForm from './Forms/SeriesFrom';
 import ContextMenu from './ContextMenu';
+import delete_icon from '../images/delete.svg';
 import { Link } from "react-router-dom";
 import Card from './Card';
 import { useDevTools } from './DevToolsContext';
@@ -243,6 +244,17 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
       sort: prevFilters.sort === sortOption ? null : sortOption,
     }));
   };
+  const resetFilters = () => {
+    Object.values(filterRefs.current).forEach((el) => {
+      if (el) el.style.display = "block";
+    });
+
+    setFilters({
+      categories: [],
+      genres: [],
+      sort: null,
+    });
+  };
 
   const deleteMovie = async (id, password) => {
     await fetchDelete(password || window.prompt("Podaj hasło"), id, movies.find((item) => item.id === id).title).then((fetchData) => {
@@ -350,6 +362,7 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
               </div>
               {filterMenuVisible && (
                 <div className='filter-menu'>
+                  <div className='filter-option' onClick={resetFilters}>Wyczyść filtry</div>
                   <div className='filter-option-title'>- Sortowanie -</div>
                   <div className='filter-option' onClick={() => toggleSortFilter('a-z', true)} ref={(el) => {
                     if (el) filterRefs.current['a-z'] = el;

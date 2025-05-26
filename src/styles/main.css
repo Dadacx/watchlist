@@ -58,6 +58,7 @@ body {
     }
     div.filter-menu {
         position: unset;
+        max-height: 55vh;
     }
     div.filter-text {
         width: max-content;

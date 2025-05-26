@@ -148,6 +148,8 @@
 .filter-menu {
     width: max-content;
     max-width: 45vw;
+    max-height: 90vh;
+    overflow-y: auto;
     background: #3c3d37;
     position: absolute;
     top: 40px;

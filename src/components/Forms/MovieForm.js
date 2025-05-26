@@ -126,7 +126,6 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
     imgs.current.value = newImgs
   }
   const updateImgsTitle = (newTitle) => {
-    console.log(newTitle)
     imgsTitle.current = newTitle
     setInitialData((prev) => {
       return {
