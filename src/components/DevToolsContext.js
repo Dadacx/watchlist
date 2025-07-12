@@ -21,7 +21,7 @@ export const DevToolsProvider = ({ children }) => {
         return { title: i === 0 ? 'miniaturka' : `zdj ${i}`, img: img }
     })
     const movieFormTestData = {
-        title: `Testowy tytuł (${new Date().toLocaleString().replace(', ',' ')})`,
+        title: `Testowy film (${new Date().toLocaleString().replace(', ',' ')})`,
         genre: 'Akcja, Sci-Fi, Komedia, Przygodowy, Thriller, Horror',
         original_title: `Test title`,
         year: '2025',
@@ -31,7 +31,7 @@ export const DevToolsProvider = ({ children }) => {
         imgs: formImgs
     }
     const filmSeriesFormTestData = {
-        title: `Testowy tytuł ${new Date().toLocaleString().replace(', ',' ')}`,
+        title: `Testowa seria filmów ${new Date().toLocaleString().replace(', ',' ')}`,
         description: `Testowy opis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
         imgs: formImgs,
         movies: Array.from({ length: 5 }, (_, i) => ({
@@ -43,7 +43,7 @@ export const DevToolsProvider = ({ children }) => {
         }))
     }
     const seriesFormTestData = {
-        title: `Testowy tytuł ${new Date().toLocaleString().replace(', ',' ')}`,
+        title: `Testowy serial ${new Date().toLocaleString().replace(', ',' ')}`,
         genre: 'Akcja, Sci-Fi, Komedia, Przygodowy, Thriller, Horror',
         original_title: `Test title`,
         year: '2025',

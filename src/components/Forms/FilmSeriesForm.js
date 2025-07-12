@@ -2,6 +2,7 @@ import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
 import FilmSeriesSingleMovie from './FilmSeriesSingleMovie';
 import { useDevTools } from '../DevToolsContext';
+import { showPasswordPrompt } from '../PasswordPrompt/PasswordPrompt';
 import ImagesPreview from './ImagesPreview';
 import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg';
@@ -45,7 +46,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData: startData, isEdit }) => {
       })
     }, [initialData]);
 
-  const FilmSeries = () => {
+  const FilmSeries = async () => {
     if (validateForm()) {
       const isMoviesValid = movieRefs.current.every((ref) => ref?.validateForm?.());
       if (isMoviesValid) {
@@ -59,7 +60,7 @@ const FilmSeriesForm = ({ setAddMovie, initialData: startData, isEdit }) => {
           moviesCount: moviesCount.current.value.trim(),
           imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
           movies: JSON.stringify(moviesData),
-          password: window.prompt("Podaj hasło")
+          password: await showPasswordPrompt("Podaj hasło")
         }
         console.log(movieSeries)
         setAddMovie(movieSeries);

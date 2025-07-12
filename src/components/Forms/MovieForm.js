@@ -1,5 +1,6 @@
 import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
+import { showPasswordPrompt } from '../PasswordPrompt/PasswordPrompt';
 import ImagesPreview from './ImagesPreview';
 import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg'
@@ -41,7 +42,7 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
       })
     }, [initialData]);
 
-  function Movie() {
+  async function Movie() {
     if (validateForm()) {
       console.log('Formularz poprawny');
       const movie = {
@@ -54,7 +55,7 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
         duration: duration.current.value.trim(),
         link: link.current.value.trim(),
         imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
-        password: window.prompt("Podaj hasło")
+        password: await showPasswordPrompt("Podaj hasło")
       }
       console.log(movie)
       setAddMovie(movie);

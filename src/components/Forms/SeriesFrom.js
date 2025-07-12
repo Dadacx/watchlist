@@ -1,6 +1,7 @@
 import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
 import { useDevTools } from '../DevToolsContext';
+import { showPasswordPrompt } from '../PasswordPrompt/PasswordPrompt';
 import ImagesPreview from './ImagesPreview';
 import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg'
@@ -45,7 +46,7 @@ const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
       })
     }, [initialData]);
 
-  function Series() {
+  async function Series() {
     if (validateForm()) {
       console.log('Formularz poprawny');
       var episodes = [];
@@ -63,7 +64,7 @@ const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
         imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
         seasonsCount: seasonsCount.current.value.trim(),
         episodes: JSON.stringify(episodes),
-        password: window.prompt("Podaj hasło")
+        password: await showPasswordPrompt("Podaj hasło")
       }
       console.log(typeof series.episodes)
       console.log(series)
