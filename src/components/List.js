@@ -9,7 +9,7 @@ import SeriesForm from './Forms/SeriesFrom';
 import ContextMenu from './ContextMenu';
 import { Link } from "react-router-dom";
 import Card from './Card';
-import { PopupManager, showPopup, closePopup } from './Popup/Popup';
+import { PopupManager, showPopup } from './Popup/Popup';
 import { showPasswordPrompt } from './PasswordPrompt/PasswordPrompt';
 import { useDevTools } from './DevToolsContext';
 
@@ -94,17 +94,16 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   useEffect(() => {
     if (addMovie && addMovie.type) {
       showPopup({
-        message: <><FilmClapboard style={{ scale: 0.07, top: '-215px', left: '-220px' }} />
-          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></>, duration: 8000, border: true
+        message: <div className='addPopupContainer'><FilmClapboard style={{ scale: 0.07, left: '-220px' }} />
+          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></div>, duration: 800000, border: true
       });
       fetchAdd(addMovie).then((response) => {
-        closePopup();
         if (response.status === 'success') {
-          showPopup({ message: response.message, type: 'success', duration: 8000, border: true, icon: true });
+          showPopup({ message: response.message, type: 'success', duration: 8000, border: true, icon: true, replace: true });
           setRefreshData((prev) => !prev);
           setAddMovie(null);
         } else {
-          showPopup({ message: response.message, type: 'error', duration: 8000, border: true, icon: true });
+          showPopup({ message: response.message, type: 'error', duration: 8000, border: true, icon: true, replace: true });
         }
       });
     }
@@ -131,18 +130,17 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   useEffect(() => {
     if (editMovie && editMovie.type) {
       showPopup({
-        message: <><FilmClapboard style={{ scale: 0.07, top: '-215px', left: '-220px' }} />
-          <span style={{ marginLeft: '45px' }}>Zapisywanie zmian...</span></>, duration: 8000, border: true
+        message: <div className='addPopupContainer'><FilmClapboard style={{ scale: 0.07, left: '-220px' }} />
+          <span style={{ marginLeft: '45px' }}>Zapisywanie zmian...</span></div>, duration: 8000, border: true
       });
       editMovie.id = selectedCardId;
       fetchEdit(editMovie).then((response) => {
-        closePopup();
         if (response.status === 'success') {
-          showPopup({ message: response.message, type: 'success', duration: 8000, border: true, icon: true });
+          showPopup({ message: response.message, type: 'success', duration: 8000, border: true, icon: true, replace: true });
           setRefreshData((prev) => !prev);
           setEditMovie(null);
         } else {
-          showPopup({ message: response.message, type: 'error', duration: 8000, border: true, icon: true });
+          showPopup({ message: response.message, type: 'error', duration: 8000, border: true, icon: true, replace: true });
         }
       });
     }
@@ -202,27 +200,31 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   };
 
   const addFavorite = async (id) => {
-    var movie = movies.find((item) => item.id === id);
+    var originalMovie  = movies.find((item) => item.id === id);
+    if (!originalMovie) {
+      showPopup({ message: "Nie znaleziono filmu", type: 'error', duration: 8000, border: true, icon: true });
+      return;
+    }
+    const movie = structuredClone(originalMovie)
     if (movie.movies && typeof movie.movies === "object") movie.movies = JSON.stringify(movie.movies);
     if (movie.episodes && typeof movie.episodes === "object") movie.episodes = JSON.stringify(movie.episodes);
     if (movie.imgs && typeof movie.imgs === "object") movie.imgs = JSON.stringify(movie.imgs);
     movie.password = await showPasswordPrompt("Podaj hasło");
     fetchAddFavorite(movie).then((data) => {
-      closePopup();
       if (data.status === 'success') {
         setFavoriteData((prevData) => ({
           ...prevData,
           data: [...prevData.data, movie],
         }));
         deleteMovie(selectedCardId, movie.password).then(() => {
-          showPopup({ message: data.message, type: 'success', duration: 8000, border: true, icon: true });
+          showPopup({ message: data.message, type: 'success', duration: 8000, border: true, icon: true, replace: true });
         });
       } else {
-        showPopup({ message: data.message, type: 'error', duration: 8000, border: true, icon: true });
+        showPopup({ message: data.message, type: 'error', duration: 8000, border: true, icon: true, replace: true });
       }
       console.log(data.message);
     }).catch((error) => {
-      showPopup({ message: error.message, type: 'error', duration: 8000, border: true, icon: true });
+      showPopup({ message: error.message, type: 'error', duration: 8000, border: true, icon: true, replace: true });
       console.log(error);
     });
   };

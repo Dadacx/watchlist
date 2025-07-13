@@ -4,8 +4,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { DevToolsProvider } from './components/DevToolsContext';
 import packageJson from '../package.json';
+import { version as popupVersion } from './components/Popup/Popup';
+import { version as passwordPromptVersion } from './components/PasswordPrompt/PasswordPrompt';
 
 console.log(`v${packageJson.version}`);
+console.log(`Popup v${popupVersion}`);
+console.log(`PasswordPrompt v${passwordPromptVersion}`);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

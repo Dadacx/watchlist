@@ -4,9 +4,9 @@ import "./PasswordPrompt.css";
 import showPasswordIcon from "./images/show_password.svg";
 import hidePasswordIcon from "./images/hide_password.svg";
 
-const version = "1.0.0";
+const version = "1.0.1";
 
-export function showPasswordPrompt(title, subtitle) {
+function showPasswordPrompt(title, subtitle) {
   return new Promise((resolve) => {
     const container = document.createElement("div");
     document.body.appendChild(container);
@@ -45,8 +45,13 @@ function PasswordPrompt({ onSubmit, title, subtitle }) {
 
   useEffect(() => {
     const esc = (e) => e.key === "Escape" && handleCancel();
+    const enter = (e) => e.key === "Enter" && handleOk();
     document.addEventListener("keydown", esc);
-    return () => document.removeEventListener("keydown", esc);
+    document.addEventListener("keydown", enter);
+    return () => {
+      document.removeEventListener("keydown", esc);
+      document.removeEventListener("keydown", enter);
+    };
   }, []);
 
   return (
@@ -80,3 +85,5 @@ function PasswordPrompt({ onSubmit, title, subtitle }) {
     </div>
   );
 }
+
+export { showPasswordPrompt, version };

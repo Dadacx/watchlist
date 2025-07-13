@@ -3,7 +3,7 @@ import "./Popup.css";
 
 let addPopupToQueue = () => { };
 let closePopup = () => { };
-const version = "1.0.0"
+const version = "1.1.0"
 
 function PopupManager() {
   const [queue, setQueue] = useState([]);
@@ -11,7 +11,6 @@ function PopupManager() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    console.log(`PopupManager v${version}`);
     addPopupToQueue = (popupData) => {
       setQueue((prev) => [...prev, popupData]);
     };
@@ -30,6 +29,15 @@ function PopupManager() {
       setQueue((prev) => prev.slice(1));
       setCurrentPopup(next);
       setVisible(true);
+    } else if (currentPopup && queue.length > 0 && queue[0].replace) {
+      // Jeśli następny popup ma replace, zamknij obecny i pokaż nowy
+      setVisible(false);
+      setTimeout(() => {
+        const next = queue[0];
+        setQueue((prev) => prev.slice(1));
+        setCurrentPopup(next);
+        setVisible(true);
+      }, 300); // czas na animację znikania
     }
   }, [queue, currentPopup]);
 
@@ -97,9 +105,9 @@ function PopupManager() {
   );
 }
 
-// Użycie: showPopup({ message: "Treść", type: "error", duration: 5000, position: "top", style: { backgroundColor: 'red' }, border: true, icon: true });
-function showPopup({ message, type = "default", duration = 3000, position = "bottomLeft", style = {}, border = false, icon = false }) {
-  addPopupToQueue({ message, type, duration, position, style, border, icon });
+// Użycie: showPopup({ message: "Treść", type: "error", duration: 5000, position: "top", style: { backgroundColor: 'red' }, border: true, icon: true, replace: true });
+function showPopup({ message, type = "default", duration = 3000, position = "bottomLeft", style = {}, border = false, icon = false, replace = false }) {
+  addPopupToQueue({ message, type, duration, position, style, border, icon, replace });
 }
 
-export { PopupManager, showPopup, closePopup };
+export { PopupManager, showPopup, closePopup, version };
