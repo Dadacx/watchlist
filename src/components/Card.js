@@ -44,8 +44,10 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
         ref={imgRef}
         className="card-img"
         alt="card-image"
-        crossOrigin="anonymous"
-        src={"https://corsproxy.io/?url=" + img}
+        // crossOrigin="anonymous"
+        // src={"https://corsproxy.io/?url=" + img}
+        // src={"https://frog02-30766.wykr.es/proxy?url=" + img}
+        src={img}
       />
       <div className="content">
         <span className="title" ref={titleRef}>

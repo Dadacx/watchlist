@@ -1,56 +1,56 @@
 const getAverageColor = (imgRef, setShadowColor) => {
-  // const imgElement = imgRef.current;
-  const imgElement = imgRef.target;
+  const originalImgElement = imgRef.target;
 
-  // Sprawdzenie, czy imgElement jest dostępny i załadowany
-  if (!imgElement || imgElement.width === 0 || imgElement.height === 0) {
-    console.warn("Obraz nie jest jeszcze załadowany lub ma szerokość/wysokość równą 0.");
-    return;
-  }
+  const imgElement = new Image();
+  imgElement.crossOrigin = "anonymous";
+  imgElement.src = "https://frog02-30766.wykr.es/proxy?url=" + originalImgElement.src;
+  // imgElement.width = originalImgElement.width;
+  // imgElement.height = originalImgElement.height;
 
-  // Tworzymy element canvas do analizy obrazu
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  canvas.width = imgElement.width;
-  canvas.height = imgElement.height;
+  imgElement.onload = () => {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    canvas.width = imgElement.width;
+    canvas.height = imgElement.height;
 
-  // Rysujemy obraz na canvasie
-  context.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height);
+    context.drawImage(imgElement, 0, 0);
 
-  try {
-    // Pobieramy piksele z obrazu
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const pixels = imageData.data;
+    // document.querySelector(".container").appendChild(canvas);
 
-    let r = 0, g = 0, b = 0, totalPixels = 0;
+    try {
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      console.log(imageData)
+      const pixels = imageData.data;
 
-    // Iterujemy po pikselach (4 wartości na piksel: r, g, b, a)
-    for (let i = 0; i < pixels.length; i += 4) {
-      const red = pixels[i]; // Red
-      const green = pixels[i + 1]; // Green
-      const blue = pixels[i + 2]; // Blue
-      // Obliczamy jasność pikselu na podstawie wartości RGB
-      const brightness = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-      // Ignorujemy bardzo ciemne lub jasne piksele
-      if (brightness > 30 && brightness < 225) {
-        r += red; // Red
-        g += green; // Green
-        b += blue; // Blue
-        totalPixels++;
+      let r = 0, g = 0, b = 0, totalPixels = 0;
+
+      for (let i = 0; i < pixels.length; i += 4) {
+        const red = pixels[i];
+        const green = pixels[i + 1];
+        const blue = pixels[i + 2];
+        const brightness = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+
+        if (brightness > 30 && brightness < 225) {
+          r += red;
+          g += green;
+          b += blue;
+          totalPixels++;
+        }
       }
-    }
 
-    // Jeśli mamy jakieś odpowiednie piksele, obliczamy średni kolor
-    if (totalPixels > 0) {
-      r = Math.floor(r / totalPixels);
-      g = Math.floor(g / totalPixels);
-      b = Math.floor(b / totalPixels);
-      // Ustawiamy kolor cienia
-      setShadowColor(`rgba(${r}, ${g}, ${b}, var(--shadow-visibility))`);
+      if (totalPixels > 0) {
+        r = Math.floor(r / totalPixels);
+        g = Math.floor(g / totalPixels);
+        b = Math.floor(b / totalPixels);
+        setShadowColor(`rgba(${r}, ${g}, ${b}, var(--shadow-visibility))`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania danych obrazu:", error);
     }
-  } catch (error) {
-    console.error("Błąd podczas pobierania danych obrazu:", error);
-  }
+  };
+
+  imgElement.onerror = () => {
+    console.error("Nie udało się załadować obrazu przez proxy.");
+  };
 };
-
 export default getAverageColor;
