@@ -4,7 +4,7 @@ import "./PasswordPrompt.css";
 import showPasswordIcon from "./images/show_password.svg";
 import hidePasswordIcon from "./images/hide_password.svg";
 
-const version = "1.0.1";
+const version = "1.0.2";
 
 function showPasswordPrompt(title, subtitle) {
   return new Promise((resolve) => {

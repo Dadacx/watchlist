@@ -19,7 +19,7 @@ const getAverageColor = (imgRef, setShadowColor) => {
 
     try {
       const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-      console.log(imageData)
+
       const pixels = imageData.data;
 
       let r = 0, g = 0, b = 0, totalPixels = 0;

@@ -67,7 +67,7 @@ const FilmSeriesSingleMovie = forwardRef(({ initialTitle, initialData }, ref) =>
   return (
     <details className='form-film-series-single-movie' open>
       <input type="checkbox" name={initialTitle.toLowerCase().replaceAll(" ","_")} className='details-input' id={initialTitle.toLowerCase().replaceAll(" ","_")} />
-      <summary><label htmlFor={initialTitle.toLowerCase().replaceAll(" ","_")}>{inputTitle || initialTitle}</label></summary>
+      <summary><label htmlFor={initialTitle.toLowerCase().replaceAll(" ","_")}><div className='details-section-title'>{inputTitle || initialTitle}</div></label></summary>
       <div className='form-form'>
         <label className='single-movie'>
           <span>Tytuł</span>
