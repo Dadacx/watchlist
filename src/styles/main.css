@@ -94,6 +94,9 @@ body {
     div.form-form input, div.form-form textarea {
         margin-top: 0;
     }
+    .details-input:checked + details, details:has(.details-input:checked) {
+        max-height: 442px !important
+    }
     /* ImagesPreview */
     img.photos {
         width: 100%;
