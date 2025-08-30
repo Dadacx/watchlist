@@ -94,7 +94,6 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-      {/* <DevTools data={data} setData={setData} favoriteData={favoriteData} setFavoriteData={setFavoriteData} error={error} setError={setError} /> */}
     </div>
   );
 }

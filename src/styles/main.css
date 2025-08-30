@@ -102,6 +102,9 @@ body {
         width: 100%;
     }
     /* Info */
+    div.back-btn {
+        display: block;
+    }
     div.short-info {
         flex-direction: column;
     }

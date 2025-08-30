@@ -1,33 +1,50 @@
 .info {
-    margin: 30px;
-    width: -webkit-fill-available;
+  margin: 30px;
+  width: -webkit-fill-available;
 }
+
+.back-btn {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  text-transform: uppercase;
+  display: none;
+}
+
 .short-info {
-    display: flex;
+  display: flex;
 }
+
 .info-img {
-    border-radius: 10px;
-    width: 200px;
-    height: fit-content;
+  border-radius: 10px;
+  width: 200px;
+  height: fit-content;
 }
+
 .info-title {
-    font-size: 30px;
-    text-transform: uppercase;
-    margin-top: 10px;
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-top: 10px;
 }
+
 .info-description {
-    margin-top: 20px;
-    font-size: 18px;
+  margin-top: 20px;
+  font-size: 18px;
 }
+
 .info-table {
-    margin-top: 50px;
-    width: 100%;
-  }
-table.info-table, table.info-table th, table.info-table td {
-    border: 1px solid white;
-    border-collapse: collapse;
-    text-align: center;
+  margin-top: 50px;
+  width: 100%;
 }
+
+table.info-table,
+table.info-table th,
+table.info-table td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  text-align: center;
+}
+
 table.info-table {
   width: 100%;
   margin-top: 10px;
@@ -36,54 +53,68 @@ table.info-table {
   border-spacing: 0;
   border: 0;
 }
+
 .info-table {
   font-size: 20px;
   text-transform: uppercase;
 }
+
 table.info-table td {
-    padding: 5px;
+  padding: 5px;
 }
+
 table.info-table a {
-    color: aqua;
-    text-decoration: none;
+  color: aqua;
+  text-decoration: none;
 }
+
 table tr:first-child td:first-child {
-    border-top-left-radius: 10px;
+  border-top-left-radius: 10px;
 }
+
 table tr:first-child td:last-child {
   border-top-right-radius: 10px;
 }
+
 table tr:last-child td:first-child {
   border-bottom-left-radius: 10px;
 }
+
 table tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
+
 .gallery-section {
-text-align: center;
+  text-align: center;
 }
+
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  width: 100%;
 }
+
 .gallery img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* Dopasowanie rozmiaru zdjęcia */
-    display: block;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  /* Dopasowanie rozmiaru zdjęcia */
+  display: block;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .gallery img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
 details.info-details {
   margin-left: 20px;
 }
+
 details.info-details summary {
   cursor: pointer;
   text-transform: uppercase;
@@ -92,34 +123,38 @@ details.info-details summary {
 
 /* Modal styles */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal img {
-    /* zoom: 1.6; */
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  .no-scroll {
-    overflow: hidden;
-  }
- .prev-img {
-   left: 0;
- }
- .next-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal img {
+  /* zoom: 1.6; */
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.prev-img {
+  left: 0;
+}
+
+.next-img {
   right: 0;
 }
+
 .modal .img-btn {
   cursor: pointer;
   display: flex;
@@ -131,6 +166,7 @@ details.info-details summary {
   align-items: center;
   user-select: none;
 }
+
 .modal-img-title {
   position: absolute;
   bottom: 40px;
@@ -141,10 +177,10 @@ details.info-details summary {
 
 .test {
   position: absolute;
-    top: 40%;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: -webkit-fill-available;
-    align-content: center;
+  top: 40%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: -webkit-fill-available;
+  align-content: center;
 }

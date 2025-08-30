@@ -10,7 +10,7 @@ const Info = ({ data, error }) => {
     const [images, setImages] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null);
     const { movie } = useParams();
-    const movieData = data?.data.find((item) => item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '') === movie)
+    const movieData = data?.data.find((item) => `${item.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}-${item.id}` === movie)
 
     useEffect(() => {
         const handleKeyUp = (e) => {
@@ -59,6 +59,7 @@ const Info = ({ data, error }) => {
     SetTitle(`${movieData ? movieData.title : ""} | Info | Filmy do obejrzenia`, movieData)
     return (
         <div className='info'>
+            <div className='back-btn'>wróć</div>
             {movieData && movieData.type === 'movie' ? <InfoMovie movieData={movieData} /> :
                 movieData && movieData.type === 'film-series' ? <InfoFilmSeries movieData={movieData} /> :
                     movieData && movieData.type === 'series' ? <InfoSeries movieData={movieData} /> : null}

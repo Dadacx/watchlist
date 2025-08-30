@@ -7,6 +7,7 @@ import MovieForm from './Forms/MovieForm';
 import FilmSeriesForm from './Forms/FilmSeriesForm';
 import SeriesForm from './Forms/SeriesFrom';
 import ContextMenu from './ContextMenu';
+import ScrollToTopButton from './ScrollToTopButton';
 import { Link } from "react-router-dom";
 import Card from './Card';
 import { PopupManager, showPopup } from './Popup/Popup';
@@ -234,12 +235,13 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
       {getAddMovieScreen()}
       {getEditMovieScreen()}
       {<PopupManager />}
+      <ScrollToTopButton />
       {isMultipleDelete && <div className='multiple-delete-icon' title='Usuń zaznaczone' onClick={deleteMultipleMovies}></div>}
       <Bar setMovies={setMovies} data={data} setAddMovie={setAddMovie} isFavoriteList={isFavoriteList} />
       <div className='movies'>
         {error ? <div className='error'>{error.message}</div> : null}
         {movies ? movies.map((movie) => (
-          <Link className='card-link' to={`/${isFavoriteList ? 'favorite/' : ''}${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}`} key={movie.id}>
+          <Link className='card-link' to={`/${isFavoriteList ? 'favorite/' : ''}${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}-${movie.id}`} key={movie.id}>
             <Card key={movie.id} id={movie.id} img={movie.imgs[0].img} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} />
           </Link>
         )) : null}
