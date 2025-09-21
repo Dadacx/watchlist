@@ -96,7 +96,8 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
     if (addMovie && addMovie.type) {
       showPopup({
         message: <div className='addPopupContainer'><FilmClapboard style={{ scale: 0.07, left: '-220px' }} />
-          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></div>, duration: 800000, border: true
+          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></div>, 
+          duration: 800000, border: true, replace: true
       });
       fetchAdd(addMovie).then((response) => {
         if (response.status === 'success') {

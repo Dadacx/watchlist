@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../styles/Card.css";
 import getAverageColor from "./AverageColor";
 import TruncatedText from "./TruncatedText";
+import imageNotFound from '../images/image_not_found.png'
 
 const Card = ({ id, img, title, year, description, genre, handleContextMenu }) => {
   const [shadowColor, setShadowColor] = useState("rgba(108,108,108,var(--shadow-visibility))");
@@ -40,6 +41,7 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
       <span style={{ display: "none" }}>{id}</span>
       <img
         onLoad={(e) => { getAverageColor(e, setShadowColor); calculateRemainingLines() }}
+        onError={(e) => { e.currentTarget.src = imageNotFound; }}
         // onError={(e) => { e.currentTarget.onError = null; calculateRemainingLines(); }}
         ref={imgRef}
         className="card-img"

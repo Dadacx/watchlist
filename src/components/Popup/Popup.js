@@ -3,7 +3,7 @@ import "./Popup.css";
 
 let addPopupToQueue = () => { };
 let closePopup = () => { };
-const version = "1.1.0"
+const version = "1.1.1"
 
 function PopupManager() {
   const [queue, setQueue] = useState([]);
@@ -93,21 +93,21 @@ function PopupManager() {
   return (
     <>
       {currentPopup && (
-        <div style={currentPopup.style}
+        <div style={currentPopup.style} onClick={currentPopup.onClick}
           className={`popup ${visible ? "show" : "hide"} ${currentPopup.type} ${currentPopup.position} 
           ${currentPopup.border ? "border" : ""}`}>
           {currentPopup.icon && <span className="popup-icon">{getIcon(currentPopup.type)}</span>}
           <span className="popup-message">{currentPopup.message}</span>
-          <button className="close-btn" onClick={closePopup}>×</button>
+          <button className="close-btn" onClick={(e) => {e.stopPropagation(); closePopup()}}>×</button>
         </div>
       )}
     </>
   );
 }
 
-// Użycie: showPopup({ message: "Treść", type: "error", duration: 5000, position: "top", style: { backgroundColor: 'red' }, border: true, icon: true, replace: true });
-function showPopup({ message, type = "default", duration = 3000, position = "bottomLeft", style = {}, border = false, icon = false, replace = false }) {
-  addPopupToQueue({ message, type, duration, position, style, border, icon, replace });
+// Użycie: showPopup({ message: "Treść", type: "error", duration: 5000, position: "top", style: { backgroundColor: 'red' }, border: true, icon: true, replace: true, onClick: () => console.log("Clicked") });
+function showPopup({ message, type = "default", duration = 3000, position = "bottomLeft", style = {}, border = false, icon = false, replace = false, onClick = () => { } }) {
+  addPopupToQueue({ message, type, duration, position, style, border, icon, replace, onClick });
 }
 
 export { PopupManager, showPopup, closePopup, version };

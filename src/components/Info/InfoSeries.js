@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import imageNotFound from '../../images/image_not_found.png'
 
 const InfoSeries = ({ movieData }) => {
     if (typeof movieData.episodes === 'string') movieData.episodes = JSON.parse(movieData.episodes)
@@ -20,7 +21,7 @@ const InfoSeries = ({ movieData }) => {
     };
     return (
         <><div className='short-info'>
-            <img className='info-img' alt='info-image' src={movieData.imgs[0].img} />
+            <img className='info-img' alt='info-image' onError={(e) => { e.currentTarget.src = imageNotFound; }} src={movieData.imgs[0].img} />
             <div className='content'>
                 <span className='info-title'>{movieData.title}</span>
                 <span className='info-description'><DataInDetails data={movieData.episodes} /></span>

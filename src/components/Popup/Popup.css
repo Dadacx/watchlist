@@ -2,7 +2,7 @@
   position: fixed;
   /* left: 50%; */
   /* transform: translateX(-50%); */
-  padding: 16px 16px;
+  padding: 13px 13px;
   border-radius: 8px;
   color: white;
   font-size: 16px;
@@ -19,13 +19,14 @@
   animation: popup-in 0.3s cubic-bezier(.4,0,.2,1);
 }
 .popup-icon {
-  height: 24px;
+  align-content: center;
 }
 .icon {
   width: 24px;
   height: 24px;
   stroke: white;
   flex-shrink: 0;
+  display: block;
 }
 
 .popup-message {
@@ -39,6 +40,7 @@
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
+  padding-right: 0;
 }
 
 .popup.show {

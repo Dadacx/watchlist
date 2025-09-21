@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import imageNotFound from '../../images/image_not_found.png'
 
 const InfoMovie = ({ movieData }) => {
     return (
         <><div className='short-info'>
-            <img className='info-img' alt='info-image' src={movieData.imgs[0].img} />
+            <img className='info-img' alt='info-image' src={movieData.imgs[0].img} onError={(e) => { e.currentTarget.src = imageNotFound; }} />
             <div className='content'>
                 <span className='info-title'>{movieData.title}</span>
                 <span className='info-description'>{movieData.description}</span>
