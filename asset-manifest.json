@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/watchlist/static/css/main.e3442d92.css",
-    "main.js": "/watchlist/static/js/main.1d031c1e.js",
+    "main.css": "/watchlist/static/css/main.a3ab00ea.css",
+    "main.js": "/watchlist/static/js/main.f7041e48.js",
     "static/js/453.522c1647.chunk.js": "/watchlist/static/js/453.522c1647.chunk.js",
+    "static/media/image_not_found.png": "/watchlist/static/media/image_not_found.8465d8b2d29ec08c7fb1.png",
     "static/media/add_film_series.svg": "/watchlist/static/media/add_film_series.1b14abd16f196cd105f9.svg",
     "static/media/add_series.svg": "/watchlist/static/media/add_series.8b4273436ca26c1f646f.svg",
     "static/media/multiple_delete.svg": "/watchlist/static/media/multiple_delete.6376d6e913a68e9ed90a6df76401e0c9.svg",
@@ -19,12 +20,12 @@
     "static/media/filter.svg": "/watchlist/static/media/filter.da38632be01d6283b9f5.svg",
     "static/media/hide_password.svg": "/watchlist/static/media/hide_password.a5c534635078e0a309a915424ae467b4.svg",
     "static/media/show_password.svg": "/watchlist/static/media/show_password.313446866eac26df07fa5477fb755706.svg",
-    "main.e3442d92.css.map": "/watchlist/static/css/main.e3442d92.css.map",
-    "main.1d031c1e.js.map": "/watchlist/static/js/main.1d031c1e.js.map",
+    "main.a3ab00ea.css.map": "/watchlist/static/css/main.a3ab00ea.css.map",
+    "main.f7041e48.js.map": "/watchlist/static/js/main.f7041e48.js.map",
     "453.522c1647.chunk.js.map": "/watchlist/static/js/453.522c1647.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e3442d92.css",
-    "static/js/main.1d031c1e.js"
+    "static/css/main.a3ab00ea.css",
+    "static/js/main.f7041e48.js"
   ]
 }
