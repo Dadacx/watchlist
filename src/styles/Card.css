@@ -10,12 +10,12 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     /* overflow: hidden; */
-    --shadow-visibility: 0;
+    /* --shadow-visibility: 0; */
     overflow-wrap: anywhere;
 }
 .card:hover {
-    --shadow-visibility: 1;
-    box-shadow: 0px 0px 24px 6px rgba(86, 87, 81, 1)
+    /* --shadow-visibility: 1; */
+    box-shadow: 0px 0px 24px 6px var(--shadow-color)
 }
 .card-img {
     border-radius: 10px;

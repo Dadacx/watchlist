@@ -4,8 +4,8 @@ import getAverageColor from "./AverageColor";
 import TruncatedText from "./TruncatedText";
 import imageNotFound from '../images/image_not_found.png'
 
-const Card = ({ id, img, title, year, description, genre, handleContextMenu }) => {
-  const [shadowColor, setShadowColor] = useState("rgba(108,108,108,var(--shadow-visibility))");
+const Card = ({ id, img, title, year, description, genre, handleContextMenu, glowingColor }) => {
+  // const [shadowColor, setShadowColor] = useState("rgba(108,108,108,var(--shadow-visibility))");
   const [remainingLines, setRemainingLines] = useState(8); // Domyślnie 8 linii dla opisu
   const titleRef = useRef(null);
   const yearRef = useRef(null);
@@ -28,19 +28,20 @@ const Card = ({ id, img, title, year, description, genre, handleContextMenu }) =
       setRemainingLines(Math.max(usedLines, 0)); // Odejmujemy zajęte linie
   }
   const genreString = genre ? genre.split(',').map(genre => genre.trim()).join(" | ") : '';
+  // console.log(title, glowingColor)
 
   return (
     <div
       className="card"
       onContextMenu={(e) => handleContextMenu(e, id)}
       style={{
-        boxShadow: "0px 0px 24px 6px " + shadowColor,
+        '--shadow-color': glowingColor,
       }}
       data-id={id}
     >
       <span style={{ display: "none" }}>{id}</span>
       <img
-        onLoad={(e) => { getAverageColor(e, setShadowColor); calculateRemainingLines() }}
+        onLoad={(e) => { calculateRemainingLines() }}
         onError={(e) => { e.currentTarget.src = imageNotFound; }}
         // onError={(e) => { e.currentTarget.onError = null; calculateRemainingLines(); }}
         ref={imgRef}

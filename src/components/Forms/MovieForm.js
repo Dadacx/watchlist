@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { showPasswordPrompt } from '../PasswordPrompt/PasswordPrompt';
 import ImagesPreview from './ImagesPreview';
 import AddFromJson from './AddFromJson';
+import getAverageColor from '../AverageColor'
 import close from '../../images/close.svg'
 import json_icon from '../../images/json.svg'
 import { useDevTools } from '../DevToolsContext';
@@ -30,21 +31,34 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
   useEffect(() => {
     setInitialData(startData)
   }, [startData])
-    // DevTools
-    const { setDevTools, movieFormTestData } = useDevTools();
-    useEffect(() => {
-      imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
-      setDevTools((prev) => {
-        return {
-          ...prev,
-          fillMovieForm: () => setInitialData(movieFormTestData)
-        };
-      })
-    }, [initialData]);
+  // DevTools
+  const { setDevTools, movieFormTestData } = useDevTools();
+  useEffect(() => {
+    imgsTitle.current = isObject(initialData?.imgs)?.map((item) => item.title)
+    setDevTools((prev) => {
+      return {
+        ...prev,
+        fillMovieForm: () => setInitialData(movieFormTestData)
+      };
+    })
+  }, [initialData]);
 
   async function Movie() {
     if (validateForm()) {
       console.log('Formularz poprawny');
+
+      let glowing_color
+      try {
+        glowing_color = await getAverageColor(imgs.current.value.trim().split('\n')[0])
+      } catch (error) {
+        console.error("Błąd podczas pobierania koloru:", error);
+        if (window.confirm(`Błąd podczas pobierania koloru. Naciśnij OK, aby ustawić domyślny kolor i kontynuować ${isEdit ? "edytowanie" : "dodawanie"} filmu lub Anuluj, aby przerwać.`)) {
+          glowing_color = "#6c6c6c" // Domyślny kolor w przypadku błędu
+        } else {
+          return;
+        }
+      }
+
       const movie = {
         type: 'movie',
         title: title.current.value.trim(),
@@ -55,8 +69,10 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
         duration: duration.current.value.trim(),
         link: link.current.value.trim(),
         imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
+        glowing_color: glowing_color,
         password: await showPasswordPrompt("Podaj hasło")
       }
+      if (!movie.password) return;
       console.log(movie)
       setAddMovie(movie);
     }
@@ -140,7 +156,7 @@ const MovieForm = ({ setAddMovie, initialData: startData, isEdit }) => {
     <div className='form-box-container'>
       {showImagesPreview && <ImagesPreview images={imgs.current.value} setShowImagesPreview={setShowImagesPreview}
         updateImages={updateImages} imgsTitle={imgsTitle.current} updateImgsTitle={updateImgsTitle} />}
-        {showAddFromJson && <AddFromJson setInitialData={setInitialData} setShowAddFromJson={setShowAddFromJson} />}
+      {showAddFromJson && <AddFromJson setInitialData={setInitialData} setShowAddFromJson={setShowAddFromJson} />}
       <div className='form-box'>
         <div className='close' onClick={() => setAddMovie(null)}><img src={close} alt='close_icon' /></div>
         {!isEdit && <div className='from-json' onClick={() => setShowAddFromJson(true)}><img src={json_icon} alt='add_from_json_icon' /></div>}

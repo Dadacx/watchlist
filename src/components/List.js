@@ -243,7 +243,7 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
         {error ? <div className='error'>{error.message}</div> : null}
         {movies ? movies.map((movie) => (
           <Link className='card-link' to={`/${isFavoriteList ? 'favorite/' : ''}${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}-${movie.id}`} key={movie.id}>
-            <Card key={movie.id} id={movie.id} img={movie.imgs[0].img} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} />
+            <Card key={movie.id} id={movie.id} img={movie.imgs[0].img} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} glowingColor={movie.glowing_color} />
           </Link>
         )) : null}
         {menuVisible && <ContextMenu menuPosition={menuPosition} setEditMovie={setEditMovie} movies={movies}

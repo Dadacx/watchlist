@@ -2,6 +2,7 @@ import '../../styles/Forms.css'
 import { useRef, useState, useEffect } from 'react';
 import { useDevTools } from '../DevToolsContext';
 import { showPasswordPrompt } from '../PasswordPrompt/PasswordPrompt';
+import getAverageColor from '../AverageColor'
 import ImagesPreview from './ImagesPreview';
 import AddFromJson from './AddFromJson';
 import close from '../../images/close.svg'
@@ -54,6 +55,19 @@ const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
         const textarea = document.getElementById(`season-${i}`);
         episodes.push(textarea.value.trim().split('\n'));
       }
+
+      let glowing_color
+      try {
+        glowing_color = await getAverageColor(imgs.current.value.trim().split('\n')[0])
+      } catch (error) {
+        console.error("Błąd podczas pobierania koloru:", error);
+        if (window.confirm(`Błąd podczas pobierania koloru. Naciśnij OK, aby ustawić domyślny kolor i kontynuować ${isEdit ? "edytowanie" : "dodawanie"} filmu lub Anuluj, aby przerwać.`)) {
+          glowing_color = "#6c6c6c" // Domyślny kolor w przypadku błędu
+        } else {
+          return;
+        }
+      }
+
       const series = {
         type: 'series',
         title: title.current.value.trim(),
@@ -64,8 +78,10 @@ const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
         imgs: JSON.stringify(imgs.current.value.trim().split('\n').map((img, i) => { return { title: imgsTitle.current[i] || '', img: img } })),
         seasonsCount: seasonsCount.current.value.trim(),
         episodes: JSON.stringify(episodes),
+        glowing_color: glowing_color,
         password: await showPasswordPrompt("Podaj hasło")
       }
+      if(!series.password) return;
       console.log(typeof series.episodes)
       console.log(series)
       setAddMovie(series);
