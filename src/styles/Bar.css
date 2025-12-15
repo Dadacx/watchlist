@@ -1,0 +1,215 @@
+.bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    margin: 10px 10px 0px;
+    gap: 10px;
+}
+
+.bar-box {
+    display: flex;
+    background-color: #3c3d37;
+    height: 30px;
+    position: relative;
+    width: fit-content;
+    max-width: fit-content;
+    border-radius: 40px;
+    padding: 5px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.bar-box.hide {
+    display: none;
+}
+
+.filter-box {
+    height: fit-content;
+}
+
+.search-box::before,
+.filter-box::before {
+    content: "";
+    width: calc(100% + 10px);
+    position: absolute;
+    /* top: -5px; */
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 10px;
+    background: #697565;
+    z-index: -1;
+    height: 50px;
+    /* width: 50px; */
+    transition: 0.4s;
+    visibility: hidden;
+}
+
+.search-box:focus-within>.search-text {
+    width: 240px;
+    padding: 0 6px;
+}
+
+.search-btn {
+    background-image: url('../images/search_icon.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.search-text {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: #ecdfcc;
+    font-size: 16px;
+    font-weight: normal;
+    transition: 0.4s;
+    line-height: 30px;
+    width: 0px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.add-movie-icon {
+    background-image: url('../images/add_movie.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
+
+.add-film-series-icon {
+    background-image: url('../images/add_film_series.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
+
+.add-series-icon {
+    background-image: url('../images/add_series.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
+
+.favorite-icon {
+    background-image: url('../images/favorite.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.favorite-fill-icon {
+    background-image: url('../images/favorite_fill.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.filter-icon {
+    background-image: url('../images/filter.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    float: left;
+    min-width: 30px;
+}
+
+.filter-wrapper {
+    top: 40px;
+    left: 0;
+    display: flex;
+    gap: 10px;
+    max-width: 90vw;
+    flex-direction: row-reverse;
+}
+
+.filter-menu {
+    width: max-content;
+    max-width: 45vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #3c3d37;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 100;
+    border-radius: 10px;
+    border: 1px solid;
+    cursor: default;
+}
+
+.filter-option-title {
+    padding: 3px 8px;
+    text-align: center;
+    color: gray;
+}
+
+.filter-option {
+    padding: 3px 8px;
+    text-align: center;
+    cursor: pointer;
+    text-wrap: auto;
+}
+
+.filter-option-title,
+.filter-option {
+    user-select: none;
+}
+
+.filter-option:hover {
+    background: #697565;
+}
+
+.filter-option:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.filter-option:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.filter-text {
+    float: right;
+    line-height: 30px;
+    text-wrap: auto;
+}
+
+.filter-text:has(span) {
+    padding: 0 5px;
+}
+
+.filter-text span {
+    margin: 0 3px;
+    background-color: #646464;
+    padding: 0 3px;
+    border-radius: 5px;
+}
+
+.filter-text span:hover {
+    background-color: #f40000;
+}

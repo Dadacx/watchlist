@@ -1,3 +1,4 @@
+import '../styles/Bar.css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from "react-router-dom";
 
@@ -54,13 +55,6 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
     }, [filters]);
 
     const toggleCategoryFilter = (category, hide) => {
-        const el = filterRefs.current[category];
-
-        if (hide) {
-            if (el) el.style.display = "none";
-        } else {
-            if (el) el.style.display = "block";
-        }
         setFilters((prevFilters) => ({
             ...prevFilters,
             categories: prevFilters.categories.includes(category)
@@ -70,13 +64,6 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
     };
 
     const toggleGenreFilter = (genre, hide) => {
-        const el = filterRefs.current[genre];
-
-        if (hide) {
-            if (el) el.style.display = "none";
-        } else {
-            if (el) el.style.display = "block";
-        }
         setFilters((prevFilters) => ({
             ...prevFilters,
             genres: prevFilters.genres.includes(genre)
@@ -86,24 +73,12 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
     };
 
     const toggleSortFilter = (sortOption, hide) => {
-        const el = filterRefs.current[sortOption];
-
-        if (hide) {
-            if (el) el.style.display = "none";
-            filterRefs.current[sortOption.split("").reverse().join("")].style.display = 'block'
-        } else {
-            if (el) el.style.display = "block";
-        }
         setFilters((prevFilters) => ({
             ...prevFilters,
             sort: prevFilters.sort === sortOption ? null : sortOption,
         }));
     };
     const resetFilters = () => {
-        Object.values(filterRefs.current).forEach((el) => {
-            if (el) el.style.display = "block";
-        });
-
         setFilters({
             categories: [],
             genres: [],
@@ -142,28 +117,29 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
                     </div>
                     {filterMenuVisible && (
                         <div className='filter-menu'>
-                            <div className='filter-option' onClick={resetFilters}>Wyczyść filtry</div>
+                            <div className='filter-option' onClick={(e) => { e.stopPropagation(); resetFilters(); }}>Wyczyść filtry</div>
                             <div className='filter-option-title'>- Sortowanie -</div>
-                            <div className='filter-option' onClick={() => toggleSortFilter('a-z', true)} ref={(el) => {
+                            {filters.sort !== 'a-z' && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleSortFilter('a-z', true); }} ref={(el) => {
                                 if (el) filterRefs.current['a-z'] = el;
-                            }}>Od A-Z</div>
-                            <div className='filter-option' onClick={() => toggleSortFilter('z-a', true)} ref={(el) => {
+                            }}>Od A-Z</div>}
+                            {filters.sort !== 'z-a' && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleSortFilter('z-a', true); }} ref={(el) => {
                                 if (el) filterRefs.current['z-a'] = el;
-                            }}>Od Z-A</div>
+                            }}>Od Z-A</div>}
                             <div className='filter-option-title'>- Kategoria -</div>
-                            <div className='filter-option' onClick={() => toggleCategoryFilter('movie', true)} ref={(el) => {
+                            {!filters.categories.includes('movie') && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleCategoryFilter('movie', true); }} ref={(el) => {
                                 if (el) filterRefs.current['movie'] = el;
-                            }}>Filmy</div>
-                            <div className='filter-option' onClick={() => toggleCategoryFilter('film-series', true)} ref={(el) => {
+                            }}>Filmy</div>}
+                            {!filters.categories.includes('film-series') && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleCategoryFilter('film-series', true); }} ref={(el) => {
                                 if (el) filterRefs.current['film-series'] = el;
-                            }}>Serie filmów</div>
-                            <div className='filter-option' onClick={() => toggleCategoryFilter('series', true)} ref={(el) => {
+                            }}>Serie filmów</div>}
+                            {!filters.categories.includes('series') && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleCategoryFilter('series', true); }} ref={(el) => {
                                 if (el) filterRefs.current['series'] = el;
-                            }}>Seriale</div>
+                            }}>Seriale</div>}
                             <div className='filter-option-title'>- Gatunek -</div>
                             {data && Array.from(new Set(data.data.flatMap(item => item.genre ? item.genre.split(', ') : [])))
+                                .filter(genre => !filters.genres.includes(genre))
                                 .map((genre, index) => (
-                                    <div key={index} className='filter-option' onClick={(e) => toggleGenreFilter(genre, true)} ref={(el) => {
+                                    <div key={index} className='filter-option' onClick={(e) => { e.stopPropagation(); toggleGenreFilter(genre, true); }} ref={(el) => {
                                         if (el) filterRefs.current[genre] = el;
                                     }}>
                                         {genre}

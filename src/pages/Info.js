@@ -68,6 +68,7 @@ const Info = ({ data, error }) => {
                 <div className="gallery">
                     {images && images.map((item, i) => <img key={`image-${i}`} src={item.img} alt={`image-${i}`}
                         onClick={() => openModal({ src: item.img, title: item.title, alt: `image-${i}`, id: i })} />)}
+                    {images?.length == 0 && <p className='no-images'>Brak zdjęć do wyświetlenia</p>}
                 </div>
                 {selectedImage && (
                     <div className="modal">

@@ -95,6 +95,11 @@ table tr:last-child td:last-child {
   width: 100%;
 }
 
+.no-images {
+  font-size: 18px;
+  color: red;
+}
+
 .gallery img {
   width: 100%;
   height: 200px;

@@ -1,6 +1,6 @@
 // const url = 'http://192.168.100.9'
-const url = 'http://localhost'
-// const url = 'https://frog02-20766.wykr.es'
+// const url = 'http://localhost'
+const url = 'https://frog02-20766.wykr.es'
 const MoviesListFetch = async () => {
   try {
     const res = await fetch(`${url}/watchlist/get_movies.php`);
