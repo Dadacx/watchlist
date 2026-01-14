@@ -39,7 +39,7 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   }, [movies]);
 
   console.log(data);
-  SetTitle(`${title}${data && data.data ? ` (${data.data.length})` : ""}`, data);
+  SetTitle(`${title}${movies ? ` (${movies.length})` : ""}`, movies);
 
   useEffect(() => {
     if (data) {
