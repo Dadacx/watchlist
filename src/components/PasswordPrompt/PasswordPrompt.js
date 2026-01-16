@@ -1,10 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./PasswordPrompt.css";
-import showPasswordIcon from "./images/show_password.svg";
-import hidePasswordIcon from "./images/hide_password.svg";
 
-const version = "1.0.2";
+const version = "1.0.3";
 
 function showPasswordPrompt(title, subtitle) {
   return new Promise((resolve) => {
@@ -69,13 +67,45 @@ function PasswordPrompt({ onSubmit, title, subtitle }) {
             ref={passwordRef}
             className="prompt-input"
           />
-          <img
-            src={showPassword ? hidePasswordIcon : showPasswordIcon}
-            alt="Toggle password visibility"
-            onClick={togglePasswordVisibility}
-            className="prompt-input-icon"
-            title={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
-          />
+          {showPassword ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              onClick={togglePasswordVisibility}
+              className="prompt-input-icon"
+              title="Ukryj hasło"
+              style={{ cursor: 'pointer' }}
+            >
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              onClick={togglePasswordVisibility}
+              className="prompt-input-icon"
+              title="Pokaż hasło"
+              style={{ cursor: 'pointer' }}
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          )}
         </div>
         <div className="prompt-buttons">
           <button className="btn-ok" onClick={handleOk}>OK</button>

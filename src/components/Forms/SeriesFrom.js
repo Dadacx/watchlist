@@ -61,8 +61,8 @@ const SeriesFrom = ({ setAddMovie, initialData: startData, isEdit }) => {
         glowing_color = await getAverageColor(imgs.current.value.trim().split('\n')[0])
       } catch (error) {
         console.error("Błąd podczas pobierania koloru:", error);
-        if (window.confirm(`Błąd podczas pobierania koloru. Naciśnij OK, aby ustawić domyślny kolor i kontynuować ${isEdit ? "edytowanie" : "dodawanie"} filmu lub Anuluj, aby przerwać.`)) {
-          glowing_color = "#6c6c6c" // Domyślny kolor w przypadku błędu
+        if (window.confirm(`Błąd podczas pobierania koloru. Naciśnij OK, aby ${isEdit ? "zachować aktualny" : "ustawić domyślny"} kolor i kontynuować ${isEdit ? "edytowanie" : "dodawanie"} filmu lub Anuluj, aby przerwać.`)) {
+          glowing_color = initialData.glowing_color || "#6c6c6c" // Domyślny kolor w przypadku błędu
         } else {
           return;
         }

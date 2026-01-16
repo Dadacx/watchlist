@@ -11,7 +11,8 @@ const getAverageColor = async (imageUrl) => {
   return new Promise((resolve, reject) => {
     const imgElement = new Image();
     imgElement.crossOrigin = "anonymous";
-    imgElement.src = "https://frog02-30766.wykr.es/proxy?url=" + imageUrl;
+    // imgElement.src = "https://frog02-30766.wykr.es/proxy?url=" + imageUrl;
+    imgElement.src = "https://corsproxy.io/?url=" + encodeURIComponent(imageUrl);
 
     imgElement.onload = () => {
       const canvas = document.createElement("canvas");

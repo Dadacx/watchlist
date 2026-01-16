@@ -235,7 +235,7 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
     <>
       {getAddMovieScreen()}
       {getEditMovieScreen()}
-      {<PopupManager />}
+      <PopupManager maxVisiblePopups={1} />
       <ScrollToTopButton />
       {isMultipleDelete && <div className='multiple-delete-icon' title='Usuń zaznaczone' onClick={deleteMultipleMovies}></div>}
       <Bar setMovies={setMovies} data={data} setAddMovie={setAddMovie} isFavoriteList={isFavoriteList} />
