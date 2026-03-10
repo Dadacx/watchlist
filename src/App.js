@@ -1,5 +1,5 @@
 import './styles/main.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import MoviesList from './pages/MoviesList';
 import FavoriteList from './pages/FavoriteList';
@@ -15,6 +15,10 @@ const App = () => {
   const [favoriteError, setFavoriteError] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
 
+  // const count = useRef(0);
+  // count.current += 1;
+  // console.log(`App render #${count.current}`);
+
   useEffect(() => {
     console.log('fetching data');
     
@@ -28,6 +32,7 @@ const App = () => {
           setError(null);
           fetchedData.data.map((item) => {
             item.imgs = item.imgs.startsWith("http") ? item.imgs : JSON.parse(item.imgs);
+            item.movies = item.movies ? JSON.parse(item.movies) : null;
             return item;
           }
           );
@@ -43,6 +48,7 @@ const App = () => {
           setFavoriteError(null);
           fetchedFavoriteData.data.map((item) => {
             item.imgs = item.imgs.startsWith("http") ? item.imgs : JSON.parse(item.imgs);
+            item.movies = item.movies ? JSON.parse(item.movies) : null;
             return item;
           }
           );

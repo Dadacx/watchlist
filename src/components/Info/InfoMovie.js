@@ -16,7 +16,7 @@ const InfoMovie = ({ movieData }) => {
                         <tr><td>rok premiery</td><td>{movieData.year}</td></tr>
                         <tr><td>czas trwania</td><td>{movieData.duration}</td></tr>
                         <tr><td>gatunek</td><td>{movieData.genre}</td></tr>
-                        <tr><td>Link do filmweb</td><td><Link target='_blank' to={movieData.link}>Link</Link></td></tr>
+                        <tr><td colSpan={2}><Link target='_blank' to={movieData.link}>Link do filmweb</Link></td></tr>
                     </tbody>
                 </table>
             </div></>

@@ -2,12 +2,15 @@ import '../styles/Bar.css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from "react-router-dom";
 
-const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
+const Bar = ({ setMovies, data, setAddMovie, isFavoriteList }) => {
     const [filterMenuVisible, setFilterMenuVisible] = useState(false)
-    const [filters, setFilters] = useState({
-        categories: [], // ['movies', 'series', 'film-series']
-        genres: [], // ['akcja', 'komedia', 'fantasy', 'horror', 'sci-fi', 'thriller', itd.]
-        sort: null, // 'a-z', 'z-a'
+    const [filters, setFilters] = useState(() => {
+        const saved = sessionStorage.getItem('wl-filters');
+        return saved !== null ? JSON.parse(saved) : {
+            categories: [], // ['movies', 'series', 'film-series']
+            genres: [], // ['akcja', 'komedia', 'fantasy', 'horror', 'sci-fi', 'thriller', itd.]
+            sort: null, // 'a-z', 'z-a'
+        };
     });
     const filterRefs = useRef({})
 
@@ -36,7 +39,8 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
         }
         if (filters.genres.length > 0) {
             filteredMovies = filteredMovies.filter(movie =>
-                movie.genre && movie.genre.split(', ').some(genre => filters.genres.includes(genre))
+                movie.genre ? movie.genre.split(', ').some(genre => filters.genres.includes(genre))
+                    : movie.movies.filter(subMovie => subMovie.genre ? subMovie.genre.split(', ').some(genre => filters.genres.includes(genre)) : false).length > 0
             );
         }
         if (filters.sort === 'a-z') {
@@ -52,7 +56,8 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
         if (data) {
             applyFiltersAndSort();
         }
-    }, [filters]);
+        sessionStorage.setItem('wl-filters', JSON.stringify(filters));
+    }, [filters, data]);
 
     const toggleCategoryFilter = (category, hide) => {
         setFilters((prevFilters) => ({
@@ -107,17 +112,17 @@ const Bar = ({setMovies, data, setAddMovie, isFavoriteList}) => {
                 <div className="filter-icon" onClick={() => setFilterMenuVisible(!filterMenuVisible)}></div>
                 <div className='filter-wrapper'>
                     <div className="filter-text">
-                        {filters.categories.map(category => (<span key={category} className="filter-label" onClick={() => toggleCategoryFilter(category)}>
+                        {filters.sort && (<span className="filter-label sort" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
+                        {filters.categories.map(category => (<span key={category} className="filter-label category" onClick={() => toggleCategoryFilter(category)}>
                             {category.replace('movie', 'Filmy').replace('film-series', 'Serie filmów').replace('series', 'Seriale')}{' '}
                         </span>))}
-                        {filters.genres.map(genre => (<span key={genre} className="filter-label" onClick={() => toggleGenreFilter(genre)}>
+                        {filters.genres.map(genre => (<span key={genre} className="filter-label genre" onClick={() => toggleGenreFilter(genre)}>
                             {genre}{' '}
                         </span>))}
-                        {filters.sort && (<span className="filter-label" onClick={() => toggleSortFilter(filters.sort)}>{filters.sort.toUpperCase()}{' '}</span>)}
                     </div>
                     {filterMenuVisible && (
                         <div className='filter-menu'>
-                            <div className='filter-option' onClick={(e) => { e.stopPropagation(); resetFilters(); }}>Wyczyść filtry</div>
+                            <div className='filter-option clear-filters' onClick={(e) => { e.stopPropagation(); resetFilters(); }}>Wyczyść filtry</div>
                             <div className='filter-option-title'>- Sortowanie -</div>
                             {filters.sort !== 'a-z' && <div className='filter-option' onClick={(e) => { e.stopPropagation(); toggleSortFilter('a-z', true); }} ref={(el) => {
                                 if (el) filterRefs.current['a-z'] = el;

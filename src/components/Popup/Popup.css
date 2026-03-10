@@ -19,7 +19,7 @@
 .popup-icon {
   align-content: center;
 }
-.icon {
+.popup .icon {
   width: 24px;
   height: 24px;
   stroke: white;
@@ -31,7 +31,7 @@
   flex-grow: 1;
   text-align: left;
 }
-.close-btn {
+.popup .close-btn {
   background: transparent;
   border: none;
   color: white;

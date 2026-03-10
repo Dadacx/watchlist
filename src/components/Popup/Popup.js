@@ -3,7 +3,7 @@ import "./Popup.css";
 
 let addPopupToQueue = () => { };
 let closePopup = () => { };
-const version = "1.2.2"
+const version = "1.2.3"
 
 function PopupManager({ maxVisiblePopups = 1 }) {
   const [queue, setQueue] = useState([]);

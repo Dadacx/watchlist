@@ -42,11 +42,6 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   SetTitle(`${title}${movies ? ` (${movies.length})` : ""}`, movies);
 
   useEffect(() => {
-    if (data) {
-      setMovies(data.data);
-    }
-  }, [data]);
-  useEffect(() => {
     const handleClose = () => {
       if (window.document.querySelector("#menu")) {
         setMenuVisible(false);
