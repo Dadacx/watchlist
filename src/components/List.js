@@ -91,8 +91,8 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
     if (addMovie && addMovie.type) {
       showPopup({
         message: <div className='addPopupContainer'><FilmClapboard style={{ scale: 0.07, left: '-220px' }} />
-          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></div>, 
-          duration: 800000, border: true, replace: true
+          <span style={{ marginLeft: '45px' }}>Dodawanie...</span></div>,
+        duration: 800000, border: true, replace: true
       });
       fetchAdd(addMovie).then((response) => {
         if (response.status === 'success') {
@@ -197,7 +197,7 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
   };
 
   const addFavorite = async (id) => {
-    var originalMovie  = movies.find((item) => item.id === id);
+    var originalMovie = movies.find((item) => item.id === id);
     if (!originalMovie) {
       showPopup({ message: "Nie znaleziono filmu", type: 'error', duration: 8000, border: true, icon: true });
       return;
@@ -240,7 +240,8 @@ const List = ({ data, setData, error, setFavoriteData, title, fetchAdd, fetchEdi
           <Link className='card-link' to={`/${isFavoriteList ? 'favorite/' : ''}${movie.title.toLowerCase().replaceAll(' ', '_').replaceAll('?', '')}-${movie.id}`} key={movie.id}>
             <Card key={movie.id} id={movie.id} img={movie.imgs[0].img} title={movie.title} year={movie.year || `Liczba filmów z serii: ${typeof movie.movies === 'string' ? JSON.parse(movie.movies).length : movie.movies.length}`} description={movie.type === 'series' ? episodesList(movie) : movie.description} genre={movie.genre} handleContextMenu={handleContextMenu} glowingColor={movie.glowing_color} />
           </Link>
-        )) : null}
+        )) : !error && <div className='loadingContainer'><FilmClapboard style={{ scale: 0.4, position: 'unset' }} />
+          <span style={{ marginTop: '-130px' }}>Ładowanie filmów...</span></div>}
         {menuVisible && <ContextMenu menuPosition={menuPosition} setEditMovie={setEditMovie} movies={movies}
           selectedCardId={selectedCardId} setMenuVisible={setMenuVisible} deleteMovie={deleteMovie}
           deleteMultipleMovies={deleteMultipleMovies} isFavoriteList={isFavoriteList} addFavorite={addFavorite}

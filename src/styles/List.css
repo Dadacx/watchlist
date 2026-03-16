@@ -36,3 +36,10 @@
     height: 35px;
     align-items: center;
 }
+
+.loadingContainer {
+    display: flex;
+    font-size: 30px;
+    flex-direction: column;
+    align-items: center;
+}
