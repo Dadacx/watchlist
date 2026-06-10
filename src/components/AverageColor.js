@@ -11,10 +11,32 @@ const getAverageColor = async (imageUrl) => {
   return new Promise((resolve, reject) => {
     const imgElement = new Image();
     imgElement.crossOrigin = "anonymous";
-    // imgElement.src = "https://frog02-30766.wykr.es/proxy?url=" + imageUrl;
-    // imgElement.src = "https://corsproxy.io/?url=" + encodeURIComponent(imageUrl);
-      imgElement.src = "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(imageUrl);
+
+    const proxyUrls = [
+      "https://frog02-30766.wykr.es/proxy?url=",
+      "https://api.codetabs.com/v1/proxy?quest=",
+    ];
+
+    let proxyIndex = 0;
+
+    const loadWithProxy = () => {
+      if (proxyIndex >= proxyUrls.length) {
+        reject("Nie udało się załadować obrazu przez żaden z serwerów proxy.");
+        return;
+      }
+      imgElement.src = proxyUrls[proxyIndex] + encodeURIComponent(imageUrl);
+    };
+
+    imgElement.onerror = () => {
+      console.error("Nie udało się załadować obrazu przez proxy: " + proxyUrls[proxyIndex] + imageUrl);
+      proxyIndex += 1;
+      loadWithProxy();
+    };
+
+    loadWithProxy();
+
     imgElement.onload = () => {
+      console.log("Udało się załadować obraz przez proxy: " + proxyUrls[proxyIndex] + imageUrl);
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
       canvas.width = imgElement.width;
@@ -53,10 +75,6 @@ const getAverageColor = async (imageUrl) => {
       } catch (error) {
         reject("Błąd podczas pobierania danych obrazu: " + error);
       }
-    };
-
-    imgElement.onerror = () => {
-      reject("Nie udało się załadować obrazu przez proxy.");
     };
   });
 };
